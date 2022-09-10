@@ -16,7 +16,7 @@ const IndexBlock = styled.div`
 const Nemo = styled.div`
   width: 35px;
   height: 38px;
-  background-color: rgba(188, 248, 183, 0.4);
+  background-color:  rgba(188, 248, 183);
   border-radius: 10px;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
 `;
@@ -64,7 +64,7 @@ function HomeCard() {
             icon="2"
             title="코퍼스 소개"
             content={'성균한문고전코퍼스에\n대해 알아보세요.\n\n'}
-            cardColor="rgba(188, 248, 183, 0.4)"
+            cardColor=" rgba(188, 248, 183)"
           />
         </Link>
         <Link to="/original-text/연행록" className="link-line">

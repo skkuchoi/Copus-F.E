@@ -24,6 +24,9 @@ const SearchBlockPositioner = styled.div`
     color: black;
     background-color: white;
     border-radius: 0px 30px 30px 0px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   @media screen and (max-width: 800px) {
     display: none;
@@ -33,7 +36,7 @@ const SearchBlockPositioner = styled.div`
 const SearchCategoryDiv = styled.div`
   width: 80px;
   height: 42px;
-  background-color: rgba(188, 248, 183, 0.4);
+  background-color: rgba(188, 248, 183);
   z-index: 10;
   font-size: 15px;
   border-radius: 30px 0px 0px 30px;
@@ -62,7 +65,7 @@ const SelectedCategoryName = styled.span`
 `;
 
 const CategoryElement = styled.li`
-  background-color: rgba(188, 248, 183, 0.4);
+  background-color:  rgba(188, 248, 183);
   cursor: pointer;
   height: 40px;
   color: black;
