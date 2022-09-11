@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import bg from './bg.png';
-import logo from './skku-logo-white.png';
 import '../../../shared/linkStyle.css';
 
 const HeaderPositioner = styled.div`
