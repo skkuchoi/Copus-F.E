@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import TitleBlock from '../ContentListTitleBlock';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import NoExistDataBlock from '../../../shared/NoExistDataBlock';
+import Pagination from '../../../shared/Pagination';
 
 const ListTableBlock = styled.div`
   width: 98%;
@@ -29,11 +31,20 @@ const ListTableRowData = styled.span`
   cursor: pointer;
 `;
 
-function MuncheContentListBlock() {
+function MuncheContentListBlock(munchesInquiryNum) {
   const munches = [
     { id: 1, name: '문체이름1' },
     { id: 2, name: '문체이름2' },
     { id: 3, name: '문체이름3' },
+    { id: 4, name: '문체이름1' },
+    { id: 5, name: '문체이름2' },
+    { id: 6, name: '문체이름3' },
+    { id: 7, name: '문체이름1' },
+    { id: 8, name: '문체이름2' },
+    { id: 9, name: '문체이름3' },
+    { id: 10, name: '문체이름1' },
+    { id: 11, name: '문체이름2' },
+    { id: 12, name: '문체이름3' },
   ];
 
   const { literature, consonant, bookname, gwoncha } = useParams();
@@ -41,6 +52,20 @@ function MuncheContentListBlock() {
   const link2munche = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
   const link2Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
 
+  //Pagination
+  const [limitPage, setLimitPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const offset = (currentPage - 1) * limitPage;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [gwoncha]);
+    if (!munchesInquiryNum)
+      return (
+        <>
+          <TitleBlock title={bookname} link={link2Gwoncha} />
+          <NoExistDataBlock />
+        </>
+      );
   return (
     <>
       <TitleBlock title={bookname} link={link2Gwoncha} />
@@ -50,7 +75,7 @@ function MuncheContentListBlock() {
         <ListTableRowData>{gwoncha}</ListTableRowData>
       </ListTableBlock>
 
-      {munches.map((item) => (
+      {munches.slice(offset, offset + limitPage).map((item) => (
         <ListTableBlock marginLeft="30px">
           <FaArrowAltCircleRight className="arrow-icon" />
           <Link to={link2munche + item.name} className="link2munche-line">
@@ -58,6 +83,13 @@ function MuncheContentListBlock() {
           </Link>
         </ListTableBlock>
       ))}
+
+      <Pagination
+          totalContent={munches.length}
+          limitPage={limitPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+      />
     </>
   );
 }

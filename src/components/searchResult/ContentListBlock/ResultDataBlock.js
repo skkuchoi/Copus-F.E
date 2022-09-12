@@ -1,9 +1,11 @@
-import Pagination from './Pagination';
+//import Pagination from './Pagination';
+import Pagination from '../../shared/Pagination';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ContentListTitleBlock from './ContentListTitleBlock';
 import { useParams } from 'react-router-dom';
-import NoExistDataBlock from './NoExistDataBlock';
+//import NoExistDataBlock from './NoExistDataBlock';
+import NoExistDataBlock from '../../shared/NoExistDataBlock'
 
 //=========== PageLimit Block //===========
 const SelectPageLimitBlock = styled.div`

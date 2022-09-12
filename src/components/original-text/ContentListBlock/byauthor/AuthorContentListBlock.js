@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import ContentListTitleBlock from '../ContentListTitleBlock';
 import { Link, useParams } from 'react-router-dom';
+import NoExistDataBlock from '../../../shared/NoExistDataBlock';
+import Pagination from '../../../shared/Pagination';
 
 const ListTableBlock = styled.div`
   display: grid;
@@ -35,7 +37,7 @@ const ListTableRowData = styled.span`
   }
 `;
 
-function AuthorContentListBlock() {
+function AuthorContentListBlock(booksInquiryNum) {
   const books = [
     {
       id: 1,
@@ -58,10 +60,88 @@ function AuthorContentListBlock() {
       jipsu: '속98집',
       year: '1929',
     },
+    {
+      id: 4,
+      name: '上蘆沙先生',
+      author: '저자1',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 5,
+      name: '石隅軒酬王大猷',
+      author: '저자2',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 6,
+      name: '與抱甕盧時用 讀書山房。及其歲暮先歸。',
+      author: '저자3',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 7,
+      name: '上蘆沙先生',
+      author: '저자1',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 8,
+      name: '石隅軒酬王大猷',
+      author: '저자2',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 9,
+      name: '與抱甕盧時用 讀書山房。及其歲暮先歸。',
+      author: '저자3',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 10,
+      name: '上蘆沙先生',
+      author: '저자1',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 11,
+      name: '石隅軒酬王大猷',
+      author: '저자2',
+      jipsu: '속98집',
+      year: '1929',
+    },
+    {
+      id: 12,
+      name: '與抱甕盧時用 讀書山房。及其歲暮先歸。',
+      author: '저자3',
+      jipsu: '속98집',
+      year: '1929',
+    },
   ];
 
   const { literature, consonant } = useParams();
   const link = `/original-text/${literature}/byauthor/${consonant}/`;
+
+  //Pagination
+  const [limitPage, setLimitPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const offset = (currentPage - 1) * limitPage;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [consonant]);
+    if (!booksInquiryNum)
+      return (
+        <>
+          <ContentListTitleBlock title="총 리스트" />
+          <NoExistDataBlock />
+        </>
+      );
 
   return (
     <>
@@ -75,7 +155,7 @@ function AuthorContentListBlock() {
         <ListTableRowTag>간행연도</ListTableRowTag>
       </ListTableBlock>
 
-      {books.map((item) => (
+      {books.slice(offset, offset + limitPage).map((item) => (
         <ListTableBlock>
           <ListTableRowData>{item.id}</ListTableRowData>
           <Link to={link + item.author + '/' + item.name} className="link-line">
@@ -86,6 +166,13 @@ function AuthorContentListBlock() {
           <ListTableRowData>{item.year}</ListTableRowData>
         </ListTableBlock>
       ))}
+
+      <Pagination
+          totalContent={books.length}
+          limitPage={limitPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+      />
     </>
   );
 }
