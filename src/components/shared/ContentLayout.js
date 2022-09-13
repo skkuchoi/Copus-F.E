@@ -12,9 +12,17 @@ const MainContentBlock = styled.div`
   margin: 12px 20px;
 `;
 
-function ContentLayout({ open = false, title, children }) {
+function ContentLayout({ open = false, title = '', children }) {
   const { literature, consonant, bookname } = useParams();
   const linkToGwonchaList = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
+  if (title === '')
+    return (
+      <>
+        <DisplaySelectedListBlock />
+        <SortBlock open={open} />
+        <MainContentBlock />
+      </>
+    );
   return (
     <>
       <DisplaySelectedListBlock />

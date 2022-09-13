@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../shared/linkStyle.css';
 
-const Positioner = styled.div`
+const TitlePositioner = styled.div`
   width: fit-content;
   margin-bottom: 5px;
 `;
@@ -24,13 +24,13 @@ const Title = styled.h6`
   }
 `;
 
-function ContentListTitleBlock({ title, link = '' }) {
+function ContentListTitleBlock({ title = '', link = '' }) {
   return (
-    <Positioner>
+    <TitlePositioner>
       <Link to={link} className="link-line">
         <Title>{title}</Title>
       </Link>
-    </Positioner>
+    </TitlePositioner>
   );
 }
 
