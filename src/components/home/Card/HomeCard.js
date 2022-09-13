@@ -8,11 +8,17 @@ const IndexPositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: left;
-  margin-left: 360px;
+  justify-content: center;
   margin-top: 70px;
 `;
 
+const IndexContainer = styled.div`
+  width: 780px;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content:left;
+`;
 const IndexBox = styled.div`
   width: 35px;
   height: 38px;
@@ -23,8 +29,8 @@ const IndexBox = styled.div`
 
 const IndexText = styled.div`
   font-size: 20px;
-  position: absolute;
-  left: 25%;
+  position: relative;
+  left: -15px;
   font-weight: 400;
 `;
 
@@ -40,8 +46,10 @@ function HomeCard() {
   return (
     <>
       <IndexPositioner>
-        <IndexBox />
-        <IndexText>서비스 메뉴</IndexText>
+        <IndexContainer>
+          <IndexBox />
+          <IndexText>서비스 메뉴</IndexText>
+        </IndexContainer>
       </IndexPositioner>
 
       <CardPositioner>
