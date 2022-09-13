@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import TitleBlock from '../ContentListTitleBlock';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import '../../../shared/linkStyle.css';
+import OtherTableBlock from '../OtherTableBlock';
 
 const ListTableBlock = styled.div`
   width: 98%;
@@ -26,7 +28,6 @@ const ListTableBlock = styled.div`
 
 const ListTableRowData = styled.span`
   font-size: 15px;
-  cursor: pointer;
 `;
 
 function MuncheContentListBlock() {
@@ -43,20 +44,16 @@ function MuncheContentListBlock() {
 
   return (
     <>
-      <TitleBlock title={bookname} link={link2Gwoncha} />
-      <ListTableBlock marginLeft="0px">
-        <FaArrowAltCircleRight className="arrow-icon" />
-
+      <OtherTableBlock>
         <ListTableRowData>{gwoncha}</ListTableRowData>
-      </ListTableBlock>
+      </OtherTableBlock>
 
       {munches.map((item) => (
-        <ListTableBlock marginLeft="30px">
-          <FaArrowAltCircleRight className="arrow-icon" />
-          <Link to={link2munche + item.name} className="link2munche-line">
+        <OtherTableBlock marginLeft="39px">
+          <Link to={link2munche + item.name} className="link-line">
             <ListTableRowData>{item.name}</ListTableRowData>
           </Link>
-        </ListTableBlock>
+        </OtherTableBlock>
       ))}
     </>
   );

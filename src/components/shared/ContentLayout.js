@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import ContentListTitleBlock from '../original-text/ContentListBlock/ContentListTitleBlock';
 import DisplaySelectedListBlock from '../original-text/DisplayBlock/DisplaySelectedListBlock';
@@ -12,12 +13,14 @@ const MainContentBlock = styled.div`
 `;
 
 function ContentLayout({ open = false, title, children }) {
+  const { literature, consonant, bookname } = useParams();
+  const linkToGwonchaList = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
   return (
     <>
       <DisplaySelectedListBlock />
       <SortBlock open={open} />
       <MainContentBlock>
-        <ContentListTitleBlock title={title} />
+        <ContentListTitleBlock title={title} link={linkToGwonchaList} />
         {children}
       </MainContentBlock>
     </>

@@ -16,14 +16,14 @@ const Positioner = styled.div`
   }
   .arrow-icon {
     color: orange;
-    margin-left: 13px;
+    margin-left: ${(props) => props.marginLeft};
     margin-right: 9px;
   }
 `;
 
-function OtherTableBlock({ children }) {
+function OtherTableBlock({ marginLeft = '13px', children }) {
   return (
-    <Positioner>
+    <Positioner marginLeft={marginLeft}>
       <FaArrowAltCircleRight className="arrow-icon" />
       {children}
     </Positioner>

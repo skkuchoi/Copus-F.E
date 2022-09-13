@@ -1,14 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../../../components/shared/Layout';
-import DisplaySelectedListBlock from '../../../../components/original-text/DisplayBlock/DisplaySelectedListBlock';
-import MainContentBlock from '../../../../components/original-text/MainContentBlock';
-import ContentListBlock from '../../../../components/original-text/ContentListBlock/ContentListBlock';
 import MuncheContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/MuncheLContentListBlock';
-import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
 
 import useAsync from '../../../../hooks/useAsync';
 import getMuncheList from '../../../../api/Explore/bybook/getMuncheList';
+import ContentLayout from '../../../../components/shared/ContentLayout';
 
 function OriginalTextMunche() {
   const { literature, consonant, bookname, gwoncha } = useParams();
@@ -20,13 +17,9 @@ function OriginalTextMunche() {
   );
   return (
     <Layout>
-      <DisplaySelectedListBlock />
-      <MainContentBlock>
-        <SortBlock open={true} />
-        <ContentListBlock>
-          {gwoncha && <MuncheContentListBlock />}
-        </ContentListBlock>
-      </MainContentBlock>
+      <ContentLayout open={true} title={bookname}>
+        <MuncheContentListBlock />
+      </ContentLayout>
     </Layout>
   );
 }
