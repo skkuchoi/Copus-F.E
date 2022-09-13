@@ -2,30 +2,32 @@ import React, { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdAdd } from 'react-icons/md';
 import { Link, useLocation, useParams } from 'react-router-dom';
+import '../../shared/linkStyle.css';
 
-const Positioner = styled.div`
+const BoxPositioner = styled.div`
   border: 1px solid #eeeeee;
   box-shadow: 0px 0px 4px gray;
-  height: 10%;
+  height: 50px;
   margin: 12px 20px;
   display: flex;
   align-items: center;
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-    color: black;
-  }
+  justify-content: left;
+  padding-left: 20px;
 `;
 
-const TitleBlock = styled.div`
+const TitlePositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 20px;
   cursor: pointer;
 `;
 
-const CircleButton = styled.div`
+const Title = styled.div`
+  font-size: 16px;
+  font-weight: 200;
+`;
+
+const CircleOpenButton = styled.div`
   background: black;
   width: 18px;
   height: 18px;
@@ -53,25 +55,14 @@ const CircleButton = styled.div`
     `}
 `;
 
-const Title = styled.div`
-  font-size: 16px;
-  font-weight: 200;
-`;
-
-const CategoryBlock = styled.div`
+const CategoryPositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   margin-left: 20px;
 `;
 
-const Name = styled.div`
-  font-size: 15px;
-  font-weight: 100;
-  margin-right: 10px;
-`;
-
-const CheckCircle = styled.div`
+const CircleCheckButton = styled.div`
   width: 16px;
   height: 16px;
   border-radius: 16px;
@@ -86,16 +77,23 @@ const CheckCircle = styled.div`
   justify-content: center;
 `;
 
-const ConsonantBlock = styled.div`
+const CategoryName = styled.div`
+  font-size: 15px;
+  font-weight: 100;
+  margin-right: 10px;
+`;
+
+const ConsonantPositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   margin-left: 8px;
   border-left: 1px solid #ced4da;
   padding-left: 15px;
 `;
 
-const ChooseCircle = styled.div`
+const CircleColorButton = styled.div`
   width: 13px;
   height: 13px;
   border-radius: 16px;
@@ -112,42 +110,31 @@ const ChooseCircle = styled.div`
   background-color: ${(props) => (props.select ? 'black' : '')};
   color: ${(props) => (props.select ? 'white' : 'black')};
 `;
-function SortBlock({ open }) {
-  //분류기준 menuOpen
-  const [menuOpen, setMenuOpen] = useState(false);
-  const onClickPlusButton = () => setMenuOpen(!menuOpen);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-  // 서명별 vs 저자별
+function SortBlock({ open }) {
+  // 분류기준 menu Open
+  const [menuOpen, setMenuOpen] = useState(false);
+  const handleMenuOpenButton = () => setMenuOpen(!menuOpen);
+
+  // Select Category menu
   const [selectByBook, setSelectByBook] = useState(false);
   const [selectByAuthor, setSelectByAuthor] = useState(false);
-  const onSelectByBook = () => {
+  const handleSelectByBook = () => {
     setSelectByBook(true);
     setSelectByAuthor(false);
   };
-  const onSelectByAuthor = () => {
+  const handleSelectByAuthor = () => {
     setSelectByAuthor(true);
     setSelectByBook(false);
   };
 
-  //가나다라마바사
+  // consonant에 따른 link 연결
   const { literature, consonant } = useParams();
   const { pathname } = useLocation();
   const includeByBook = pathname.includes('bybook');
   const includeByAuthor = pathname.includes('byauthor');
-
   const byBookLink = `/original-text/${literature}/bybook/`;
   const byAuthorLink = `/original-text/${literature}/byauthor/`;
-
-  useEffect(() => {
-    if (open) {
-      setMenuOpen(true);
-      setSelectByBook(includeByBook);
-      setSelectByAuthor(includeByAuthor);
-    }
-  }, []);
 
   const consonants = [
     { id: 0, consonant: '가' },
@@ -165,59 +152,75 @@ function SortBlock({ open }) {
     { id: 12, consonant: '파' },
     { id: 13, consonant: '하' },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (open) {
+      setMenuOpen(true);
+      setSelectByBook(includeByBook);
+      setSelectByAuthor(includeByAuthor);
+    }
+  }, [open, includeByBook, includeByAuthor]);
+
   return (
-    <Positioner>
-      <TitleBlock onClick={onClickPlusButton}>
+    <BoxPositioner>
+      <TitlePositioner onClick={handleMenuOpenButton}>
         <Title>분류기준</Title>
-        <CircleButton menuOpen={menuOpen}>
+        <CircleOpenButton menuOpen={menuOpen}>
           <MdAdd />
-        </CircleButton>
-      </TitleBlock>
+        </CircleOpenButton>
+      </TitlePositioner>
 
       {menuOpen && (
         <>
-          <CategoryBlock>
+          <CategoryPositioner>
             <Link to={byBookLink} className="link-line">
-              <CheckCircle onClick={onSelectByBook}>
-                {selectByBook && <MdDone className="check-icon" />}
-              </CheckCircle>
+              <CircleCheckButton onClick={handleSelectByBook}>
+                {selectByBook && <MdDone />}
+              </CircleCheckButton>
             </Link>
-            <Name>서명별</Name>
+            <CategoryName>서명별</CategoryName>
 
             <Link to={byAuthorLink} className="link-line">
-              <CheckCircle onClick={onSelectByAuthor}>
-                {selectByAuthor && <MdDone className="check-icon" />}
-              </CheckCircle>
+              <CircleCheckButton onClick={handleSelectByAuthor}>
+                {selectByAuthor && <MdDone />}
+              </CircleCheckButton>
             </Link>
-            <Name>저자별</Name>
-          </CategoryBlock>
+            <CategoryName>저자별</CategoryName>
+          </CategoryPositioner>
         </>
       )}
 
       {menuOpen && selectByBook && (
-        <ConsonantBlock>
+        <ConsonantPositioner>
           {consonants.map((item) => (
-            <Link to={byBookLink + item.consonant} className="link-line">
-              <ChooseCircle key={item.id} select={item.consonant === consonant}>
+            <Link
+              to={byBookLink + item.consonant}
+              className="link-line"
+              key={item.id}>
+              <CircleColorButton select={item.consonant === consonant}>
                 {item.consonant}
-              </ChooseCircle>
+              </CircleColorButton>
             </Link>
           ))}
-        </ConsonantBlock>
+        </ConsonantPositioner>
       )}
 
       {menuOpen && selectByAuthor && (
-        <ConsonantBlock>
+        <ConsonantPositioner>
           {consonants.map((item) => (
-            <Link to={byAuthorLink + item.consonant} className="link-line">
-              <ChooseCircle key={item.id} select={item.consonant === consonant}>
+            <Link
+              to={byAuthorLink + item.consonant}
+              className="link-line"
+              key={item.id}>
+              <CircleColorButton select={item.consonant === consonant}>
                 {item.consonant}
-              </ChooseCircle>
+              </CircleColorButton>
             </Link>
           ))}
-        </ConsonantBlock>
+        </ConsonantPositioner>
       )}
-    </Positioner>
+    </BoxPositioner>
   );
 }
 
