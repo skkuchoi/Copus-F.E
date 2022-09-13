@@ -1,32 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import TitleBlock from '../ContentListTitleBlock';
-import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
-
-const ListTableBlock = styled.div`
-  width: 98%;
-  border-bottom: 1px solid #dadce0;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  text-align: left;
-
-  .arrow-icon {
-    color: orange;
-    margin-right: 9px;
-    margin-left: ${(props) => props.marginLeft};
-  }
-
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-    color: black;
-  }
-`;
+import OtherTableBlock from '../OtherTableBlock';
 
 const ListTableRowData = styled.span`
   font-size: 15px;
-  cursor: pointer;
 `;
 
 function TitleContentListBlock() {
@@ -44,26 +22,22 @@ function TitleContentListBlock() {
 
   return (
     <>
-      <TitleBlock title={bookname} link={link2Gwoncha} />
-      <ListTableBlock marginLeft="0px">
-        <FaArrowAltCircleRight className="arrow-icon" />
+      <OtherTableBlock>
         <Link to={link2gwoncha} className="link-line">
           <ListTableRowData>{gwoncha}</ListTableRowData>
         </Link>
-      </ListTableBlock>
+      </OtherTableBlock>
 
-      <ListTableBlock marginLeft="30px">
-        <FaArrowAltCircleRight className="arrow-icon" />
+      <OtherTableBlock marginLeft="39px">
         <ListTableRowData>{munche}</ListTableRowData>
-      </ListTableBlock>
+      </OtherTableBlock>
 
       {titles.map((item) => (
-        <ListTableBlock marginLeft="60px">
-          <FaArrowAltCircleRight className="arrow-icon" />
+        <OtherTableBlock marginLeft="65px">
           <Link to={link + item.name} className="link-line">
             <ListTableRowData>{item.name}</ListTableRowData>
           </Link>
-        </ListTableBlock>
+        </OtherTableBlock>
       ))}
     </>
   );

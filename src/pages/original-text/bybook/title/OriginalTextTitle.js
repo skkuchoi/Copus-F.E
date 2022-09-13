@@ -10,6 +10,7 @@ import TitleContentListBlock from '../../../../components/original-text/ContentL
 
 import useAsync from '../../../../hooks/useAsync';
 import getTitleList from '../../../../api/Explore/bybook/getTitleList';
+import ContentLayout from '../../../../components/shared/ContentLayout';
 
 function OriginalTextTitle() {
   const { literature, consonant, bookname, gwoncha, munche } = useParams();
@@ -21,13 +22,9 @@ function OriginalTextTitle() {
   );
   return (
     <Layout>
-      <DisplaySelectedListBlock />
-      <MainContentBlock>
-        <SortBlock open={true} />
-        <ContentListBlock>
-          {munche && <TitleContentListBlock />}
-        </ContentListBlock>
-      </MainContentBlock>
+      <ContentLayout open={true} title={bookname}>
+        <TitleContentListBlock />
+      </ContentLayout>
     </Layout>
   );
 }
