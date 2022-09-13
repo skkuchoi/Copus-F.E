@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
 import BookTableBlock from '../BookTableBlock';
 
 const ListTableRowData = styled.span`

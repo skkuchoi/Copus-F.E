@@ -10,7 +10,7 @@ const TableRowText = styled.div`
   padding: 7px 0px;
 `;
 
-function BookTable() {
+function BookTableRowBlock() {
   return (
     <>
       <BookTableBlock border="1.5px solid #dadce0">
@@ -24,4 +24,4 @@ function BookTable() {
   );
 }
 
-export default BookTable;
+export default BookTableRowBlock;

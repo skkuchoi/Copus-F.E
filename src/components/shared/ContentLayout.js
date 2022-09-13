@@ -8,16 +8,16 @@ const MainContentBlock = styled.div`
   display: flex;
   flex-direction: column;
   height: 75vh;
-  margin:12px 20px;
+  margin: 12px 20px;
 `;
 
-function ContentLayout({ open = false, children }) {
+function ContentLayout({ open = false, title, children }) {
   return (
     <>
       <DisplaySelectedListBlock />
       <SortBlock open={open} />
       <MainContentBlock>
-        <ContentListTitleBlock title="총 리스트" />
+        <ContentListTitleBlock title={title} />
         {children}
       </MainContentBlock>
     </>
