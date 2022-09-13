@@ -1,13 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import logo from './skku-logo.png';
 
-const LogoImgBlock = styled.div`
+const ImgPositioner = styled.div`
   margin-left: 40px;
 
-  @media screen and (max-width : 800px){
-    display : flex;
+  @media screen and (max-width: 800px) {
+    display: flex;
     justify-content: center;
     align-items: center;
   }
@@ -20,11 +19,14 @@ const LogoImg = styled.img`
 
 function ImgBlock() {
   return (
-    <LogoImgBlock>
+    <ImgPositioner>
       <Link to="/">
-        <LogoImg src={logo} />
+        <LogoImg
+          src={process.env.PUBLIC_URL + '/img/common/skku-logo-black.png'}
+          alt="skku-logo-black"
+        />
       </Link>
-    </LogoImgBlock>
+    </ImgPositioner>
   );
 }
 
