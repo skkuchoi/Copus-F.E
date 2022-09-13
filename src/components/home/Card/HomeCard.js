@@ -2,21 +2,21 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from './Card';
+import '../../shared/linkStyle.css';
 
-const IndexBlock = styled.div`
+const IndexPositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: fit-content;
-  margin-left: 23%;
-  margin-top: 70px;
   justify-content: left;
+  margin-left: 360px;
+  margin-top: 70px;
 `;
 
-const Nemo = styled.div`
+const IndexBox = styled.div`
   width: 35px;
   height: 38px;
-  background-color:  rgba(188, 248, 183);
+  background-color: rgba(188, 248, 183);
   border-radius: 10px;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
 `;
@@ -24,32 +24,27 @@ const Nemo = styled.div`
 const IndexText = styled.div`
   font-size: 20px;
   position: absolute;
-  left: 24.2%;
+  left: 25%;
   font-weight: 400;
 `;
 
-const CardBlock = styled.div`
+const CardPositioner = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 30px 23%;
+  margin-top: 30px;
   gap: 40px;
-
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-  }
 `;
 
 function HomeCard() {
   return (
     <>
-      <IndexBlock>
-        <Nemo />
+      <IndexPositioner>
+        <IndexBox />
         <IndexText>서비스 메뉴</IndexText>
-      </IndexBlock>
+      </IndexPositioner>
 
-      <CardBlock>
+      <CardPositioner>
         <Link to="/original-text/연행록" className="link-line">
           <Card
             icon="1"
@@ -77,7 +72,7 @@ function HomeCard() {
             cardColor="white"
           />
         </Link>
-      </CardBlock>
+      </CardPositioner>
     </>
   );
 }
