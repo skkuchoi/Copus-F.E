@@ -2,47 +2,34 @@ import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
-const DisplaySelectedInfoBlock = styled.div`
+const DisplayPositioner = styled.div`
   background-color: #f2f2f2;
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  justify-content: left;
   height: 50px;
+  padding-left: 40px;
 `;
 
-const BookTitle = styled.span`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+const LiteratureTitle = styled.h2`
   font-size: 20px;
-  font-weight: bold;
-  padding-left : 37px;  
-
-  .line {
-    //display : flex;
-    border-left: 2px solid black;
-    opacity: 0.5;
-    //justify-content: center;
-    //align-items: center;
-    //margin-top: 18px;
-    margin-left: 50px;
-    //margin-right: 5px;
-  }
 `;
 
-const ListInformation = styled.span`
-  display : flex;
+const EachElementTitle = styled.h3`
+  display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: 300;
   font-size: 18px;
-  
+
   ::before {
-    content: '▶';
+    content: '▷';
     margin-left: 7px;
     margin-right: 7px;
-    font-size : 10px;
+    font-size: 10px;
   }
 `;
 
@@ -85,19 +72,16 @@ function DisplaySelectedListBlock() {
     useParams();
 
   return (
-    <DisplaySelectedInfoBlock>
-      <BookTitle>
-        연행록
-       
-      </BookTitle>
+    <DisplayPositioner>
+      <LiteratureTitle>연행록</LiteratureTitle>
 
-      {consonant && <ListInformation>{consonant}</ListInformation>}
-      {authorname && <ListInformation>{authorname}</ListInformation>}
-      {bookname && <ListInformation>{bookname}</ListInformation>}
-      {gwoncha && <ListInformation>{gwoncha}</ListInformation>}
-      {munche && <ListInformation>{munche}</ListInformation>}
-      {title && <ListInformation>{title}</ListInformation>}
-    </DisplaySelectedInfoBlock>
+      {consonant && <EachElementTitle>{consonant}</EachElementTitle>}
+      {authorname && <EachElementTitle>{authorname}</EachElementTitle>}
+      {bookname && <EachElementTitle>{bookname}</EachElementTitle>}
+      {gwoncha && <EachElementTitle>{gwoncha}</EachElementTitle>}
+      {munche && <EachElementTitle>{munche}</EachElementTitle>}
+      {title && <EachElementTitle>{title}</EachElementTitle>}
+    </DisplayPositioner>
   );
 }
 
