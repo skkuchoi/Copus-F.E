@@ -8,6 +8,9 @@ import BookContentListBlock from '../../../../components/original-text/ContentLi
 import useAsync from '../../../../hooks/useAsync';
 import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
 import getBookList from '../../../../api/Explore/bybook/getBookList';
+import BookTable from '../../../../components/original-text/ContentListBlock/BookTable';
+import ContentLayout from '../../../../components/shared/ContentLayout';
+import ContentListTitleBlock from '../../../../components/original-text/ContentListBlock/ContentListTitleBlock';
 
 function OriginalTextCategory() {
   const { literature, consonant } = useParams();
@@ -25,14 +28,10 @@ function OriginalTextCategory() {
   //state 가지고 분석하여.. props로 잘 넘기기 to BookContentListBlock
   return (
     <Layout>
-      <DisplaySelectedListBlock />
-      <MainContentBlock>
-        <SortBlock open={true} />
-
-        <ContentListBlock>
-          {bybook && consonant && <BookContentListBlock />}
-        </ContentListBlock>
-      </MainContentBlock>
+      <ContentLayout open={true}>
+        <BookTable />
+        {bybook && consonant && <BookContentListBlock />}
+      </ContentLayout>
     </Layout>
   );
 }

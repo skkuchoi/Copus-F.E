@@ -1,22 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import '../../shared/linkStyle.css';
 
-const TitlesBlock = styled.div`
-  padding-bottom: 8px;
-  border-bottom: 2px solid #dadce0;
-  width: 98%;
-
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-    color: black;
-  }
+const Positioner = styled.div`
+  width: fit-content;
+  margin-bottom: 5px;
 `;
 
-const Title = styled.span`
+const Title = styled.h6`
   font-size: 16px;
-  font-weight: bold;
+  margin: 0;
   ::before {
     content: '▼';
     margin-right: 5px;
@@ -24,15 +18,19 @@ const Title = styled.span`
     position: relative;
     top: -2px;
   }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 function ContentListTitleBlock({ title, link = '' }) {
   return (
-    <TitlesBlock>
+    <Positioner>
       <Link to={link} className="link-line">
         <Title>{title}</Title>
       </Link>
-    </TitlesBlock>
+    </Positioner>
   );
 }
 
