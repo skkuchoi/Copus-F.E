@@ -10,9 +10,9 @@ const ListTableRowData = styled.span`
 
 function MuncheContentListBlock() {
   const munches = [
-    { id: 1, name: '문체이름1' },
-    { id: 2, name: '문체이름2' },
-    { id: 3, name: '문체이름3' },
+    { id: 1, name: '詩' },
+    { id: 2, name: '詩' },
+    { id: 3, name: '詩' },
   ];
 
   const { literature, consonant, bookname, gwoncha } = useParams();
@@ -27,7 +27,7 @@ function MuncheContentListBlock() {
       </OtherTableBlock>
 
       {munches.map((item) => (
-        <OtherTableBlock marginLeft="39px">
+        <OtherTableBlock marginLeft="39px" key={item.id}>
           <Link to={link2munche + item.name} className="link-line">
             <ListTableRowData>{item.name}</ListTableRowData>
           </Link>

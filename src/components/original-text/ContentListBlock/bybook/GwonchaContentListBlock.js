@@ -10,9 +10,9 @@ const ListTableRowData = styled.span`
 
 function GwonchaContentListBlock() {
   const gwonchas = [
-    { id: 1, name: '권차이름1' },
-    { id: 2, name: '권차이름2' },
-    { id: 3, name: '권차이름3' },
+    { id: 1, name: '月皐先生文集卷之一' },
+    { id: 2, name: '月皐先生文集卷之二' },
+    { id: 3, name: '月皐先生文集卷之三' },
   ];
 
   const { literature, consonant, bookname } = useParams();
@@ -23,7 +23,7 @@ function GwonchaContentListBlock() {
   return (
     <>
       {gwonchas.map((item) => (
-        <OtherTableBlock>
+        <OtherTableBlock key={item.id}>
           <Link to={link + item.name} className="link-line">
             <ListTableRowData>{item.name}</ListTableRowData>
           </Link>

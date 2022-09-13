@@ -12,22 +12,22 @@ function BookContentListBlock() {
   const books = [
     {
       id: 1,
-      name: '上蘆沙先生',
-      author: '저자1',
+      name: '월고집(月皐集)',
+      author: '조성가(趙性家)',
       zipsu: '속98집',
       year: '1929',
     },
     {
       id: 2,
-      name: '石隅軒酬王大猷',
-      author: '저자2',
+      name: '월고집(月皐集)',
+      author: '조성가(趙性家)',
       zipsu: '속98집',
       year: '1929',
     },
     {
       id: 3,
-      name: '與抱甕盧時用 讀書山房。及其歲暮先歸。',
-      author: '저자3',
+      name: '월고집(月皐集)',
+      author: '조성가(趙性家)',
       zipsu: '속98집',
       year: '1929',
     },
@@ -40,7 +40,7 @@ function BookContentListBlock() {
   return (
     <>
       {books.map((item) => (
-        <Link to={link + item.name} className="link-line">
+        <Link to={link + item.name} className="link-line" key={item.id}>
           <BookTableBlock bgColor="#edeaea">
             <ListTableRowData>{item.id}</ListTableRowData>
             <ListTableRowData>{item.name}</ListTableRowData>
