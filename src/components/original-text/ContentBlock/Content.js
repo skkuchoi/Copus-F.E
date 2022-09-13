@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ContentBlock = styled.div`
-  background-color: white;
+const ContentPositioner = styled.div`
   padding: 15px 30px;
   display: flex;
   flex-direction: column;
@@ -106,7 +105,7 @@ const Origin = styled.div`
 export default function Content({ title, wonju, page, dci, content }) {
   return (
     
-    <ContentBlock>
+    <ContentPositioner>
       <Title>{title}</Title>
 
       <SubTitle>
@@ -123,6 +122,6 @@ export default function Content({ title, wonju, page, dci, content }) {
 
       <ContentText>{content}</ContentText>
       <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
-    </ContentBlock>
+    </ContentPositioner>
   );
 }
