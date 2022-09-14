@@ -6,7 +6,7 @@ import '../../../shared/linkStyle.css';
 const HeaderPositioner = styled.div`
   width: 100%;
   height: 50vh;
-  background-image: url(${process.env.PUBLIC_URL + 'img/home/header/bg.png'});
+  background-image: url(${process.env.PUBLIC_URL + '/img/home/header/bg.png'});
   background-size: 100% 100%;
   overflow-x: hidden;
 `;
