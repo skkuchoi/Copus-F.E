@@ -1,18 +1,15 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import Layout from '../../../../components/shared/Layout';
+import { useParams } from 'react-router-dom';
 
-import DisplaySelectedListBlock from '../../../../components/original-text/DisplayBlock/DisplaySelectedListBlock';
-import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
-import MainContentBlock from '../../../../components/original-text/MainContentBlock';
-import ContentListBlock from '../../../../components/original-text/ContentListBlock/ContentListBlock';
+import Layout from '../../../../components/shared/Layout';
+import ContentLayout from '../../../../components/shared/ContentLayout';
+import BookTableRowBlock from '../../../../components/original-text/ContentListBlock/BookTableRowBlock';
 import AuthorContentListBlock from '../../../../components/original-text/ContentListBlock/byauthor/AuthorContentListBlock';
+
 import useAsync from '../../../../hooks/useAsync';
 import getBookList from '../../../../api/Explore/byauthor/getBookList';
 
 function OriginalTextCategory() {
-  const { pathname } = useLocation();
-  const byauthor = pathname.includes('byauthor');
   const { literature, consonant } = useParams();
   // consonant 바뀔때마다 호출
   const [state] = useAsync(
@@ -24,13 +21,10 @@ function OriginalTextCategory() {
   //to AuthorContentListBlock
   return (
     <Layout>
-      <DisplaySelectedListBlock />
-      <MainContentBlock>
-        <SortBlock open={true} />
-        <ContentListBlock>
-          {byauthor && consonant && <AuthorContentListBlock />}
-        </ContentListBlock>
-      </MainContentBlock>
+      <ContentLayout open={true} title="총 리스트">
+        <BookTableRowBlock />
+        <AuthorContentListBlock />
+      </ContentLayout>
     </Layout>
   );
 }

@@ -2,17 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import Layout from '../../../../components/shared/Layout';
 import DisplaySelectedListBlock from '../../../../components/original-text/DisplayBlock/DisplaySelectedListBlock';
-
-import Content from '../../../../components/original-text/ContentBlock/Content';
-
-import TitleContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/TitleContentListBlock';
 import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
+import TitleContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/TitleContentListBlock';
+import ContentListTitleBlock from '../../../../components/original-text/ContentListBlock/ContentListTitleBlock';
+import Content from '../../../../components/original-text/ContentBlock/Content';
 
 import { useParams } from 'react-router-dom';
 import useAsync from '../../../../hooks/useAsync';
 import getDetailText from '../../../../api/Explore/bybook/getDetailText';
-
-import ContentListTitleBlock from '../../../../components/original-text/ContentListBlock/ContentListTitleBlock';
 
 const MainContentBlock = styled.div`
   display: flex;
