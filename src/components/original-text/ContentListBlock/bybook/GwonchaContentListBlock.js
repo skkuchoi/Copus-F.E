@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
-import OtherTableBlock from '../OtherTableBlock';
+import OtherListTableBlock from '../OtherListTableBlock';
 
-const ListTableRowData = styled.span`
+const TableItem = styled.p`
   font-size: 15px;
+  margin: 0;
 `;
 
 function GwonchaContentListBlock() {
@@ -16,18 +17,16 @@ function GwonchaContentListBlock() {
   ];
 
   const { literature, consonant, bookname } = useParams();
-
   const link = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
-  const link2Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
 
   return (
     <>
       {gwonchas.map((item) => (
-        <OtherTableBlock key={item.id}>
-          <Link to={link + item.name} className="link-line">
-            <ListTableRowData>{item.name}</ListTableRowData>
-          </Link>
-        </OtherTableBlock>
+        <Link to={link + item.name} className="link-line" key={item.id}>
+          <OtherListTableBlock>
+            <TableItem>{item.name}</TableItem>
+          </OtherListTableBlock>
+        </Link>
       ))}
     </>
   );

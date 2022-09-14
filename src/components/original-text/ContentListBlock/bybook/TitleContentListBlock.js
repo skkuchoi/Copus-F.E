@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
-import OtherTableBlock from '../OtherTableBlock';
+import OtherListTableBlock from '../OtherListTableBlock';
 
-const ListTableRowData = styled.span`
+const TableItem = styled.p`
   font-size: 15px;
+  margin: 0;
 `;
 
 function TitleContentListBlock() {
@@ -17,27 +18,30 @@ function TitleContentListBlock() {
   const { literature, consonant, bookname, gwoncha, munche } = useParams();
 
   const link = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/${munche}/`;
-  const link2gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
-  const link2Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}`;
+  const link4Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
+  const link4Munche = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
 
+  //title에도 원주가 있으므로 여기에서 파싱 작업이 필요하다.
   return (
     <>
-      <OtherTableBlock>
-        <Link to={link2gwoncha} className="link-line">
-          <ListTableRowData>{gwoncha}</ListTableRowData>
-        </Link>
-      </OtherTableBlock>
+      <Link to={link4Gwoncha} className="link-line">
+        <OtherListTableBlock>
+          <TableItem>{gwoncha}</TableItem>
+        </OtherListTableBlock>
+      </Link>
 
-      <OtherTableBlock marginLeft="39px">
-        <ListTableRowData>{munche}</ListTableRowData>
-      </OtherTableBlock>
+      <Link to={link4Munche} className="link-line">
+        <OtherListTableBlock marginLeft="39px">
+          <TableItem>{munche}</TableItem>
+        </OtherListTableBlock>
+      </Link>
 
       {titles.map((item) => (
-        <OtherTableBlock marginLeft="65px" key={item.id}>
-          <Link to={link + item.name} className="link-line">
-            <ListTableRowData>{item.name}</ListTableRowData>
-          </Link>
-        </OtherTableBlock>
+        <Link to={link + item.name} className="link-line" key={item.id}>
+          <OtherListTableBlock marginLeft="65px">
+            <TableItem>{item.name}</TableItem>
+          </OtherListTableBlock>
+        </Link>
       ))}
     </>
   );

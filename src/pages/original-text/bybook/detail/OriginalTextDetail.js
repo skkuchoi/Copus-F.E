@@ -46,7 +46,8 @@ function OriginalTextDetail() {
       getDetailText(literature, consonant, bookname, gwoncha, munche, title),
     [title],
   );
-  const linkToGwonchaList = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
+  const link4Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
+
   // content.js 에 전달하려면
   // < > < > 가 마구마구 섞인 애들을 잘 파싱해서
   // 아래처럼 예쁜 props로 보내주면 좋을 것 같다.
@@ -55,7 +56,8 @@ function OriginalTextDetail() {
       <DisplaySelectedListBlock />
       <SortBlock open={true} />
       <MainContentBlock>
-        <ContentListTitleBlock title={bookname} link={linkToGwonchaList} />
+        <ContentListTitleBlock title={bookname} link={link4Gwoncha} />
+
         <ContainerPositioner>
           <ListPositioner>
             <TitleContentListBlock />

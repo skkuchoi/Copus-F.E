@@ -3,9 +3,10 @@ import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
 
-const ListTableRowData = styled.span`
+const TableItem = styled.p`
   font-size: 15px;
   padding: 5px 0px;
+  margin: 0;
 `;
 
 function BookContentListBlock() {
@@ -42,11 +43,11 @@ function BookContentListBlock() {
       {books.map((item) => (
         <Link to={link + item.name} className="link-line" key={item.id}>
           <BookTableBlock bgColor="#edeaea">
-            <ListTableRowData>{item.id}</ListTableRowData>
-            <ListTableRowData>{item.name}</ListTableRowData>
-            <ListTableRowData>{item.author}</ListTableRowData>
-            <ListTableRowData>{item.zipsu}</ListTableRowData>
-            <ListTableRowData>{item.year}</ListTableRowData>
+            <TableItem>{item.id}</TableItem>
+            <TableItem>{item.name}</TableItem>
+            <TableItem>{item.author}</TableItem>
+            <TableItem>{item.zipsu}</TableItem>
+            <TableItem>{item.year}</TableItem>
           </BookTableBlock>
         </Link>
       ))}

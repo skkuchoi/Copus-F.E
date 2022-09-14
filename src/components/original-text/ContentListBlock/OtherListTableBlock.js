@@ -18,7 +18,6 @@ const Positioner = styled.div`
   }
   .arrow-icon {
     color: orange;
-
     margin-left: ${(props) => props.marginLeft};
     margin-right: 9px;
   }
@@ -32,7 +31,7 @@ const IconPositioner = styled.div`
 
 const TextPositioner = styled.div``;
 
-function OtherTableBlock({ marginLeft = '13px', children }) {
+function OtherListTableBlock({ marginLeft = '13px', children }) {
   return (
     <Positioner marginLeft={marginLeft}>
       <IconPositioner>
@@ -43,4 +42,4 @@ function OtherTableBlock({ marginLeft = '13px', children }) {
   );
 }
 
-export default OtherTableBlock;
+export default OtherListTableBlock;

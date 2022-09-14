@@ -1,21 +1,15 @@
 import React from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Layout from '../../../../components/shared/Layout';
-import DisplaySelectedListBlock from '../../../../components/original-text/DisplayBlock/DisplaySelectedListBlock';
-import MainContentBlock from '../../../../components/original-text/MainContentBlock';
-import ContentListBlock from '../../../../components/original-text/ContentListBlock/ContentListBlock';
-import BookContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/BookContentListBlock';
-import useAsync from '../../../../hooks/useAsync';
-import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
-import getBookList from '../../../../api/Explore/bybook/getBookList';
-import BookTableRowBlock from '../../../../components/original-text/ContentListBlock/BookTableRowBlock';
 import ContentLayout from '../../../../components/shared/ContentLayout';
-import ContentListTitleBlock from '../../../../components/original-text/ContentListBlock/ContentListTitleBlock';
+import BookTableRowBlock from '../../../../components/original-text/ContentListBlock/BookTableRowBlock';
+import BookContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/BookContentListBlock';
+
+import useAsync from '../../../../hooks/useAsync';
+import getBookList from '../../../../api/Explore/bybook/getBookList';
 
 function OriginalTextCategory() {
   const { literature, consonant } = useParams();
-  const { pathname } = useLocation();
-  const bybook = pathname.includes('bybook');
 
   // consonant 바뀔때마다 호출
   const [state] = useAsync(

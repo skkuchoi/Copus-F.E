@@ -21,6 +21,7 @@ const Title = styled.h6`
 
   &:hover {
     cursor: pointer;
+    background-color: #eeeeee;
   }
 `;
 

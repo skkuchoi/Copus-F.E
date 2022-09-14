@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 const ContentListTablePositioner = styled.div`
   display: grid;
   width: 100%;

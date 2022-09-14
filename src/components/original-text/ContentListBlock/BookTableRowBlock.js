@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import '../../shared/linkStyle.css';
 import BookTableBlock from './BookTableBlock';
 
-const TableRowText = styled.div`
+const TableRow = styled.div`
   font-size: 15px;
   font-weight: bold;
   background-color: #f5f5f6;
@@ -14,11 +14,11 @@ function BookTableRowBlock() {
   return (
     <>
       <BookTableBlock border="1.5px solid #dadce0">
-        <TableRowText>번호</TableRowText>
-        <TableRowText>서명</TableRowText>
-        <TableRowText>저자</TableRowText>
-        <TableRowText>집수</TableRowText>
-        <TableRowText>간행연도</TableRowText>
+        <TableRow>번호</TableRow>
+        <TableRow>서명</TableRow>
+        <TableRow>저자</TableRow>
+        <TableRow>집수</TableRow>
+        <TableRow>간행연도</TableRow>
       </BookTableBlock>
     </>
   );

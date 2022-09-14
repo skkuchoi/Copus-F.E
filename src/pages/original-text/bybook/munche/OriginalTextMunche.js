@@ -1,11 +1,11 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../../../components/shared/Layout';
+import ContentLayout from '../../../../components/shared/ContentLayout';
 import MuncheContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/MuncheLContentListBlock';
 
 import useAsync from '../../../../hooks/useAsync';
 import getMuncheList from '../../../../api/Explore/bybook/getMuncheList';
-import ContentLayout from '../../../../components/shared/ContentLayout';
 
 function OriginalTextMunche() {
   const { literature, consonant, bookname, gwoncha } = useParams();

@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
-import OtherTableBlock from '../OtherTableBlock';
+import OtherListTableBlock from '../OtherListTableBlock';
 
-const ListTableRowData = styled.span`
+const TableItem = styled.p`
   font-size: 15px;
+  margin: 0;
 `;
 
 function MuncheContentListBlock() {
@@ -17,21 +18,23 @@ function MuncheContentListBlock() {
 
   const { literature, consonant, bookname, gwoncha } = useParams();
 
-  const link2munche = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
-  const link2Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
+  const link = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
+  const link4Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
 
   return (
     <>
-      <OtherTableBlock>
-        <ListTableRowData>{gwoncha}</ListTableRowData>
-      </OtherTableBlock>
+      <Link to={link4Gwoncha} className="link-line">
+        <OtherListTableBlock>
+          <TableItem>{gwoncha}</TableItem>
+        </OtherListTableBlock>
+      </Link>
 
       {munches.map((item) => (
-        <OtherTableBlock marginLeft="39px" key={item.id}>
-          <Link to={link2munche + item.name} className="link-line">
-            <ListTableRowData>{item.name}</ListTableRowData>
-          </Link>
-        </OtherTableBlock>
+        <Link to={link + item.name} className="link-line" key={item.id}>
+          <OtherListTableBlock marginLeft="39px">
+            <TableItem>{item.name}</TableItem>
+          </OtherListTableBlock>
+        </Link>
       ))}
     </>
   );
