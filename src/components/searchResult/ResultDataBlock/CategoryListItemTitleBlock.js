@@ -21,7 +21,7 @@ const CategoryListItemTitle = styled.p`
   }
 `;
 
-function ContentListTitleBlock({ title, number = 0 }) {
+function CategoryListItemTitleBlock({ title, number = 0 }) {
   return (
     <CategoryListItemTitlePositioner>
       <CategoryListItemTitle>
@@ -31,4 +31,4 @@ function ContentListTitleBlock({ title, number = 0 }) {
   );
 }
 
-export default ContentListTitleBlock;
+export default CategoryListItemTitleBlock;

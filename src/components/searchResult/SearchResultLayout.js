@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ResultDataBlock from './ContentListBlock/ResultDataBlock';
+import ResultDataBlock from './ResultDataBlock/ResultDataBlock';
 import DisplaySelectedListBlock from './DisplayBlock/DisplaySelectedListBlock';
 import SidebarBlock from './SidebarBlock/SidebarBlock';
 
@@ -22,6 +22,7 @@ function SearchResultLayout({ bookResultNum, authorResultNum, textResultNum }) {
   return (
     <>
       <DisplaySelectedListBlock totalResultNum={totalResultNum} />
+
       <MainContentBlock>
         <SidebarBlock
           bookResultNum={bookResultNum}

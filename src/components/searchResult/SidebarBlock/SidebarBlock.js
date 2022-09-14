@@ -9,7 +9,6 @@ const SidebarPositioner = styled.div`
   flex-direction: column;
   width: 15%;
   height: 75vh;
-  overflow: auto;
   padding: 7px 10px;
 `;
 

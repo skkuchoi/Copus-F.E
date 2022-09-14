@@ -1,7 +1,7 @@
 import Pagination from './Pagination';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ContentListTitleBlock from './ContentListTitleBlock';
+import CategoryListItemTitleBlock from './CategoryListItemTitleBlock';
 import { useParams } from 'react-router-dom';
 import NoExistDataBlock from './NoExistDataBlock';
 //=========== Result Data Block //===========
@@ -61,109 +61,105 @@ const OriginalText = styled.div`
   color: gray;
 `;
 
-function ResultDataBlock({
-  bookResultNum,
-  SubInformationTextResultNum,
-  textResultNum,
-}) {
+function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
   const bookExample = [
     {
       id: 1,
       name: '가암유고(可庵遺稿)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 2,
       name: '가오고략(嘉梧藁略)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 3,
       name: '가정유고(柯汀遺稿)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 4,
       name: '가정집(稼亭集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 5,
       name: '가주집(家州集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 6,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 7,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 8,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 9,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 10,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 11,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
       id: 12,
       name: '가휴집(可畦集)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
   ];
-  const SubInformationTextExample = [
+  const authorExample = [
     {
       id: 1,
       name: '이름이름1(可庵遺稿)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
     {
-      id: 1,
+      id: 2,
       name: '이름이름2(可庵遺稿)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       munche: '시(詩)',
       year: '1929년 간행',
     },
@@ -174,7 +170,7 @@ function ResultDataBlock({
       name: '가암유고(可庵遺稿)',
       gwoncha: '어쩌고일',
       munche: '시(詩)',
-      SubInformationText: '강규환(姜奎煥)',
+      author: '강규환(姜奎煥)',
       year: '1929년 간행',
       page: 'a016_299d',
       content:
@@ -197,13 +193,13 @@ function ResultDataBlock({
     if (!bookResultNum)
       return (
         <>
-          <ContentListTitleBlock title="서명" number={bookResultNum} />
+          <CategoryListItemTitleBlock title="서명" number={bookResultNum} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <ContentListTitleBlock title="서명" number={bookResultNum} />
+        <CategoryListItemTitleBlock title="서명" number={bookResultNum} />
 
         {bookExample.slice(offset, offset + limitPage).map((result) => (
           <>
@@ -214,10 +210,7 @@ function ResultDataBlock({
                 <Title>{result.name}</Title>
 
                 <SubInformation>
-                  <SubInformationText>
-                    {' '}
-                    {result.SubInformationText}{' '}
-                  </SubInformationText>
+                  <SubInformationText>{result.author}</SubInformationText>
                   <SubInformationText>{result.munche} </SubInformationText>
                   <SubInformationText>{result.year} </SubInformationText>
                 </SubInformation>
@@ -235,47 +228,37 @@ function ResultDataBlock({
       </>
     );
   } else if (searchCategory === '저자') {
-    if (!SubInformationTextResultNum)
+    if (!authorResultNum)
       return (
         <>
-          <ContentListTitleBlock
-            title="저자"
-            number={SubInformationTextResultNum}
-          />
+          <CategoryListItemTitleBlock title="저/편/필자" number={authorResultNum} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <ContentListTitleBlock
-          title="저자"
-          number={SubInformationTextResultNum}
-        />
+        <CategoryListItemTitleBlock title="저/편/필자" number={authorResultNum} />
 
-        {SubInformationTextExample.slice(offset, offset + limitPage).map(
-          (result) => (
-            <>
-              <ResultListPositioner>
-                <Id> {result.id}. </Id>
+        {authorExample.slice(offset, offset + limitPage).map((result) => (
+          <>
+            <ResultListPositioner>
+              <Id> {result.id}. </Id>
 
-                <ResultInformation>
-                  <Title>{result.name}</Title>
+              <ResultInformation>
+                <Title>{result.name}</Title>
 
-                  <SubInformation>
-                    <SubInformationText>
-                      {result.SubInformationText}
-                    </SubInformationText>
-                    <SubInformationText>{result.munche} </SubInformationText>
-                    <SubInformationText>{result.year} </SubInformationText>
-                  </SubInformation>
-                </ResultInformation>
-              </ResultListPositioner>
-            </>
-          ),
-        )}
+                <SubInformation>
+                  <SubInformationText>{result.author}</SubInformationText>
+                  <SubInformationText>{result.munche} </SubInformationText>
+                  <SubInformationText>{result.year} </SubInformationText>
+                </SubInformation>
+              </ResultInformation>
+            </ResultListPositioner>
+          </>
+        ))}
 
         <Pagination
-          totalContent={SubInformationTextExample.length}
+          totalContent={authorExample.length}
           limitPage={limitPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
@@ -286,13 +269,13 @@ function ResultDataBlock({
     if (!textResultNum)
       return (
         <>
-          <ContentListTitleBlock title="원문" number={textResultNum} />
+          <CategoryListItemTitleBlock title="원문" number={textResultNum} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <ContentListTitleBlock title="원문" number={textResultNum} />
+        <CategoryListItemTitleBlock title="원문" number={textResultNum} />
 
         {textExample.slice(offset, offset + limitPage).map((result) => (
           <>
@@ -303,9 +286,7 @@ function ResultDataBlock({
                 <Title>{result.name}</Title>
 
                 <SubInformation>
-                  <SubInformationText>
-                    {result.SubInformationText}
-                  </SubInformationText>
+                  <SubInformationText>{result.author}</SubInformationText>
                   <SubInformationText>{result.gwoncha} </SubInformationText>
                   <SubInformationText>{result.munche} </SubInformationText>
                   <SubInformationText>{result.year} </SubInformationText>
