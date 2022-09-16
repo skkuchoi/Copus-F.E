@@ -1,37 +1,30 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { IoMdBook } from 'react-icons/io';
 import { Link, useParams } from 'react-router-dom';
+import '../../shared/linkStyle.css';
 
-const CategoryList = styled.div`
-  margin-top: 3px;
+const CategoryListPositioner = styled.div`
   display: flex;
   flex-direction: column;
+  margin-left: 4px;
+`;
 
-  margin-left: 10px;
+const CategoryListItemPositioner = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 3px;
+  width: fit-content;
+
   .document-icon {
     border: 0.5px solid #eeeeee;
     color: gray;
     margin-right: 3px;
-    position: relative;
-    top: 2px;
-  }
-`;
-
-const CategoryDetailElementBlock = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 3px;
-  width: fit-content;
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-    color: black;
   }
 
   .focus {
     background-color: #f0be86;
-    cursor: disabled;
   }
 
   .not-focus:hover {
@@ -39,47 +32,50 @@ const CategoryDetailElementBlock = styled.div`
   }
 `;
 
-const CategoryDetailElementName = styled.span`
+const CategoryListItemName = styled.p`
   font-size: 16px;
-   
+  margin: 0;
 `;
 
 function CategoryListBlock({ bookResultNum, authorResultNum, textResultNum }) {
   const { searchCategory, keyword } = useParams();
 
-  const link = `/search-result/`;
+  const link4BookName = `/search-result/서명/`;
+  const link4AuthorName = `/search-result/저자/`;
+  const link4OrigianlText = `/search-result/원문/`;
+
   return (
-    <CategoryList>
-      <CategoryDetailElementBlock>
+    <CategoryListPositioner>
+      <CategoryListItemPositioner>
         <IoMdBook className="document-icon" />
-        <Link to={link + '서명' + '/' + keyword} className="link-line">
-          <CategoryDetailElementName
+        <Link to={link4BookName + keyword} className="link-line">
+          <CategoryListItemName
             className={searchCategory === '서명' ? 'focus' : 'not-focus'}>
             서명({bookResultNum})
-          </CategoryDetailElementName>
+          </CategoryListItemName>
         </Link>
-      </CategoryDetailElementBlock>
+      </CategoryListItemPositioner>
 
-      <CategoryDetailElementBlock>
+      <CategoryListItemPositioner>
         <IoMdBook className="document-icon" />
-        <Link to={link + '저자' + '/' + keyword} className="link-line">
-          <CategoryDetailElementName
+        <Link to={link4AuthorName + keyword} className="link-line">
+          <CategoryListItemName
             className={searchCategory === '저자' ? 'focus' : 'not-focus'}>
             저/편/필자({authorResultNum})
-          </CategoryDetailElementName>
+          </CategoryListItemName>
         </Link>
-      </CategoryDetailElementBlock>
+      </CategoryListItemPositioner>
 
-      <CategoryDetailElementBlock>
+      <CategoryListItemPositioner>
         <IoMdBook className="document-icon" />
-        <Link to={link + '원문' + '/' + keyword} className="link-line">
-          <CategoryDetailElementName
+        <Link to={link4OrigianlText + keyword} className="link-line">
+          <CategoryListItemName
             className={searchCategory === '원문' ? 'focus' : 'not-focus'}>
             원문({textResultNum})
-          </CategoryDetailElementName>
+          </CategoryListItemName>
         </Link>
-      </CategoryDetailElementBlock>
-    </CategoryList>
+      </CategoryListItemPositioner>
+    </CategoryListPositioner>
   );
 }
 

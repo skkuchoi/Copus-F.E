@@ -1,9 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import notFoundIcon from './notFoundIcon.png';
 import { Link, useNavigate } from 'react-router-dom';
 
-const NotFoundBlock = styled.div`
+const Positioner = styled.div`
   background-color: #f5f5f5;
   display: flex;
   flex-direction: column;
@@ -13,7 +12,7 @@ const NotFoundBlock = styled.div`
   text-align: center;
 `;
 
-const GuideBlock = styled.div`
+const GuidePositioner = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 30px;
@@ -30,7 +29,7 @@ const GuideText = styled.span`
   margin-bottom: 5px;
 `;
 
-const ButtonBlock = styled.div`
+const ButtonPositioner = styled.div`
   display: flex;
   flex-direction: row;
 `;
@@ -56,30 +55,25 @@ const ErrorNum = styled.div`
   font-size: 13px;
   margin-top: 10px;
 `;
-function NotWorking() {
+function Error({ guideTitle, guideText1, guideText2, errorNum }) {
   const navigate = useNavigate();
   return (
-    <NotFoundBlock>
-      <img src={notFoundIcon} alt="" />
-      <GuideBlock>
-        <GuideTitle>페이지를 표시할 수 없습니다.</GuideTitle>
-        <GuideText>
-          시스템 서버 에러가 발생하여 페이지를 표시할 수 없습니다.
-        </GuideText>
-        <GuideText>
-          관리자에게 문의하거나 잠시 후 다시 시도해주시기 바랍니다.
-        </GuideText>
-      </GuideBlock>
-      <ButtonBlock>
+    <Positioner>
+      <img src={process.env.PUBLIC_URL + '/img/error/error-icon.png'} alt="" />
+      <GuidePositioner>
+        <GuideTitle>{guideTitle}</GuideTitle>
+        <GuideText>{guideText1}</GuideText>
+        <GuideText>{guideText2}</GuideText>
+      </GuidePositioner>
+      <ButtonPositioner>
         <Button onClick={() => navigate(-1)}>이전 화면</Button>
-
         <Link to="/">
           <Button>홈으로 가기</Button>
         </Link>
-      </ButtonBlock>
-      <ErrorNum>Error 500</ErrorNum>
-    </NotFoundBlock>
+      </ButtonPositioner>
+      <ErrorNum>{errorNum}</ErrorNum>
+    </Positioner>
   );
 }
 
-export default NotWorking;
+export default Error;

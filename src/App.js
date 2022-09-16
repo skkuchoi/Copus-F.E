@@ -12,11 +12,12 @@ import PersonalInfo from './pages/account/myaccount/PersonalInfo';
 import MemberInfo from './pages/account/myaccount/MemberInfo';
 
 import NotFound from './pages/notFound/NotFound';
+import NotWorking from './pages/NotWorking/NotWorking';
 
 import SearchResult from './pages/searchResult/SearchResult';
 
-import OriginalTextId from './pages/original-text/id/OriginalTextId';
-import OriginalTextBy from './pages/original-text/id/OriginalTextBy';
+import OriginalTextLiterature from './pages/original-text/OriginalTextLiterature';
+import OriginalTextBy from './pages/original-text/OriginalTextBy';
 
 import BookOriginalTextDetail from './pages/original-text/bybook/detail/OriginalTextDetail';
 import BookOriginalTextCategory from './pages/original-text/bybook/category/OriginalTextCategory';
@@ -29,7 +30,7 @@ import AuthorOriginalTextCategory from './pages/original-text/byauthor/category/
 import AuthorOriginalTextGwoncha from './pages/original-text/byauthor/gwoncha/OriginalTextGwoncha';
 import AuthorOriginalTextMunche from './pages/original-text/byauthor/munche/OriginalTextMunche';
 import AuthorOriginalTextTitle from './pages/original-text/byauthor/title/OriginalTextTitle';
-import NotWorking from './pages/NotWorking/NotWorking';
+ 
 
 const Container = styled.div`
   position: absolute;
@@ -81,7 +82,7 @@ function App() {
           <Route
             path="/original-text/:literature"
             exact={true}
-            element={<OriginalTextId />}
+            element={<OriginalTextLiterature />}
           />
 
           {/* OriginalText / bybook */}

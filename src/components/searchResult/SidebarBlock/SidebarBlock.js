@@ -1,30 +1,52 @@
 import React from 'react';
 import styled from 'styled-components';
 import CategoryListBlock from './CategoryListBlock';
-import { KindListBlock } from './KindListBlock';
-import { useParams } from 'react-router-dom';
+import { RiArrowDropDownLine } from 'react-icons/ri';
+import '../../shared/linkStyle.css';
 
-const SidebarsBlock = styled.div`
+const SidebarPositioner = styled.div`
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 15%;
   height: 75vh;
-  overflow: auto;
   padding: 7px 10px;
+`;
+
+const LiteratureTitlePositioner = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 3px;
+  border-bottom: 1px solid #d9d9d9;
+  margin-bottom: 5px;
+  .arrow-icon {
+    color: #c55a11;
+    height: 30px;
+  }
+`;
+
+const LiteratureTitle = styled.p`
+  color: #c55a11;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
 `;
 
 function SidebarBlock({ bookResultNum, authorResultNum, textResultNum }) {
   const totalResultNum = bookResultNum + authorResultNum + textResultNum;
   return (
-    <SidebarsBlock>
-      <KindListBlock element="연행록" number={totalResultNum} />
+    <SidebarPositioner>
+      <LiteratureTitlePositioner>
+        <LiteratureTitle>연행록 ({totalResultNum})</LiteratureTitle>
+        <RiArrowDropDownLine className="arrow-icon" size="35" />
+      </LiteratureTitlePositioner>
+
       <CategoryListBlock
-        title="연행록"
         bookResultNum={bookResultNum}
         authorResultNum={authorResultNum}
         textResultNum={textResultNum}
       />
-    </SidebarsBlock>
+    </SidebarPositioner>
   );
 }
 

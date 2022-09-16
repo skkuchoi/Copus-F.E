@@ -1,38 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ContentBlock = styled.div`
-  background-color: white;
-  padding: 15px 30px;
+const ContentPositioner = styled.div`
+  padding: 15px 0px;
+  padding-left: 15px;
   display: flex;
   flex-direction: column;
-
-  .big-title {
-    font-size: 25px;
-    font-weight: bold;
-  }
-
-  .line {
-    border-bottom: 2px solid black;
-    width: 50%;
-    margin-top: 5px;
-  }
-
-  .post-div {
-    background-color: brown;
-    margin-top: 10px;
-    margin-left: 25px;
-  }
-
-  .small-title {
-    font-size: 25px;
-    margin-top: 10px;
-    margin-bottom: 30px;
-  }
-
-  .post {
-    font-size: 25px;
-  }
 `;
 
 const Title = styled.div`
@@ -102,11 +75,9 @@ const Origin = styled.div`
   font-size: 12px;
 `;
 
-
 export default function Content({ title, wonju, page, dci, content }) {
   return (
-    
-    <ContentBlock>
+    <ContentPositioner>
       <Title>{title}</Title>
 
       <SubTitle>
@@ -123,6 +94,6 @@ export default function Content({ title, wonju, page, dci, content }) {
 
       <ContentText>{content}</ContentText>
       <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
-    </ContentBlock>
+    </ContentPositioner>
   );
 }

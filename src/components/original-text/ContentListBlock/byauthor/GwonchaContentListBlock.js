@@ -1,40 +1,19 @@
 import React from 'react';
-
 import styled from 'styled-components';
-import TitleBlock from '../ContentListTitleBlock';
-import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import '../../../shared/linkStyle.css';
+import OtherListTableBlock from '../OtherListTableBlock';
 
-const ListTableBlock = styled.div`
-  width: 98%;
-  border-bottom: 1px solid #dadce0;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  text-align: left;
-
-  .arrow-icon {
-    color: orange;
-    margin-right: 9px;
-    margin-left: ${(props) => props.marginLeft};
-  }
-
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-    color: black;
-  }
-`;
-
-const ListTableRowData = styled.span`
+const TableItem = styled.p`
   font-size: 15px;
-  cursor: pointer;
+  margin: 0;
 `;
 
 function GwonchaContentListBlock() {
   const gwonchas = [
-    { id: 1, name: '권차이름1' },
-    { id: 2, name: '권차이름2' },
-    { id: 3, name: '권차이름3' },
+    { id: 1, name: '月皐先生文集卷之一' },
+    { id: 2, name: '月皐先生文集卷之二' },
+    { id: 3, name: '月皐先生文集卷之三' },
   ];
 
   const { literature, consonant, authorname, bookname } = useParams();
@@ -42,15 +21,12 @@ function GwonchaContentListBlock() {
 
   return (
     <>
-      <TitleBlock title={bookname} link={link} />
-
       {gwonchas.map((item) => (
-        <ListTableBlock>
-          <FaArrowAltCircleRight className="arrow-icon" />
-          <Link to={link + item.name} className="link-line">
-            <ListTableRowData>{item.name}</ListTableRowData>
-          </Link>
-        </ListTableBlock>
+        <Link to={link + item.name} className="link-line" key={item.id}>
+          <OtherListTableBlock>
+            <TableItem>{item.name}</TableItem>
+          </OtherListTableBlock>
+        </Link>
       ))}
     </>
   );

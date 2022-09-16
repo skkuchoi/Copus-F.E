@@ -3,66 +3,46 @@ import styled from 'styled-components';
 import TitleBlock from '../ContentListTitleBlock';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { Link, useParams } from 'react-router-dom';
+import OtherListTableBlock from '../OtherListTableBlock';
 
-const ListTableBlock = styled.div`
-  width: 98%;
-  border-bottom: 1px solid #dadce0;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  text-align: left;
-
-  .arrow-icon {
-    color: orange;
-    margin-right: 9px;
-    margin-left: ${(props) => props.marginLeft};
-  }
-
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-    color: black;
-  }
-`;
-
-const ListTableRowData = styled.span`
+const TableItem = styled.p`
   font-size: 15px;
-  cursor: pointer;
+  margin: 0;
 `;
 
 function TitleContentListBlock() {
   const titles = [
-    { id: 1, name: '월고집1' },
-    { id: 2, name: '월고집2' },
-    { id: 3, name: '월고집3' },
+    { id: 1, name: '上蘆沙先生 癸丑' },
+    { id: 2, name: '石隅軒酬王大猷 師亨○二首' },
+    { id: 3, name: '與抱甕盧時用 兢壽 讀書山房。及其歲暮先歸。拈韻相酬。' },
   ];
+
   const { literature, consonant, authorname, bookname, gwoncha, munche } =
     useParams();
-  const link2gwoncha = `/original-text/${literature}/byauthor/${consonant}/${authorname}/${bookname}/${gwoncha}/`;
+  const link4Munche = `/original-text/${literature}/byauthor/${consonant}/${authorname}/${bookname}/${gwoncha}/`;
   const link = `/original-text/${literature}/byauthor/${consonant}/${authorname}/${bookname}/${gwoncha}/${munche}/`;
-  const link2Gwoncha = `/original-text/${literature}/byauthor/${consonant}/${authorname}/${bookname}/`;
+  const link4Gwoncha = `/original-text/${literature}/byauthor/${consonant}/${authorname}/${bookname}/`;
 
   return (
     <>
-      <TitleBlock title={bookname} link={link2Gwoncha} />
-      <ListTableBlock marginLeft="0px">
-        <FaArrowAltCircleRight className="arrow-icon" />
-        <Link to={link2gwoncha} className="link-line">
-          <ListTableRowData>{gwoncha}</ListTableRowData>
-        </Link>
-      </ListTableBlock>
+      <Link to={link4Gwoncha} className="link-line">
+        <OtherListTableBlock>
+          <TableItem>{gwoncha}</TableItem>
+        </OtherListTableBlock>
+      </Link>
 
-      <ListTableBlock marginLeft="30px">
-        <FaArrowAltCircleRight className="arrow-icon" />
-        <ListTableRowData>{munche}</ListTableRowData>
-      </ListTableBlock>
+      <Link to={link4Munche} className="link-line">
+        <OtherListTableBlock marginLeft="39px">
+          <TableItem>{munche}</TableItem>
+        </OtherListTableBlock>
+      </Link>
 
       {titles.map((item) => (
-        <ListTableBlock marginLeft="60px">
-          <FaArrowAltCircleRight className="arrow-icon" />
-          <Link to={link + item.name} className="link-line">
-            <ListTableRowData>{item.name}</ListTableRowData>
-          </Link>
-        </ListTableBlock>
+        <Link to={link + item.name} className="link-line" key={item.id}>
+          <OtherListTableBlock marginLeft="65px">
+            <TableItem>{item.name}</TableItem>
+          </OtherListTableBlock>
+        </Link>
       ))}
     </>
   );

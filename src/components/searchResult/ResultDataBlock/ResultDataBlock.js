@@ -1,46 +1,15 @@
 import Pagination from './Pagination';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ContentListTitleBlock from './ContentListTitleBlock';
+import CategoryListItemTitleBlock from './CategoryListItemTitleBlock';
 import { useParams } from 'react-router-dom';
 import NoExistDataBlock from './NoExistDataBlock';
-
-//=========== PageLimit Block //===========
-const SelectPageLimitBlock = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  // 반응형 조지기 필요
-  position: absolute;
-  top: 26%;
-  right: 10%;
-
-  span {
-    font-size: 16px;
-    font-weight: bold;
-    margin-right: 10px;
-  }
-`;
-
-const SelectPageNumber = styled.select`
-  width: 40px;
-  height: 25px;
-  margin-top: 4px;
-  font-size: 14px;
-  text-align: center;
-`;
-
-const PageNumberOption = styled.option`
-  text-align: left;
-`;
-
 //=========== Result Data Block //===========
-const ResultDatasBlock = styled.div`
+const ResultListPositioner = styled.div`
   width: 98%;
   display: grid;
-  grid-template-columns: 5% 93%;
-  padding: 15px 0px;
+  grid-template-columns: 5% 95%;
+  padding: 10px 3px;
   border-bottom: 0.5px solid #bfbfbf;
 `;
 
@@ -49,20 +18,20 @@ const Id = styled.span`
   margin: 0 auto;
 `;
 
-const ResultContent = styled.div`
+const ResultInformation = styled.div`
   display: flex;
   flex-direction: column;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #eeeeee;
+  }
 `;
 
 const Title = styled.div`
-  font-size: 19px;
+  font-size: 18px;
   font-weight: bold;
-  width: fit-content;
-  height: fit-content;
   margin-bottom: 5px;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const SubInformation = styled.div`
@@ -76,7 +45,7 @@ const SubInformation = styled.div`
   }
 `;
 
-const Author = styled.span`
+const SubInformationText = styled.span`
   margin-right: 15px;
   ::after {
     content: '|';
@@ -85,36 +54,7 @@ const Author = styled.span`
   }
 `;
 
-const Gwoncha = styled.span`
-  margin-right: 15px;
-  ::after {
-    content: '|';
-    margin-left: 10px;
-    opacity: 0.5;
-  }
-`;
-const Kind = styled.span`
-  ::after {
-    content: '|';
-    margin-left: 10px;
-    opacity: 0.5;
-  }
-`;
-
-const Year = styled.span`
-  margin-left: 20px;
-  ::after {
-    content: '|';
-    margin-left: 10px;
-    opacity: 0.5;
-  }
-`;
-
-const Page = styled.span`
-  margin-left: 20px;
-`;
-
-const Text = styled.div`
+const OriginalText = styled.div`
   font-size: 17px;
   margin-top: 5px;
   padding-left: 20px;
@@ -217,7 +157,7 @@ function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
       year: '1929년 간행',
     },
     {
-      id: 1,
+      id: 2,
       name: '이름이름2(可庵遺稿)',
       author: '강규환(姜奎煥)',
       munche: '시(詩)',
@@ -248,33 +188,34 @@ function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
   useEffect(() => {
     setCurrentPage(1);
   }, [searchCategory]);
+
   if (searchCategory === '서명') {
     if (!bookResultNum)
       return (
         <>
-          <ContentListTitleBlock title="서명" number={bookResultNum} />
+          <CategoryListItemTitleBlock title="서명" number={bookResultNum} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <ContentListTitleBlock title="서명" number={bookResultNum} />
+        <CategoryListItemTitleBlock title="서명" number={bookResultNum} />
 
         {bookExample.slice(offset, offset + limitPage).map((result) => (
           <>
-            <ResultDatasBlock>
+            <ResultListPositioner>
               <Id> {result.id}. </Id>
 
-              <ResultContent>
+              <ResultInformation>
                 <Title>{result.name}</Title>
 
                 <SubInformation>
-                  <Author> {result.author} </Author>
-                  <Kind>{result.munche} </Kind>
-                  <Year>{result.year} </Year>
+                  <SubInformationText>{result.author}</SubInformationText>
+                  <SubInformationText>{result.munche} </SubInformationText>
+                  <SubInformationText>{result.year} </SubInformationText>
                 </SubInformation>
-              </ResultContent>
-            </ResultDatasBlock>
+              </ResultInformation>
+            </ResultListPositioner>
           </>
         ))}
 
@@ -290,29 +231,29 @@ function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
     if (!authorResultNum)
       return (
         <>
-          <ContentListTitleBlock title="저자" number={authorResultNum} />
+          <CategoryListItemTitleBlock title="저/편/필자" number={authorResultNum} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <ContentListTitleBlock title="저자" number={authorResultNum} />
+        <CategoryListItemTitleBlock title="저/편/필자" number={authorResultNum} />
 
         {authorExample.slice(offset, offset + limitPage).map((result) => (
           <>
-            <ResultDatasBlock>
+            <ResultListPositioner>
               <Id> {result.id}. </Id>
 
-              <ResultContent>
+              <ResultInformation>
                 <Title>{result.name}</Title>
 
                 <SubInformation>
-                  <Author> {result.author} </Author>
-                  <Kind>{result.munche} </Kind>
-                  <Year>{result.year} </Year>
+                  <SubInformationText>{result.author}</SubInformationText>
+                  <SubInformationText>{result.munche} </SubInformationText>
+                  <SubInformationText>{result.year} </SubInformationText>
                 </SubInformation>
-              </ResultContent>
-            </ResultDatasBlock>
+              </ResultInformation>
+            </ResultListPositioner>
           </>
         ))}
 
@@ -328,32 +269,32 @@ function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
     if (!textResultNum)
       return (
         <>
-          <ContentListTitleBlock title="원문" number={textResultNum} />
+          <CategoryListItemTitleBlock title="원문" number={textResultNum} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <ContentListTitleBlock title="원문" number={textResultNum} />
+        <CategoryListItemTitleBlock title="원문" number={textResultNum} />
 
         {textExample.slice(offset, offset + limitPage).map((result) => (
           <>
-            <ResultDatasBlock>
+            <ResultListPositioner>
               <Id> {result.id}. </Id>
 
-              <ResultContent>
+              <ResultInformation>
                 <Title>{result.name}</Title>
 
                 <SubInformation>
-                  <Author> {result.author} </Author>
-                  <Gwoncha>{result.gwoncha} </Gwoncha>
-                  <Kind>{result.munche} </Kind>
-                  <Year>{result.year} </Year>
-                  <Page>{result.page}</Page>
+                  <SubInformationText>{result.author}</SubInformationText>
+                  <SubInformationText>{result.gwoncha} </SubInformationText>
+                  <SubInformationText>{result.munche} </SubInformationText>
+                  <SubInformationText>{result.year} </SubInformationText>
+                  <SubInformationText>{result.page}</SubInformationText>
                 </SubInformation>
-                <Text>{result.content}</Text>
-              </ResultContent>
-            </ResultDatasBlock>
+                <OriginalText>{result.content}</OriginalText>
+              </ResultInformation>
+            </ResultListPositioner>
           </>
         ))}
 

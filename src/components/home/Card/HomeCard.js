@@ -2,54 +2,57 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from './Card';
+import '../../shared/linkStyle.css';
 
-const IndexBlock = styled.div`
+const IndexPositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: fit-content;
-  margin-left: 23%;
+  justify-content: center;
   margin-top: 70px;
-  justify-content: left;
 `;
 
-const Nemo = styled.div`
+const IndexContainer = styled.div`
+  width: 780px;
+  display:flex;
+  flex-direction: row;
+  align-items:center;
+  justify-content:left;
+`;
+const IndexBox = styled.div`
   width: 35px;
   height: 38px;
-  background-color: rgba(188, 248, 183, 0.4);
+  background-color: rgba(188, 248, 183);
   border-radius: 10px;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
 `;
 
 const IndexText = styled.div`
   font-size: 20px;
-  position: absolute;
-  left: 24.2%;
+  position: relative;
+  left: -15px;
   font-weight: 400;
 `;
 
-const CardBlock = styled.div`
+const CardPositioner = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 30px 23%;
+  margin-top: 30px;
   gap: 40px;
-
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-  }
 `;
 
 function HomeCard() {
   return (
     <>
-      <IndexBlock>
-        <Nemo />
-        <IndexText>서비스 메뉴</IndexText>
-      </IndexBlock>
+      <IndexPositioner>
+        <IndexContainer>
+          <IndexBox />
+          <IndexText>서비스 메뉴</IndexText>
+        </IndexContainer>
+      </IndexPositioner>
 
-      <CardBlock>
+      <CardPositioner>
         <Link to="/original-text/연행록" className="link-line">
           <Card
             icon="1"
@@ -64,7 +67,7 @@ function HomeCard() {
             icon="2"
             title="코퍼스 소개"
             content={'성균한문고전코퍼스에\n대해 알아보세요.\n\n'}
-            cardColor="rgba(188, 248, 183, 0.4)"
+            cardColor=" rgba(188, 248, 183)"
           />
         </Link>
         <Link to="/original-text/연행록" className="link-line">
@@ -77,7 +80,7 @@ function HomeCard() {
             cardColor="white"
           />
         </Link>
-      </CardBlock>
+      </CardPositioner>
     </>
   );
 }

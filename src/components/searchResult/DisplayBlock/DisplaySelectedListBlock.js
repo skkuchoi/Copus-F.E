@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 
-const DisplaySelectedInfoBlock = styled.div`
+const DisplayPositioner = styled.div`
   background-color: #f2f2f2;
   border-top: 1px solid #d9d9d9;
   border-bottom: 1px solid #d9d9d9;
@@ -13,7 +13,7 @@ const DisplaySelectedInfoBlock = styled.div`
   height: 50px;
 `;
 
-const SearchResultNumberInfo = styled.span`
+const ResultNumberPositioner = styled.p`
   font-size: 20px;
   font-weight: bold;
   margin-left: 50px;
@@ -38,16 +38,17 @@ const Keyword = styled.span`
   }
 `;
 
-function DisplaySelectedListBlock({ number }) {
+function DisplaySelectedListBlock({ totalResultNum }) {
   const { keyword } = useParams();
   return (
-    <DisplaySelectedInfoBlock>
-      <SearchResultNumberInfo>
-        <SearchResultNumber>{number}</SearchResultNumber>
-        건의 검색결과 <span className="line"></span>
-      </SearchResultNumberInfo>
+    <DisplayPositioner>
+      <ResultNumberPositioner>
+        <SearchResultNumber>{totalResultNum}</SearchResultNumber>
+        건의 검색결과
+      </ResultNumberPositioner>
+      
       <Keyword>검색어: {keyword}</Keyword>
-    </DisplaySelectedInfoBlock>
+    </DisplayPositioner>
   );
 }
 

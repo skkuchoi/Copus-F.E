@@ -1,10 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../../../components/shared/Layout';
-import DisplaySelectedListBlock from '../../../../components/original-text/DisplayBlock/DisplaySelectedListBlock';
-import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
-import MainContentBlock from '../../../../components/original-text/MainContentBlock';
-import ContentListBlock from '../../../../components/original-text/ContentListBlock/ContentListBlock';
+import ContentLayout from '../../../../components/shared/ContentLayout';
 import GwonchaContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/GwonchaContentListBlock';
 
 import useAsync from '../../../../hooks/useAsync';
@@ -21,14 +18,9 @@ function OriginalTextGwoncha() {
 
   return (
     <Layout>
-      <DisplaySelectedListBlock />
-      <MainContentBlock>
-        <SortBlock open={true} />
-
-        <ContentListBlock>
-          {bookname && <GwonchaContentListBlock />}
-        </ContentListBlock>
-      </MainContentBlock>
+      <ContentLayout open={true} title={bookname}>
+        <GwonchaContentListBlock />
+      </ContentLayout>
     </Layout>
   );
 }

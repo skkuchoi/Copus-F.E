@@ -1,25 +1,18 @@
 import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import bg from './bg.png';
-import logo from './skku-logo-white.png';
+import '../../../shared/linkStyle.css';
 
-const HeadersBlock = styled.div`
+const HeaderPositioner = styled.div`
   width: 100%;
   height: 50vh;
-  background-image: url(${bg});
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: url(${process.env.PUBLIC_URL + '/img/home/header/bg.png'});
+  background-size: 100% 100%;
   overflow-x: hidden;
-  .link-line {
-    list-style: none;
-    text-decoration-line: none;
-  }
 `;
 
-const MenubarBlock = styled.div`
+const MenubarPositioner = styled.div`
   background-color: rgba(0, 0, 0, 0.35);
-  width: 98.7%;
   height: 100px;
   display: flex;
   flex-direction: row;
@@ -28,13 +21,13 @@ const MenubarBlock = styled.div`
   padding-left: 30px;
 `;
 
-const LogoImgBlock = styled.img`
+const LogoImgPositioner = styled.img`
   width: 250px;
   height: 80px;
   cursor: pointer;
 `;
 
-const MenuBlock = styled.div`
+const MenuElementPositioner = styled.div`
   width: fit-content;
   padding-right: 30px;
 `;
@@ -44,7 +37,11 @@ const MenuName = styled.span`
   color: white;
   font-weight: bold;
   margin-right: 20px;
-  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    cursor: pointer;
+  }
 `;
 
 function HeaderBlock() {
@@ -64,12 +61,17 @@ function HeaderBlock() {
   };
 
   return (
-    <HeadersBlock>
-      <MenubarBlock>
+    <HeaderPositioner>
+      <MenubarPositioner>
         <Link to="/">
-          <LogoImgBlock src={logo} alt="logo" />
+          <LogoImgPositioner
+            src={
+              process.env.PUBLIC_URL + '/img/home/header/skku-logo-white.png'
+            }
+            alt="skku-logo-white"
+          />
         </Link>
-        <MenuBlock>
+        <MenuElementPositioner>
           {isLogin && (
             <Link to="/myaccount" className="link-line">
               <MenuName>마이페이지</MenuName>
@@ -85,9 +87,9 @@ function HeaderBlock() {
           <Link to="/signup" className="link-line">
             <MenuName>회원가입</MenuName>
           </Link>
-        </MenuBlock>
-      </MenubarBlock>
-    </HeadersBlock>
+        </MenuElementPositioner>
+      </MenubarPositioner>
+    </HeaderPositioner>
   );
 }
 

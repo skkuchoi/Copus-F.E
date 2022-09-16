@@ -2,10 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 import Layout from '../../../../components/shared/Layout';
-import DisplaySelectedListBlock from '../../../../components/original-text/DisplayBlock/DisplaySelectedListBlock';
-import SortBlock from '../../../../components/original-text/SortBlock/SortBlock';
-import MainContentBlock from '../../../../components/original-text/MainContentBlock';
-import ContentListBlock from '../../../../components/original-text/ContentListBlock/ContentListBlock';
+import ContentLayout from '../../../../components/shared/ContentLayout';
 import TitleContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/TitleContentListBlock';
 
 import useAsync from '../../../../hooks/useAsync';
@@ -21,13 +18,9 @@ function OriginalTextTitle() {
   );
   return (
     <Layout>
-      <DisplaySelectedListBlock />
-      <MainContentBlock>
-        <SortBlock open={true} />
-        <ContentListBlock>
-          {munche && <TitleContentListBlock />}
-        </ContentListBlock>
-      </MainContentBlock>
+      <ContentLayout open={true} title={bookname}>
+        <TitleContentListBlock />
+      </ContentLayout>
     </Layout>
   );
 }

@@ -5,18 +5,13 @@ import { RiArrowDropDownLine } from 'react-icons/ri';
 import OutsideClickHandler from 'react-outside-click-handler';
 
 const SearchBlockPositioner = styled.div`
-  position: absolute;
-  top: 48%;
-  left: 36%;
-
+  height: 40px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 40px;
-
   border-radius: 30px;
-  border: 1px solid #d9e3d8;
+  border: ${(props) => props.border};
   .search-icon {
     padding: 10px 10px;
     height: 20px;
@@ -24,23 +19,26 @@ const SearchBlockPositioner = styled.div`
     color: black;
     background-color: white;
     border-radius: 0px 30px 30px 0px;
+    &:hover {
+      cursor: pointer;
+    }
   }
   @media screen and (max-width: 800px) {
     display: none;
   }
 `;
 
-const SearchCategoryDiv = styled.div`
+const CategoryPositioner = styled.div`
   width: 80px;
   height: 42px;
-  background-color: rgba(188, 248, 183, 0.4);
+  background-color: rgba(188, 248, 183);
   z-index: 10;
   font-size: 15px;
   border-radius: 30px 0px 0px 30px;
   color: black;
 `;
 
-const SelectedCategoryBlock = styled.div`
+const SelectedCategoryPositioner = styled.div`
   color: black;
   height: 40px;
   width: 90px;
@@ -53,16 +51,16 @@ const SelectedCategoryBlock = styled.div`
   font-weight: 500;
   .dropdown-icon {
     background-color: none;
-    cursor: pointer;
   }
+  cursor: pointer;
 `;
 
-const SelectedCategoryName = styled.span`
+const SelectedCategoryName = styled.p`
   text-align: left;
 `;
 
 const CategoryElement = styled.li`
-  background-color: rgba(188, 248, 183, 0.4);
+  background-color: rgba(188, 248, 183);
   cursor: pointer;
   height: 40px;
   color: black;
@@ -89,39 +87,35 @@ const SearchInputBox = styled.input`
     font-weight: 400;
   }
 `;
-function SearchBlock() {
-  const [searchCategory, setSearchCategoryDiv] = useState('서명');
+function SearchBlock({ border="none" }) {
+  const [searchCategory, setSearchCategory] = useState('서명');
   const [keyword, setKeyword] = useState('');
   const [isMenuOpen, setIsOpenMenu] = useState(false);
 
   const onClickCategory = (e) => {
-    setSearchCategoryDiv(e.target.innerText);
+    setSearchCategory(e.target.innerText);
     setIsOpenMenu(false);
   };
 
-  //검색 했을 때 일어나는 일(post)
-  // searchCategory는, context 조회로, 해당 영역이 먼저 선택되도록 하자.
   const onSubmit = (e) => {
     if (keyword !== '' && keyword.trim() !== '') {
       window.location.href = '/search-result/' + searchCategory + '/' + keyword;
     }
   };
   return (
-    <SearchBlockPositioner>
-      <SearchCategoryDiv>
+    <SearchBlockPositioner border={border}>
+      <CategoryPositioner>
         <OutsideClickHandler
           onOutsideClick={() => {
             setIsOpenMenu(false);
           }}>
-          <SelectedCategoryBlock>
+          <SelectedCategoryPositioner
+            onClick={() => setIsOpenMenu(!isMenuOpen)}>
             <SelectedCategoryName>{searchCategory}</SelectedCategoryName>
 
-            <RiArrowDropDownLine
-              size="20"
-              className="dropdown-icon"
-              onClick={() => setIsOpenMenu(!isMenuOpen)}
-            />
-          </SelectedCategoryBlock>
+            <RiArrowDropDownLine size="20" className="dropdown-icon" />
+          </SelectedCategoryPositioner>
+
           {isMenuOpen && (
             <>
               <CategoryElement onClick={onClickCategory}>서명</CategoryElement>
@@ -130,7 +124,7 @@ function SearchBlock() {
             </>
           )}
         </OutsideClickHandler>
-      </SearchCategoryDiv>
+      </CategoryPositioner>
 
       <SearchInputBox
         type="text"
