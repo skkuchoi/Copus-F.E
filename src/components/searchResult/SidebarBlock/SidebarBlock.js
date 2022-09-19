@@ -32,19 +32,19 @@ const LiteratureTitle = styled.p`
   margin: 0;
 `;
 
-function SidebarBlock({ bookResultNum, authorResultNum, textResultNum }) {
-  const totalResultNum = bookResultNum + authorResultNum + textResultNum;
+function SidebarBlock({ leftDatas }) {
   return (
     <SidebarPositioner>
       <LiteratureTitlePositioner>
-        <LiteratureTitle>연행록 ({totalResultNum})</LiteratureTitle>
+        <LiteratureTitle>연행록 ({leftDatas.totalCount})</LiteratureTitle>
         <RiArrowDropDownLine className="arrow-icon" size="35" />
       </LiteratureTitlePositioner>
 
       <CategoryListBlock
-        bookResultNum={bookResultNum}
-        authorResultNum={authorResultNum}
-        textResultNum={textResultNum}
+        totalCount={leftDatas.totalCount}
+        bookTitleCount={leftDatas.bookTitleCount}
+        authorNameCount={leftDatas.authorNameCount}
+        contentCount={leftDatas.contentCount}
       />
     </SidebarPositioner>
   );

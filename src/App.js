@@ -30,7 +30,6 @@ import AuthorOriginalTextCategory from './pages/original-text/byauthor/category/
 import AuthorOriginalTextGwoncha from './pages/original-text/byauthor/gwoncha/OriginalTextGwoncha';
 import AuthorOriginalTextMunche from './pages/original-text/byauthor/munche/OriginalTextMunche';
 import AuthorOriginalTextTitle from './pages/original-text/byauthor/title/OriginalTextTitle';
- 
 
 const Container = styled.div`
   position: absolute;
@@ -71,7 +70,29 @@ function App() {
           />
 
           {/* search-result */}
+          <Route
+            path="/search-result/total/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
 
+          <Route
+            path="/search-result/book-title/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
+
+          <Route
+            path="/search-result/author-name/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
+
+          <Route
+            path="/search-result/content/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
           <Route
             path="/search-result/:searchCategory/:keyword"
             exact={true}

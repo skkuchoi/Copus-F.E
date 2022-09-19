@@ -87,19 +87,30 @@ const SearchInputBox = styled.input`
     font-weight: 400;
   }
 `;
-function SearchBlock({ border="none" }) {
-  const [searchCategory, setSearchCategory] = useState('서명');
+function SearchBlock({ border = 'none' }) {
+  const [searchFilter, setSearchFilter] = useState('전체');
   const [keyword, setKeyword] = useState('');
   const [isMenuOpen, setIsOpenMenu] = useState(false);
 
-  const onClickCategory = (e) => {
-    setSearchCategory(e.target.innerText);
+  const onClickMenu = (e) => {
+    if (e.target.innerText === '저/편/필자') {
+      setSearchFilter('저자');
+    } else {
+      setSearchFilter(e.target.innerText);
+    }
     setIsOpenMenu(false);
   };
 
+  const filterUri = {
+    전체: 'total/',
+    서명: 'book-title/',
+    저자: 'author-name/',
+    원문: 'content/',
+  };
   const onSubmit = (e) => {
     if (keyword !== '' && keyword.trim() !== '') {
-      window.location.href = '/search-result/' + searchCategory + '/' + keyword;
+      window.location.href =
+        '/search-result/'  + filterUri[searchFilter] + keyword;
     }
   };
   return (
@@ -111,16 +122,19 @@ function SearchBlock({ border="none" }) {
           }}>
           <SelectedCategoryPositioner
             onClick={() => setIsOpenMenu(!isMenuOpen)}>
-            <SelectedCategoryName>{searchCategory}</SelectedCategoryName>
+            <SelectedCategoryName>{searchFilter}</SelectedCategoryName>
 
             <RiArrowDropDownLine size="20" className="dropdown-icon" />
           </SelectedCategoryPositioner>
 
           {isMenuOpen && (
             <>
-              <CategoryElement onClick={onClickCategory}>서명</CategoryElement>
-              <CategoryElement onClick={onClickCategory}>저자</CategoryElement>
-              <CategoryElement onClick={onClickCategory}>원문</CategoryElement>
+              <CategoryElement onClick={onClickMenu}>전체</CategoryElement>
+              <CategoryElement onClick={onClickMenu}>서명</CategoryElement>
+              <CategoryElement onClick={onClickMenu}>
+                저/편/필자
+              </CategoryElement>
+              <CategoryElement onClick={onClickMenu}>원문</CategoryElement>
             </>
           )}
         </OutsideClickHandler>

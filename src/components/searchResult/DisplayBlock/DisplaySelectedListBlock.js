@@ -38,12 +38,12 @@ const Keyword = styled.span`
   }
 `;
 
-function DisplaySelectedListBlock({ totalResultNum }) {
+function DisplaySelectedListBlock({ totalCount }) {
   const { keyword } = useParams();
   return (
     <DisplayPositioner>
       <ResultNumberPositioner>
-        <SearchResultNumber>{totalResultNum}</SearchResultNumber>
+        <SearchResultNumber>{totalCount}</SearchResultNumber>
         건의 검색결과
       </ResultNumberPositioner>
       

@@ -2,15 +2,19 @@ import Pagination from './Pagination';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CategoryListItemTitleBlock from './CategoryListItemTitleBlock';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import NoExistDataBlock from './NoExistDataBlock';
-//=========== Result Data Block //===========
+
 const ResultListPositioner = styled.div`
   width: 98%;
   display: grid;
   grid-template-columns: 5% 95%;
   padding: 10px 3px;
-  border-bottom: 0.5px solid #bfbfbf;
+  border-bottom: 0.5px solid #dadce0;
+  &:hover {
+    cursor: pointer;
+    background-color: #eeeeee;
+  }
 `;
 
 const Id = styled.span`
@@ -21,11 +25,6 @@ const Id = styled.span`
 const ResultInformation = styled.div`
   display: flex;
   flex-direction: column;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #eeeeee;
-  }
 `;
 
 const Title = styled.div`
@@ -61,125 +60,18 @@ const OriginalText = styled.div`
   color: gray;
 `;
 
-function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
-  const bookExample = [
-    {
-      id: 1,
-      name: '가암유고(可庵遺稿)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 2,
-      name: '가오고략(嘉梧藁略)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 3,
-      name: '가정유고(柯汀遺稿)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 4,
-      name: '가정집(稼亭集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 5,
-      name: '가주집(家州集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 6,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 7,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 8,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 9,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 10,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 11,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 12,
-      name: '가휴집(可畦集)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-  ];
-  const authorExample = [
-    {
-      id: 1,
-      name: '이름이름1(可庵遺稿)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-    {
-      id: 2,
-      name: '이름이름2(可庵遺稿)',
-      author: '강규환(姜奎煥)',
-      munche: '시(詩)',
-      year: '1929년 간행',
-    },
-  ];
-  const textExample = [
-    {
-      id: 1,
-      name: '가암유고(可庵遺稿)',
-      gwoncha: '어쩌고일',
-      munche: '시(詩)',
-      author: '강규환(姜奎煥)',
-      year: '1929년 간행',
-      page: 'a016_299d',
-      content:
-        '毛遂昔自薦，囊錐穎未脫。目笑十九人，恥與比同列。至楚約定從，日中猶不決',
-    },
-  ];
+function ResultDataBlock({ rightDatas }) {
+  let id = 1;
 
-  //Title Settings
-  const { searchCategory } = useParams();
+  //SearchFilter Settings
+  const { pathname } = useLocation();
+  const filterUri = {
+    total: '전체',
+    'book-title': '서명',
+    'author-name': '저자',
+    content: '원문',
+  };
+  const searchFilter = filterUri[pathname.split('/')[2]];
 
   //Pagination
   const [limitPage, setLimitPage] = useState(10);
@@ -187,70 +79,103 @@ function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
   const offset = (currentPage - 1) * limitPage;
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchCategory]);
-
-  if (searchCategory === '서명') {
-    if (!bookResultNum)
-      return (
-        <>
-          <CategoryListItemTitleBlock title="서명" number={bookResultNum} />
-          <NoExistDataBlock />
-        </>
-      );
+  }, [searchFilter]);
+  
+  if (searchFilter === '전체') {
     return (
       <>
-        <CategoryListItemTitleBlock title="서명" number={bookResultNum} />
-
-        {bookExample.slice(offset, offset + limitPage).map((result) => (
+        <CategoryListItemTitleBlock title="서명" number={rightDatas.count} />
+        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
           <>
             <ResultListPositioner>
-              <Id> {result.id}. </Id>
-
+              <Id> {id++}. </Id>
               <ResultInformation>
-                <Title>{result.name}</Title>
-
+                <Title>{item.seojiTitle}</Title>
                 <SubInformation>
-                  <SubInformationText>{result.author}</SubInformationText>
-                  <SubInformationText>{result.munche} </SubInformationText>
-                  <SubInformationText>{result.year} </SubInformationText>
+                  <SubInformationText>{item.authorName}</SubInformationText>
+                  <SubInformationText>{item.publishYear} </SubInformationText>
                 </SubInformation>
               </ResultInformation>
             </ResultListPositioner>
           </>
         ))}
 
+        <br />
+
+        <CategoryListItemTitleBlock
+          title="저/편/필자"
+          number={rightDatas.count}
+        />
+        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+          <>
+            <ResultListPositioner>
+              <Id> {id++}. </Id>
+              <ResultInformation>
+                <Title>{item.seojiTitle}</Title>
+                <SubInformation>
+                  <SubInformationText>{item.authorName}</SubInformationText>
+                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
+                  <SubInformationText>{item.muncheTitle} </SubInformationText>
+                  <SubInformationText>{item.publishYear} </SubInformationText>
+                </SubInformation>
+              </ResultInformation>
+            </ResultListPositioner>
+          </>
+        ))}
+
+        <br />
+
+        <CategoryListItemTitleBlock title="원문" number={rightDatas.count} />
+        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+          <>
+            <ResultListPositioner>
+              <Id> {id++}. </Id>
+              <ResultInformation>
+                <Title>{item.seojiTitle}</Title>
+                <SubInformation>
+                  <SubInformationText>{item.authorName}</SubInformationText>
+                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
+                  <SubInformationText>{item.muncheTitle} </SubInformationText>
+                  <SubInformationText>{item.publishYear} </SubInformationText>
+                  {/* <SubInformationText>{item.page}</SubInformationText> */}
+                </SubInformation>
+                <OriginalText>{item.contentPartition}</OriginalText>
+              </ResultInformation>
+            </ResultListPositioner>
+          </>
+        ))}
+
         <Pagination
-          totalContent={bookExample.length}
+          totalContent={rightDatas.datas.length}
           limitPage={limitPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
       </>
     );
-  } else if (searchCategory === '저자') {
-    if (!authorResultNum)
+  } else if (searchFilter === '서명') {
+    if (!rightDatas.count)
       return (
         <>
-          <CategoryListItemTitleBlock title="저/편/필자" number={authorResultNum} />
+          <CategoryListItemTitleBlock title="서명" number={rightDatas.count} />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <CategoryListItemTitleBlock title="저/편/필자" number={authorResultNum} />
+        <CategoryListItemTitleBlock title="서명" number={rightDatas.count} />
 
-        {authorExample.slice(offset, offset + limitPage).map((result) => (
+        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
           <>
             <ResultListPositioner>
-              <Id> {result.id}. </Id>
+              <Id> {id++}. </Id>
 
               <ResultInformation>
-                <Title>{result.name}</Title>
+                <Title>{item.seojiTitle}</Title>
 
                 <SubInformation>
-                  <SubInformationText>{result.author}</SubInformationText>
-                  <SubInformationText>{result.munche} </SubInformationText>
-                  <SubInformationText>{result.year} </SubInformationText>
+                  <SubInformationText>{item.authorName}</SubInformationText>
+                  <SubInformationText>{item.publishYear} </SubInformationText>
                 </SubInformation>
               </ResultInformation>
             </ResultListPositioner>
@@ -258,48 +183,93 @@ function ResultDataBlock({ bookResultNum, authorResultNum, textResultNum }) {
         ))}
 
         <Pagination
-          totalContent={authorExample.length}
+          totalContent={rightDatas.datas.length}
           limitPage={limitPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}
         />
       </>
     );
-  } else if (searchCategory === '원문') {
-    if (!textResultNum)
+  } else if (searchFilter === '저자') {
+    if (!rightDatas.count)
       return (
         <>
-          <CategoryListItemTitleBlock title="원문" number={textResultNum} />
+          <CategoryListItemTitleBlock
+            title="저/편/필자"
+            number={rightDatas.count}
+          />
           <NoExistDataBlock />
         </>
       );
     return (
       <>
-        <CategoryListItemTitleBlock title="원문" number={textResultNum} />
+        <CategoryListItemTitleBlock
+          title="저/편/필자"
+          number={rightDatas.count}
+        />
 
-        {textExample.slice(offset, offset + limitPage).map((result) => (
+        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
           <>
             <ResultListPositioner>
-              <Id> {result.id}. </Id>
+              <Id> {id++}. </Id>
 
               <ResultInformation>
-                <Title>{result.name}</Title>
+                <Title>{item.seojiTitle}</Title>
 
                 <SubInformation>
-                  <SubInformationText>{result.author}</SubInformationText>
-                  <SubInformationText>{result.gwoncha} </SubInformationText>
-                  <SubInformationText>{result.munche} </SubInformationText>
-                  <SubInformationText>{result.year} </SubInformationText>
-                  <SubInformationText>{result.page}</SubInformationText>
+                  <SubInformationText>{item.authorName}</SubInformationText>
+                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
+                  <SubInformationText>{item.muncheTitle} </SubInformationText>
+                  <SubInformationText>{item.publishYear} </SubInformationText>
                 </SubInformation>
-                <OriginalText>{result.content}</OriginalText>
               </ResultInformation>
             </ResultListPositioner>
           </>
         ))}
 
         <Pagination
-          totalContent={textExample.length}
+          totalContent={rightDatas.datas.length}
+          limitPage={limitPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </>
+    );
+  } else if (searchFilter === '원문') {
+    if (!rightDatas.count)
+      return (
+        <>
+          <CategoryListItemTitleBlock title="원문" number={rightDatas.count} />
+          <NoExistDataBlock />
+        </>
+      );
+    return (
+      <>
+        <CategoryListItemTitleBlock title="원문" number={rightDatas.count} />
+
+        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+          <>
+            <ResultListPositioner>
+              <Id> {id++}. </Id>
+
+              <ResultInformation>
+                <Title>{item.seojiTitle}</Title>
+
+                <SubInformation>
+                  <SubInformationText>{item.authorName}</SubInformationText>
+                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
+                  <SubInformationText>{item.muncheTitle} </SubInformationText>
+                  <SubInformationText>{item.publishYear} </SubInformationText>
+                  {/* <SubInformationText>{item.page}</SubInformationText> */}
+                </SubInformation>
+                <OriginalText>{item.contentPartition}</OriginalText>
+              </ResultInformation>
+            </ResultListPositioner>
+          </>
+        ))}
+
+        <Pagination
+          totalContent={rightDatas.datas.length}
           limitPage={limitPage}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

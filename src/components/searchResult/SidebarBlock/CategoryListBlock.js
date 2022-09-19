@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IoMdBook } from 'react-icons/io';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
 
 const CategoryListPositioner = styled.div`
@@ -27,8 +27,15 @@ const CategoryListItemPositioner = styled.div`
     background-color: #f0be86;
   }
 
-  .not-focus:hover {
-    background-color: #eeeeee;
+  .not-focus {
+    color: gray;
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  .total-not-focus {
+    color: black;
   }
 `;
 
@@ -37,46 +44,150 @@ const CategoryListItemName = styled.p`
   margin: 0;
 `;
 
-function CategoryListBlock({ bookResultNum, authorResultNum, textResultNum }) {
-  const { searchCategory, keyword } = useParams();
+function CategoryListBlock({ totalCount, bookTitleCount, authorNameCount, contentCount }) {
+  const { keyword } = useParams();
 
-  const link4BookName = `/search-result/서명/`;
-  const link4AuthorName = `/search-result/저자/`;
-  const link4OrigianlText = `/search-result/원문/`;
+  const { pathname } = useLocation();
+  const searchFilter = pathname.split('/')[2].toString();
 
-  return (
-    <CategoryListPositioner>
-      <CategoryListItemPositioner>
-        <IoMdBook className="document-icon" />
-        <Link to={link4BookName + keyword} className="link-line">
-          <CategoryListItemName
-            className={searchCategory === '서명' ? 'focus' : 'not-focus'}>
-            서명({bookResultNum})
-          </CategoryListItemName>
-        </Link>
-      </CategoryListItemPositioner>
+  const link4Total = `/search-result/total/${keyword}`;
+  const link4BookTitle = `/search-result/book-title/${keyword}`;
+  const link4AuthorName = `/search-result/author-name/${keyword}`;
+  const link4Content = `/search-result/content/${keyword}`;
 
-      <CategoryListItemPositioner>
-        <IoMdBook className="document-icon" />
-        <Link to={link4AuthorName + keyword} className="link-line">
-          <CategoryListItemName
-            className={searchCategory === '저자' ? 'focus' : 'not-focus'}>
-            저/편/필자({authorResultNum})
-          </CategoryListItemName>
-        </Link>
-      </CategoryListItemPositioner>
+  switch (searchFilter) {
+    case 'total':
+      return (
+        <CategoryListPositioner>
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link to={link4Total} className="link-line">
+              <CategoryListItemName className="focus">
+                전체({totalCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link
+              to={link4Total}
+              className="link-line"
+              state={{ display: 'bookTitle' }}>
+              <CategoryListItemName className="total-not-focus">
+                서명({bookTitleCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
 
-      <CategoryListItemPositioner>
-        <IoMdBook className="document-icon" />
-        <Link to={link4OrigianlText + keyword} className="link-line">
-          <CategoryListItemName
-            className={searchCategory === '원문' ? 'focus' : 'not-focus'}>
-            원문({textResultNum})
-          </CategoryListItemName>
-        </Link>
-      </CategoryListItemPositioner>
-    </CategoryListPositioner>
-  );
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link
+              to={link4Total}
+              className="link-line"
+              state={{ display: 'authorName' }}>
+              <CategoryListItemName className="total-not-focus">
+                저/편/필자({authorNameCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link
+              to={link4Total}
+              className="link-line"
+              state={{ display: 'content' }}>
+              <CategoryListItemName className="total-not-focus">
+                원문({contentCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
+        </CategoryListPositioner>
+      );
+    case 'book-title':
+      return (
+        <CategoryListPositioner>
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link to={link4BookTitle} className="link-line">
+              <CategoryListItemName className="focus">
+                서명({bookTitleCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <CategoryListItemName className="not-focus">
+              저/편/필자({authorNameCount})
+            </CategoryListItemName>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <CategoryListItemName className="not-focus">
+              원문({contentCount})
+            </CategoryListItemName>
+          </CategoryListItemPositioner>
+        </CategoryListPositioner>
+      );
+    case 'author-name':
+      return (
+        <CategoryListPositioner>
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <CategoryListItemName className="not-focus">
+              서명({bookTitleCount})
+            </CategoryListItemName>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link to={link4AuthorName} className="link-line">
+              <CategoryListItemName className="focus">
+                저/편/필자({authorNameCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <CategoryListItemName className="not-focus">
+              원문({contentCount})
+            </CategoryListItemName>
+          </CategoryListItemPositioner>
+        </CategoryListPositioner>
+      );
+    case 'content':
+      return (
+        <CategoryListPositioner>
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <CategoryListItemName className="not-focus">
+              서명({bookTitleCount})
+            </CategoryListItemName>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <CategoryListItemName className="not-focus">
+              저/편/필자({authorNameCount})
+            </CategoryListItemName>
+          </CategoryListItemPositioner>
+
+          <CategoryListItemPositioner>
+            <IoMdBook className="document-icon" />
+            <Link to={link4Content} className="link-line">
+              <CategoryListItemName className="focus">
+                원문({contentCount})
+              </CategoryListItemName>
+            </Link>
+          </CategoryListItemPositioner>
+        </CategoryListPositioner>
+      );
+    default:
+      break;
+  }
 }
 
 export default CategoryListBlock;
