@@ -19,6 +19,7 @@ function BookTableRowBlock() {
         <TableRow>저자</TableRow>
         <TableRow>집수</TableRow>
         <TableRow>간행연도</TableRow>
+        <TableRow>부가정보</TableRow>
       </BookTableBlock>
     </>
   );

@@ -10,23 +10,58 @@ const TableItem = styled.p`
 `;
 
 function GwonchaContentListBlock() {
-  const gwonchas = [
-    { id: 1, name: '月皐先生文集卷之一' },
-    { id: 2, name: '月皐先生文集卷之二' },
-    { id: 3, name: '月皐先生文集卷之三' },
-  ];
+  const rightDatas = {
+    seojiId: 'seojiId',
+    seojiTitle: 'seojiTitle',
+    datas: [
+      {
+        gwonchaId: 'gwonchaId1',
+        gwonchaTitle: 'gwonchaTitle',
+        munches: [
+          {
+            muncheId: 'muncheId3',
+            muncheTitle: 'muncheTitle',
+          },
+        ],
+      },
+      {
+        gwonchaId: 'gwonchaId2',
+        gwonchaTitle: 'gwonchaTitle',
+        munches: [
+          {
+            muncheId: 'muncheId1',
+            muncheTitle: 'muncheTitle',
+          },
+          {
+            muncheId: 'muncheId2',
+            muncheTitle: 'muncheTitle',
+          },
+        ],
+      },
+    ],
+  };
+  const realDatas = JSON.parse(JSON.stringify(rightDatas));
 
-  const { literature, consonant, bookname } = useParams();
-  const link = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
+  const link4Munche = '/menu-explore/munche/';
 
   return (
     <>
-      {gwonchas.map((item) => (
-        <Link to={link + item.name} className="link-line" key={item.id}>
-          <OtherListTableBlock>
-            <TableItem>{item.name}</TableItem>
+      {realDatas.datas.map((item) => (
+        <>
+          <OtherListTableBlock iconNum="1" key={item.gwonchaId}>
+            <TableItem>{item.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
-        </Link>
+          {item.munches.map((item) => (
+            <Link
+              to={link4Munche + item.muncheId}
+              className="link-line"
+              key={item.muncheId}>
+              <OtherListTableBlock marginLeft="39px" iconNum="2">
+                <TableItem>{item.muncheTitle}</TableItem>
+              </OtherListTableBlock>
+            </Link>
+          ))}
+        </>
       ))}
     </>
   );

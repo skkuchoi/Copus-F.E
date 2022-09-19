@@ -2,8 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ContentPositioner = styled.div`
-  padding: 15px 0px;
-  padding-left: 15px;
+  padding: 12px 0px;
   display: flex;
   flex-direction: column;
 `;

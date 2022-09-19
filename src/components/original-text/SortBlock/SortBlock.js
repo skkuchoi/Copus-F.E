@@ -3,16 +3,17 @@ import styled, { css } from 'styled-components';
 import { MdDone, MdAdd } from 'react-icons/md';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
-
+ 
 const BoxPositioner = styled.div`
   border: 1px solid #eeeeee;
   box-shadow: 0px 0px 4px gray;
   height: 50px;
-  margin: 12px 20px;
+  margin: 0px 20px;
   display: flex;
   align-items: center;
   justify-content: left;
   padding-left: 20px;
+  margin-top: 12px;
 `;
 
 const TitlePositioner = styled.div`
@@ -111,13 +112,13 @@ const CircleColorButton = styled.div`
   color: ${(props) => (props.select ? 'white' : 'black')};
 `;
 
-function SortBlock({ open }) {
+function SortBlock() {
   // 분류기준 menu Open
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
   const handleMenuOpenButton = () => setMenuOpen(!menuOpen);
 
   // Select Category menu
-  const [selectByBook, setSelectByBook] = useState(false);
+  const [selectByBook, setSelectByBook] = useState(true);
   const [selectByAuthor, setSelectByAuthor] = useState(false);
   const handleSelectByBook = () => {
     setSelectByBook(true);
@@ -155,12 +156,10 @@ function SortBlock({ open }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (open) {
-      setMenuOpen(true);
-      setSelectByBook(includeByBook);
-      setSelectByAuthor(includeByAuthor);
-    }
-  }, [open, includeByBook, includeByAuthor]);
+  }, []);
+
+ 
+
 
   return (
     <BoxPositioner>
@@ -171,55 +170,36 @@ function SortBlock({ open }) {
         </CircleOpenButton>
       </TitlePositioner>
 
-      {menuOpen && (
-        <>
-          <CategoryPositioner>
-            <Link to={byBookLink} className="link-line">
-              <CircleCheckButton onClick={handleSelectByBook}>
-                {selectByBook && <MdDone />}
-              </CircleCheckButton>
-            </Link>
-            <CategoryName>서명별</CategoryName>
+      <>
+        <CategoryPositioner>
+          <Link to={byBookLink} className="link-line">
+            <CircleCheckButton onClick={handleSelectByBook}>
+              {selectByBook && <MdDone />}
+            </CircleCheckButton>
+          </Link>
+          <CategoryName>서명별</CategoryName>
 
-            <Link to={byAuthorLink} className="link-line">
-              <CircleCheckButton onClick={handleSelectByAuthor}>
-                {selectByAuthor && <MdDone />}
-              </CircleCheckButton>
-            </Link>
-            <CategoryName>저자별</CategoryName>
-          </CategoryPositioner>
-        </>
-      )}
+          <Link to={byAuthorLink} className="link-line">
+            <CircleCheckButton onClick={handleSelectByAuthor}>
+              {selectByAuthor && <MdDone />}
+            </CircleCheckButton>
+          </Link>
+          <CategoryName>저자별</CategoryName>
+        </CategoryPositioner>
+      </>
 
-      {menuOpen && selectByBook && (
-        <ConsonantPositioner>
-          {consonants.map((item) => (
-            <Link
-              to={byBookLink + item.consonant}
-              className="link-line"
-              key={item.id}>
-              <CircleColorButton select={item.consonant === consonant}>
-                {item.consonant}
-              </CircleColorButton>
-            </Link>
-          ))}
-        </ConsonantPositioner>
-      )}
-
-      {menuOpen && selectByAuthor && (
-        <ConsonantPositioner>
-          {consonants.map((item) => (
-            <Link
-              to={byAuthorLink + item.consonant}
-              className="link-line"
-              key={item.id}>
-              <CircleColorButton select={item.consonant === consonant}>
-                {item.consonant}
-              </CircleColorButton>
-            </Link>
-          ))}
-        </ConsonantPositioner>
-      )}
+      <ConsonantPositioner>
+        {consonants.map((item) => (
+          <Link
+            to={byBookLink + item.consonant}
+            className="link-line"
+            key={item.id}>
+            <CircleColorButton select={item.consonant === consonant}>
+              {item.consonant}
+            </CircleColorButton>
+          </Link>
+        ))}
+      </ConsonantPositioner>
     </BoxPositioner>
   );
 }

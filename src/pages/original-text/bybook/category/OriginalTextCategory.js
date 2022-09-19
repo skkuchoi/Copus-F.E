@@ -22,7 +22,7 @@ function OriginalTextCategory() {
   //state 가지고 분석하여.. props로 잘 넘기기 to BookContentListBlock
   return (
     <Layout>
-      <ContentLayout open={true} title="총 리스트">
+      <ContentLayout title="총 리스트">
         <BookTableRowBlock />
         <BookContentListBlock />
       </ContentLayout>

@@ -5,7 +5,7 @@ import ContentLayout from '../../components/shared/ContentLayout';
 function OriginalTextBy() {
   return (
     <Layout>
-      <ContentLayout open={true} />
+      <ContentLayout />
     </Layout>
   );
 }

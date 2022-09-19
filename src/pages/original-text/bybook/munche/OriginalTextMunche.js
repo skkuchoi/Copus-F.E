@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../../../../components/shared/Layout';
 import ContentLayout from '../../../../components/shared/ContentLayout';
-import MuncheContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/MuncheLContentListBlock';
+import MuncheContentListBlock from '../../../../components/original-text/ContentListBlock/bybook/MuncheContentListBlock';
 
 import useAsync from '../../../../hooks/useAsync';
 import getMuncheList from '../../../../api/Explore/bybook/getMuncheList';

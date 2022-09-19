@@ -6,7 +6,7 @@ const FooterPositioner = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 90px;
   padding: 60px 150px;
   background-color: #ededed;
 

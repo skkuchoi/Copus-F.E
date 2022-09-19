@@ -31,6 +31,11 @@ import AuthorOriginalTextGwoncha from './pages/original-text/byauthor/gwoncha/Or
 import AuthorOriginalTextMunche from './pages/original-text/byauthor/munche/OriginalTextMunche';
 import AuthorOriginalTextTitle from './pages/original-text/byauthor/title/OriginalTextTitle';
 
+import Seoji from './pages/menuExplore/seoji/Seoji';
+import Gwoncha from './pages/menuExplore/gwoncha/Gwoncha';
+import Munche from './pages/menuExplore/munche/Munche';
+import Final from './pages/menuExplore/final/Final';
+
 const Container = styled.div`
   position: absolute;
   top: 0;
@@ -93,12 +98,23 @@ function App() {
             exact={true}
             element={<SearchResult />}
           />
+          {/* New Explore;;ㅋㅋ */}
+          <Route path="/menu-explore/seoji" exact={true} element={<Seoji />} />
           <Route
-            path="/search-result/:searchCategory/:keyword"
+            path="/menu-explore/gwoncha/:id"
             exact={true}
-            element={<SearchResult />}
+            element={<Gwoncha />}
           />
-
+          <Route
+            path="/menu-explore/munche/:id"
+            exact={true}
+            element={<Munche />}
+          />
+          <Route
+            path="/menu-explore/final/:id"
+            exact={true}
+            element={<Final />}
+          />
           {/* Original - Text */}
           <Route
             path="/original-text/:literature"

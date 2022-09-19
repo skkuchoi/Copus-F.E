@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import '../../shared/linkStyle.css';
 
 const TitlePositioner = styled.div`
-  width: fit-content;
-  margin-bottom: 5px;
+  margin: 10px 0px;
+  margin-left:20px;
 `;
 
 const Title = styled.h6`
   font-size: 16px;
-  margin: 0;
+  margin:0;
+  margin-bottom: 5px;
   ::before {
     content: '▼';
     margin-right: 5px;
@@ -18,19 +19,13 @@ const Title = styled.h6`
     position: relative;
     top: -2px;
   }
-
-  &:hover {
-    cursor: pointer;
-    background-color: #eeeeee;
-  }
 `;
 
-function ContentListTitleBlock({ title = '', link = '' }) {
+function ContentListTitleBlock({ title = '', children }) {
   return (
     <TitlePositioner>
-      <Link to={link} className="link-line">
-        <Title>{title}</Title>
-      </Link>
+      <Title>{title}</Title>
+      {children}
     </TitlePositioner>
   );
 }
