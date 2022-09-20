@@ -12,13 +12,13 @@ const MainContentBlock = styled.div`
   margin: 1px 20px;
 `;
 
-function ContentLayout({ title = '', children }) {
+function ContentLayout({ title = '', depth, children }) {
   return (
     <>
       <DisplaySelectedListBlock />
       <SortBlock />
       <MainContentBlock>
-        <SidebarBlock />
+        <SidebarBlock depth={depth} />
         <ContentListTitleBlock title={title}>{children}</ContentListTitleBlock>
       </MainContentBlock>
     </>

@@ -22,7 +22,7 @@ function Gwoncha() {
   //state 가지고 분석하여.. props로 잘 넘기기 to BookContentListBlock
   return (
     <Layout>
-      <ContentLayout title="서지명 넣기 ">
+      <ContentLayout title="서지명 넣기 " depth={3} >
         <GwonchaContentListBlock />
       </ContentLayout>
     </Layout>

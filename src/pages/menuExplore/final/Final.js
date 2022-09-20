@@ -36,7 +36,6 @@ function Final() {
     realDatas.seojiTitle,
     realDatas.gwonchaTitle,
     realDatas.muncheTitle,
-    realDatas.gwonchaTitle,
     title,
   ].join(' > ');
 
