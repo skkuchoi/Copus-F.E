@@ -99,6 +99,9 @@ function App() {
             element={<SearchResult />}
           />
           {/* New Explore;;ㅋㅋ */}
+          <Route path="/menu-explore/2" exact={true} element={<Seoji />} />
+          <Route path="/menu-explore/3" exact={true} element={<Seoji />} />
+          <Route path="/menu-explore/4" exact={true} element={<Seoji />} />
           <Route path="/menu-explore/seoji" exact={true} element={<Seoji />} />
           <Route
             path="/menu-explore/gwoncha/:id"

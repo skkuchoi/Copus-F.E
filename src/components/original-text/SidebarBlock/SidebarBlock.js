@@ -1,8 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { TiPlusOutline, TiMinusOutline } from 'react-icons/ti';
 import '../../shared/linkStyle.css';
+import getDepth2List from '../../../api/explore1/sidebar/getDepth2List';
+
+import useAsync from '../../../hooks/useAsync';
+import { selectedConsonant } from '../SortBlock/SortBlock';
+import getDepth1List from '../../../api/explore1/sidebar/getDepth1List';
+
 const Container = styled.div`
   border: 1px solid #d9d9d9;
   border-right: none;
@@ -26,7 +32,7 @@ const Container = styled.div`
 const ListItemPositioner = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: left;
   padding: 5px 10px;
 
   .list-icon {
@@ -49,97 +55,16 @@ const ListLi = styled.li`
     cursor: pointer;
   }
 `;
-
+function CallGetDepth2List(consonant) {
+  const [rightState] = useAsync(() => getDepth2List(2, consonant), [consonant]);
+  return rightState;
+}
 function SidebarBlock({ depth = 2 }) {
+  //State
+  const [seoji, setSeoji] = useState('');
+  const [gwoncha, setGwoncha] = useState('');
   //Data
-  const leftDatasDepth2 = {
-    datas: [
-      {
-        childId: 'childId1',
-        childTitle: 'childTitleDepth2-1',
-      },
-      {
-        childId: 'childId2',
-        childTitle: 'childTitleDepth2-2',
-      },
-      {
-        childId: 'childId3',
-        childTitle: 'childTitleDepth2-3',
-      },
-      {
-        childId: 'childId4',
-        childTitle: 'childTitleDepth2-4',
-      },
-      {
-        childId: 'childId5',
-        childTitle: 'childTitleDepth2-5',
-      },
-      {
-        childId: 'childId6',
-        childTitle: 'childTitleDepth2-6',
-      },
-      {
-        childId: 'childId7',
-        childTitle: 'childTitleDepth2-7',
-      },
-      {
-        childId: 'childId8',
-        childTitle: 'childTitleDepth2-8',
-      },
-      {
-        childId: 'childId9',
-        childTitle: 'childTitleDepth2-9',
-      },
-      {
-        childId: 'childId10',
-        childTitle: 'childTitleDepth2-10',
-      },
-      {
-        childId: 'childId11',
-        childTitle: 'childTitleDepth2-11',
-      },
-      {
-        childId: 'childId12',
-        childTitle: 'childTitleDepth2-12',
-      },
-      {
-        childId: 'childId13',
-        childTitle: 'childTitleDepth2-13',
-      },
-      {
-        childId: 'childId14',
-        childTitle: 'childTitleDepth2-14',
-      },
-      {
-        childId: 'childId15',
-        childTitle: 'childTitleDepth2-15',
-      },
-      {
-        childId: 'childId16',
-        childTitle: 'childTitleDepth2-16',
-      },
-      {
-        childId: 'childId17',
-        childTitle: 'childTitleDepth2-17',
-      },
-      {
-        childId: 'childId18',
-        childTitle: 'childTitleDepth2-18',
-      },
-      {
-        childId: 'childId19',
-        childTitle: 'childTitleDepth2-19',
-      },
-      {
-        childId: 'childId20',
-        childTitle: 'childTitleDepth2-20',
-      },
-      {
-        childId: 'childId21',
-        childTitle: 'childTitleDepth2-21',
-      },
-    ],
-  };
+
   const leftDatasDepth3 = {
     parentId: 'childId3',
     datas: [
@@ -153,38 +78,12 @@ function SidebarBlock({ depth = 2 }) {
       },
     ],
   };
-  const leftDatasDepth4 = {
-    datas: [
-      {
-        childId: 'childId',
-        childTitle: 'childTitleDepth4-1',
-      },
-      {
-        childId: 'childId',
-        childTitle: 'childTitleDepth4-2',
-      },
-    ],
-  };
-  const leftDatasDepth5 = {
-    datas: [
-      {
-        childId: 'childId',
-        childTitle: 'childTitleDepth5-1',
-      },
-      {
-        childId: 'childId',
-        childTitle: 'childTitleDepth5-2',
-      },
-    ],
-  };
-  const realDatasDepth2 = JSON.parse(JSON.stringify(leftDatasDepth2));
+
   const realDatasDepth3 = JSON.parse(JSON.stringify(leftDatasDepth3));
-  const realDatasDepth4 = JSON.parse(JSON.stringify(leftDatasDepth4));
-  const realDatasDepth5 = JSON.parse(JSON.stringify(leftDatasDepth5));
 
   const container = useRef();
-  const { state } = useLocation();
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
+
   console.log('state: ', state);
   let iconState = {};
   useEffect(() => {
@@ -220,12 +119,18 @@ function SidebarBlock({ depth = 2 }) {
       state: { height: moveHeight, iconState: minusIcon },
     });
   };
+  const consonant = useContext(selectedConsonant);
+
+  let rightState = [];
+  useEffect(() => {
+    rightState = CallGetDepth2List(consonant);
+  }, [consonant]);
 
   return (
     <Container ref={container}>
-      {depth >= 2 && (
+      {depth >= 2 && rightState.data !== null && (
         <>
-          {realDatasDepth2.datas.map((item) => (
+          {rightState.data.datas.map((item) => (
             <>
               <ListItemPositioner>
                 {minusIcon[item.childId] ? (

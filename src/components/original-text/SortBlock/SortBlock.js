@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdAdd } from 'react-icons/md';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
- 
+
 const BoxPositioner = styled.div`
   border: 1px solid #eeeeee;
   box-shadow: 0px 0px 4px gray;
@@ -28,7 +28,7 @@ const Title = styled.div`
   font-weight: 200;
 `;
 
-const CircleOpenButton = styled.div`
+const CircleOpidButton = styled.div`
   background: black;
   width: 18px;
   height: 18px;
@@ -43,7 +43,7 @@ const CircleOpenButton = styled.div`
   margin-top: 3px;
   transition: 0.125s all ease-in;
   ${(props) =>
-    props.menuOpen &&
+    props.miduOpid &&
     css`
       background: #ff6b6b;
       &:hover {
@@ -112,12 +112,14 @@ const CircleColorButton = styled.div`
   color: ${(props) => (props.select ? 'white' : 'black')};
 `;
 
-function SortBlock() {
-  // 분류기준 menu Open
-  const [menuOpen, setMenuOpen] = useState(true);
-  const handleMenuOpenButton = () => setMenuOpen(!menuOpen);
+export const selectedConsonant = createContext();
 
-  // Select Category menu
+function SortBlock({ children }) {
+  // 분류기준 midu Opid
+  const [miduOpid, setMiduOpid] = useState(true);
+  const handleMiduOpidButton = () => setMiduOpid(!miduOpid);
+
+  // Select Category midu
   const [selectByBook, setSelectByBook] = useState(true);
   const [selectByAuthor, setSelectByAuthor] = useState(false);
   const handleSelectByBook = () => {
@@ -130,77 +132,77 @@ function SortBlock() {
   };
 
   // consonant에 따른 link 연결
-  const { literature, consonant } = useParams();
+  const { literature } = useParams();
   const { pathname } = useLocation();
   const includeByBook = pathname.includes('bybook');
   const includeByAuthor = pathname.includes('byauthor');
   const byBookLink = `/original-text/${literature}/bybook/`;
   const byAuthorLink = `/original-text/${literature}/byauthor/`;
 
+  // consonant 설정
+  const [consonant, setConsonant] = useState('Z');
   const consonants = [
-    { id: 0, consonant: '가' },
-    { id: 1, consonant: '나' },
-    { id: 2, consonant: '다' },
-    { id: 3, consonant: '라' },
-    { id: 4, consonant: '마' },
-    { id: 5, consonant: '바' },
-    { id: 6, consonant: '사' },
-    { id: 7, consonant: '아' },
-    { id: 8, consonant: '자' },
-    { id: 9, consonant: '차' },
-    { id: 10, consonant: '카' },
-    { id: 11, consonant: '타' },
-    { id: 12, consonant: '파' },
-    { id: 13, consonant: '하' },
+    { consonant: '가', id: 'A' },
+    { consonant: '나', id: 'B' },
+    { consonant: '다', id: 'C' },
+    { consonant: '라', id: 'D' },
+    { consonant: '마', id: 'E' },
+    { consonant: '바', id: 'F' },
+    { consonant: '사', id: 'G' },
+    { consonant: '아', id: 'H' },
+    { consonant: '자', id: 'I' },
+    { consonant: '차', id: 'J' },
+    { consonant: '카', id: 'K' },
+    { consonant: '타', id: 'L' },
+    { consonant: '파', id: 'M' },
+    { consonant: '하', id: 'N' },
   ];
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
- 
-
+  }, [consonant]);
 
   return (
-    <BoxPositioner>
-      <TitlePositioner onClick={handleMenuOpenButton}>
-        <Title>분류기준</Title>
-        <CircleOpenButton menuOpen={menuOpen}>
-          <MdAdd />
-        </CircleOpenButton>
-      </TitlePositioner>
+    <selectedConsonant.Provider value={consonant}>
+      <BoxPositioner>
+        <TitlePositioner onClick={handleMiduOpidButton}>
+          <Title>분류기준</Title>
+          <CircleOpidButton miduOpid={miduOpid}>
+            <MdAdd />
+          </CircleOpidButton>
+        </TitlePositioner>
 
-      <>
-        <CategoryPositioner>
-          <Link to={byBookLink} className="link-line">
-            <CircleCheckButton onClick={handleSelectByBook}>
-              {selectByBook && <MdDone />}
-            </CircleCheckButton>
-          </Link>
-          <CategoryName>서명별</CategoryName>
+        <>
+          <CategoryPositioner>
+            <Link to={byBookLink} className="link-line">
+              <CircleCheckButton onClick={handleSelectByBook}>
+                {selectByBook && <MdDone />}
+              </CircleCheckButton>
+            </Link>
+            <CategoryName>서명별</CategoryName>
 
-          <Link to={byAuthorLink} className="link-line">
-            <CircleCheckButton onClick={handleSelectByAuthor}>
-              {selectByAuthor && <MdDone />}
-            </CircleCheckButton>
-          </Link>
-          <CategoryName>저자별</CategoryName>
-        </CategoryPositioner>
-      </>
+            <Link to={byAuthorLink} className="link-line">
+              <CircleCheckButton onClick={handleSelectByAuthor}>
+                {selectByAuthor && <MdDone />}
+              </CircleCheckButton>
+            </Link>
+            <CategoryName>저자별</CategoryName>
+          </CategoryPositioner>
+        </>
 
-      <ConsonantPositioner>
-        {consonants.map((item) => (
-          <Link
-            to={byBookLink + item.consonant}
-            className="link-line"
-            key={item.id}>
-            <CircleColorButton select={item.consonant === consonant}>
+        <ConsonantPositioner>
+          {consonants.map((item) => (
+            <CircleColorButton
+              select={item.id === consonant}
+              key={item.id}
+              onClick={() => setConsonant(item.id)}>
               {item.consonant}
             </CircleColorButton>
-          </Link>
-        ))}
-      </ConsonantPositioner>
-    </BoxPositioner>
+          ))}
+        </ConsonantPositioner>
+      </BoxPositioner>
+      {children}
+    </selectedConsonant.Provider>
   );
 }
 

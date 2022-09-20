@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import styled from 'styled-components';
 import ContentListTitleBlock from '../original-text/ContentListBlock/ContentListTitleBlock';
 import DisplaySelectedListBlock from '../original-text/DisplayBlock/DisplaySelectedListBlock';
@@ -12,15 +12,20 @@ const MainContentBlock = styled.div`
   margin: 1px 20px;
 `;
 
+ 
+
 function ContentLayout({ title = '', depth, children }) {
   return (
     <>
       <DisplaySelectedListBlock />
-      <SortBlock />
-      <MainContentBlock>
-        <SidebarBlock depth={depth} />
-        <ContentListTitleBlock title={title}>{children}</ContentListTitleBlock>
-      </MainContentBlock>
+      <SortBlock>
+        <MainContentBlock>
+          <SidebarBlock depth={depth} />
+          <ContentListTitleBlock title={title}>
+            {children}
+          </ContentListTitleBlock>
+        </MainContentBlock>
+      </SortBlock>
     </>
   );
 }
