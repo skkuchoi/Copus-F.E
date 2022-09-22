@@ -2,7 +2,7 @@ import axios from 'axios';
 
 async function getRightSearchResult(filter, keyword) {
   const response = axios({
-    url: `/article/preview`,
+    url: '/article/preview',
     method: 'get',
     data: {
       filter: filter,
