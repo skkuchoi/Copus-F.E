@@ -105,10 +105,10 @@ function SearchBlock({ border = 'none' }) {
     전체: 'total/',
     서명: 'book-title/',
     저자: 'author-name/',
-    권차: 'gwoncha-title',
-    문체: 'munche-title',
+    권차: 'gwoncha-title/',
+    문체: 'munche-title/',
     원문: 'content/',
-    자료ID: 'id',
+    자료ID: 'id/',
   };
   const onSubmit = (e) => {
     if (keyword !== '' && keyword.trim() !== '') {

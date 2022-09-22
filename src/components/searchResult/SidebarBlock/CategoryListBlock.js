@@ -36,6 +36,9 @@ const CategoryListItemPositioner = styled.div`
 
   .total-not-focus {
     color: black;
+    &:hover {
+      background-color: #eeeeee;
+    }
   }
 `;
 
@@ -97,6 +100,24 @@ function CategoryListBlock({
 
         <CategoryListItemPositioner>
           <IoMdBook className="document-icon" />
+          <Link to={link4Content} className="link-line">
+            <CategoryListItemName className="total-not-focus">
+              권차({contentCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
+
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link to={link4Content} className="link-line">
+            <CategoryListItemName className="total-not-focus">
+              문체({contentCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
+
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
           <Link
             to={link4Total}
             className="link-line"
@@ -110,8 +131,7 @@ function CategoryListBlock({
         <CategoryListItemPositioner>
           <IoMdBook className="document-icon" />
           <Link to={link4Content} className="link-line">
-            <CategoryListItemName
-              className={searchFilter === 'id' ? 'focus' : 'not-focus'}>
+            <CategoryListItemName className="total-not-focus">
               자료ID({contentCount})
             </CategoryListItemName>
           </Link>
