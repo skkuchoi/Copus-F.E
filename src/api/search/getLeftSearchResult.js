@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 async function getLeftSearchResult(filter, keyword) {
-  console.log(filter);
 
   const response = axios({
     url: `/category/total`,

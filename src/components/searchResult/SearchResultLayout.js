@@ -20,7 +20,7 @@ const ContentPositioner = styled.div`
   flex-direction: column;
 `;
 
-function SearchResultLayout({ rightDatas }) {
+function SearchResultLayout() {
   const { keyword } = useParams();
   const { pathname } = useLocation();
   let searchFilter, filter;
@@ -45,7 +45,9 @@ function SearchResultLayout({ rightDatas }) {
     () => getLeftSearchResult(filter, keyword),
     [filter],
   );
+  console.log(leftDatas);
   if (leftDatas.data === null) return <div>zz</div>;
+
   return (
     <>
       <DisplaySelectedListBlock totalCount={leftDatas.data.totalCount} />
@@ -54,7 +56,7 @@ function SearchResultLayout({ rightDatas }) {
         <SidebarBlock leftDatas={leftDatas.data} />
 
         <ContentPositioner>
-          <ResultDataBlock rightDatas={rightDatas} />
+          <ResultDataBlock />
         </ContentPositioner>
       </MainContentBlock>
     </>

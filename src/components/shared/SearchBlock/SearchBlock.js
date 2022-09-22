@@ -108,7 +108,7 @@ function SearchBlock({ border = 'none' }) {
     권차: 'gwoncha-title/',
     문체: 'munche-title/',
     원문: 'content/',
-    자료ID: 'id/',
+    자료ID: 'data-id/',
   };
   const onSubmit = (e) => {
     if (keyword !== '' && keyword.trim() !== '') {
