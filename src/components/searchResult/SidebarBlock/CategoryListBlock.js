@@ -51,7 +51,10 @@ function CategoryListBlock({
   totalCount,
   bookTitleCount,
   authorNameCount,
+  gwonchaTitleCount,
+  muncheTitleCount,
   contentCount,
+  dataIdCount,
 }) {
   const { keyword } = useParams();
 
@@ -102,7 +105,7 @@ function CategoryListBlock({
           <IoMdBook className="document-icon" />
           <Link to={link4Content} className="link-line">
             <CategoryListItemName className="total-not-focus">
-              권차({contentCount})
+              권차({gwonchaTitleCount})
             </CategoryListItemName>
           </Link>
         </CategoryListItemPositioner>
@@ -111,7 +114,7 @@ function CategoryListBlock({
           <IoMdBook className="document-icon" />
           <Link to={link4Content} className="link-line">
             <CategoryListItemName className="total-not-focus">
-              문체({contentCount})
+              문체({muncheTitleCount})
             </CategoryListItemName>
           </Link>
         </CategoryListItemPositioner>
@@ -132,7 +135,7 @@ function CategoryListBlock({
           <IoMdBook className="document-icon" />
           <Link to={link4Content} className="link-line">
             <CategoryListItemName className="total-not-focus">
-              자료ID({contentCount})
+              자료ID({dataIdCount})
             </CategoryListItemName>
           </Link>
         </CategoryListItemPositioner>
@@ -164,7 +167,7 @@ function CategoryListBlock({
             className={
               searchFilter === 'gwoncha-title' ? 'focus' : 'not-focus'
             }>
-            권차({contentCount})
+            권차({gwonchaTitleCount})
           </CategoryListItemName>
         </Link>
       </CategoryListItemPositioner>
@@ -174,7 +177,7 @@ function CategoryListBlock({
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
             className={searchFilter === 'munche-title' ? 'focus' : 'not-focus'}>
-            문체({contentCount})
+            문체({muncheTitleCount})
           </CategoryListItemName>
         </Link>
       </CategoryListItemPositioner>
@@ -194,7 +197,7 @@ function CategoryListBlock({
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
             className={searchFilter === 'id' ? 'focus' : 'not-focus'}>
-            자료ID({contentCount})
+            자료ID({dataIdCount})
           </CategoryListItemName>
         </Link>
       </CategoryListItemPositioner>

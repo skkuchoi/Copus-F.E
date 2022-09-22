@@ -107,7 +107,7 @@ function App() {
           />
 
           <Route
-            path="/search-result/id/:keyword"
+            path="/search-result/data-id/:keyword"
             exact={true}
             element={<SearchResult />}
           />

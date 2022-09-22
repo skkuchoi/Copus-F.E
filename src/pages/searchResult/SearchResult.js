@@ -5,7 +5,7 @@ import SearchResultLayout from '../../components/searchResult/SearchResultLayout
 import useAsync from '../../hooks/useAsync';
 import getRightSearchResult from '../../api/search/getRightSearchResult';
 import getLeftSearchResult from '../../api/search/getLeftSearchResult';
-// search-result/total/:keyword
+// 
 function SearchResult() {
   const { keyword } = useParams();
   const { pathname } = useLocation();
@@ -66,7 +66,7 @@ function SearchResult() {
   return (
     <Layout>
       <SearchResultLayout
-        leftDatas={JSON.parse(JSON.stringify(leftDatas))}
+        
         rightDatas={JSON.parse(JSON.stringify(rightDatas))}
       />
     </Layout>

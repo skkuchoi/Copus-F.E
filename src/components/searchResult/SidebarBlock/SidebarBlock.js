@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import CategoryListBlock from './CategoryListBlock';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import '../../shared/linkStyle.css';
+import { useLocation, useParams } from 'react-router-dom';
+import useAsync from '../../../hooks/useAsync';
+import getLeftSearchResult from '../../../api/search/getLeftSearchResult';
 
 const SidebarPositioner = styled.div`
   display: flex;
@@ -44,7 +47,10 @@ function SidebarBlock({ leftDatas }) {
         totalCount={leftDatas.totalCount}
         bookTitleCount={leftDatas.bookTitleCount}
         authorNameCount={leftDatas.authorNameCount}
+        gwonchaTitleCount={leftDatas.gwonchaTitleCount}
+        muncheTitleCount={leftDatas.muncheTitleCount}
         contentCount={leftDatas.contentCount}
+        dataIdCount={leftDatas.dataIdCount}
       />
     </SidebarPositioner>
   );
