@@ -105,6 +105,13 @@ function App() {
             exact={true}
             element={<SearchResult />}
           />
+
+          <Route
+            path="/search-result/id/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
+
           <Route
             path="/search-result/:searchCategory/:keyword"
             exact={true}
