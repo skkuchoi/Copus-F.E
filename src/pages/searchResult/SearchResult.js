@@ -5,7 +5,7 @@ import SearchResultLayout from '../../components/searchResult/SearchResultLayout
 import useAsync from '../../hooks/useAsync';
 import getRightSearchResult from '../../api/search/getRightSearchResult';
 import getLeftSearchResult from '../../api/search/getLeftSearchResult';
-
+// search-result/total/:keyword
 function SearchResult() {
   const { keyword } = useParams();
   const { pathname } = useLocation();
