@@ -68,7 +68,6 @@ function ResultDataBlock() {
   //SearchFilter Settings
   const { pathname } = useLocation();
   const { keyword } = useParams();
-  const searchFilter = pathname.split('/')[2];
   const filterUri = {
     total: 'total',
     'book-title': 'bookTitle',
@@ -78,7 +77,7 @@ function ResultDataBlock() {
     content: 'content',
     'data-id': 'dataId',
   };
-  const filter = filterUri[searchFilter];
+  const filter = filterUri[pathname.split('/')[2]];
 
   const [rightDatas] = useAsync(
     () => getRightSearchResult(filter, keyword),
@@ -92,7 +91,8 @@ function ResultDataBlock() {
   useEffect(() => {
     setCurrentPage(1);
   }, [filter]);
-   
+
+  // 로딩 페이지
   if (rightDatas.data === null) return <div>zz</div>;
   switch (filter) {
     case 'total':

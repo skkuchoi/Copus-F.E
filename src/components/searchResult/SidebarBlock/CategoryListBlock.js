@@ -59,14 +59,15 @@ function CategoryListBlock({
   const { keyword } = useParams();
 
   const { pathname } = useLocation();
-  const searchFilter = pathname.split('/')[2].toString();
+  const filter = pathname.split('/')[2].toString();
 
+  // these link is for case 'total', not setting yet
   const link4Total = `/search-result/total/${keyword}`;
   const link4BookTitle = `/search-result/book-title/${keyword}`;
   const link4AuthorName = `/search-result/author-name/${keyword}`;
   const link4Content = `/search-result/content/${keyword}`;
 
-  if (searchFilter === 'total')
+  if (filter === 'total')
     return (
       <CategoryListPositioner>
         <CategoryListItemPositioner>
@@ -147,7 +148,7 @@ function CategoryListBlock({
       <CategoryListItemPositioner>
         <IoMdBook className="document-icon" />
         <CategoryListItemName
-          className={searchFilter === 'book-title' ? 'focus' : 'not-focus'}>
+          className={filter === 'book-title' ? 'focus' : 'not-focus'}>
           서명({bookTitleCount})
         </CategoryListItemName>
       </CategoryListItemPositioner>
@@ -155,7 +156,7 @@ function CategoryListBlock({
       <CategoryListItemPositioner>
         <IoMdBook className="document-icon" />
         <CategoryListItemName
-          className={searchFilter === 'author-name' ? 'focus' : 'not-focus'}>
+          className={filter === 'author-name' ? 'focus' : 'not-focus'}>
           저/편/필자({authorNameCount})
         </CategoryListItemName>
       </CategoryListItemPositioner>
@@ -164,9 +165,7 @@ function CategoryListBlock({
         <IoMdBook className="document-icon" />
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
-            className={
-              searchFilter === 'gwoncha-title' ? 'focus' : 'not-focus'
-            }>
+            className={filter === 'gwoncha-title' ? 'focus' : 'not-focus'}>
             권차({gwonchaTitleCount})
           </CategoryListItemName>
         </Link>
@@ -176,7 +175,7 @@ function CategoryListBlock({
         <IoMdBook className="document-icon" />
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
-            className={searchFilter === 'munche-title' ? 'focus' : 'not-focus'}>
+            className={filter === 'munche-title' ? 'focus' : 'not-focus'}>
             문체({muncheTitleCount})
           </CategoryListItemName>
         </Link>
@@ -186,7 +185,7 @@ function CategoryListBlock({
         <IoMdBook className="document-icon" />
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
-            className={searchFilter === 'content' ? 'focus' : 'not-focus'}>
+            className={filter === 'content' ? 'focus' : 'not-focus'}>
             원문({contentCount})
           </CategoryListItemName>
         </Link>
@@ -196,7 +195,7 @@ function CategoryListBlock({
         <IoMdBook className="document-icon" />
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
-            className={searchFilter === 'id' ? 'focus' : 'not-focus'}>
+            className={filter === 'data-id' ? 'focus' : 'not-focus'}>
             자료ID({dataIdCount})
           </CategoryListItemName>
         </Link>

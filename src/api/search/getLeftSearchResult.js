@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 async function getLeftSearchResult(filter, keyword) {
-
   const response = axios({
     url: `/category/total`,
     method: 'get',
@@ -57,6 +56,7 @@ async function getLeftSearchResult(filter, keyword) {
     return JSON.parse(JSON.stringify(gwonchaTitleDatas));
   else if (filter === 'content')
     return JSON.parse(JSON.stringify(contentDatas));
+  else return JSON.parse(JSON.stringify(bookTitleDatas));
 }
 
 export default getLeftSearchResult;

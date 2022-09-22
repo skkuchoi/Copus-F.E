@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import CategoryListBlock from './CategoryListBlock';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import '../../shared/linkStyle.css';
-import { useLocation, useParams } from 'react-router-dom';
-import useAsync from '../../../hooks/useAsync';
-import getLeftSearchResult from '../../../api/search/getLeftSearchResult';
 
 const SidebarPositioner = styled.div`
   display: flex;

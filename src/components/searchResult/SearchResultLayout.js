@@ -23,7 +23,9 @@ const ContentPositioner = styled.div`
 function SearchResultLayout() {
   const { keyword } = useParams();
   const { pathname } = useLocation();
-  let searchFilter, filter;
+
+  let filter;
+
   const filterUri = {
     total: 'total',
     'book-title': 'bookTitle',
@@ -35,26 +37,21 @@ function SearchResultLayout() {
   };
 
   useEffect(() => {
-    searchFilter = pathname.split('/')[2];
-    filter = filterUri[searchFilter];
+    filter = filterUri[pathname.split('/')[2]];
   }, [pathname]);
 
-  //Left: searchFilter가 바뀔때마다 호출
-  //Right: Left에 따라 자동
   const [leftDatas] = useAsync(
     () => getLeftSearchResult(filter, keyword),
     [filter],
   );
-  console.log(leftDatas);
-  if (leftDatas.data === null) return <div>zz</div>;
 
+  // 로딩 페이지
+  if (leftDatas.data === null) return <div>zz</div>;
   return (
     <>
       <DisplaySelectedListBlock totalCount={leftDatas.data.totalCount} />
-
       <MainContentBlock>
         <SidebarBlock leftDatas={leftDatas.data} />
-
         <ContentPositioner>
           <ResultDataBlock />
         </ContentPositioner>

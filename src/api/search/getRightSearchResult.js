@@ -133,6 +133,7 @@ async function getRightSearchResult(filter, keyword) {
     return JSON.parse(JSON.stringify(gwonchaTitleDatas));
   else if (filter === 'content')
     return JSON.parse(JSON.stringify(contentDatas));
+  else return JSON.parse(JSON.stringify(bookTitleDatas));
 }
 
 export default getRightSearchResult;
