@@ -106,6 +106,16 @@ function CategoryListBlock({
             </CategoryListItemName>
           </Link>
         </CategoryListItemPositioner>
+
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link to={link4Content} className="link-line">
+            <CategoryListItemName
+              className={searchFilter === 'id' ? 'focus' : 'not-focus'}>
+              자료ID({contentCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
       </CategoryListPositioner>
     );
 
@@ -148,12 +158,23 @@ function CategoryListBlock({
           </CategoryListItemName>
         </Link>
       </CategoryListItemPositioner>
+
       <CategoryListItemPositioner>
         <IoMdBook className="document-icon" />
         <Link to={link4Content} className="link-line">
           <CategoryListItemName
             className={searchFilter === 'content' ? 'focus' : 'not-focus'}>
             원문({contentCount})
+          </CategoryListItemName>
+        </Link>
+      </CategoryListItemPositioner>
+
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+        <Link to={link4Content} className="link-line">
+          <CategoryListItemName
+            className={searchFilter === 'id' ? 'focus' : 'not-focus'}>
+            자료ID({contentCount})
           </CategoryListItemName>
         </Link>
       </CategoryListItemPositioner>
