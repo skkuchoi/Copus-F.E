@@ -7,7 +7,8 @@ import getDepth2List from '../../../api/explore1/sidebar/getDepth2List';
 
 import useAsync from '../../../hooks/useAsync';
 import { selectedConsonant } from '../SortBlock/SortBlock';
-import getDepth1List from '../../../api/explore1/sidebar/getDepth1List';
+import getDepth1List from '../../../api/explore1/sidebar/left/getLeftDepth1List';
+
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
@@ -55,10 +56,7 @@ const ListLi = styled.li`
     cursor: pointer;
   }
 `;
-function CallGetDepth2List(consonant) {
-  const [rightState] = useAsync(() => getDepth2List(2, consonant), [consonant]);
-  return rightState;
-}
+
 function SidebarBlock({ depth = 2 }) {
   //State
   const [seoji, setSeoji] = useState('');
@@ -120,17 +118,14 @@ function SidebarBlock({ depth = 2 }) {
     });
   };
   const consonant = useContext(selectedConsonant);
-
-  let rightState = [];
-  useEffect(() => {
-    rightState = CallGetDepth2List(consonant);
-  }, [consonant]);
-
+ 
+  const [consonantDatas] = useAsync(() => getDepth2List(2, consonant), [consonant]);
+ 
   return (
     <Container ref={container}>
-      {depth >= 2 && rightState.data !== null && (
+      {depth >= 2 && consonantDatas.data !== null && (
         <>
-          {rightState.data.datas.map((item) => (
+          {consonantDatas.data.datas.map((item) => (
             <>
               <ListItemPositioner>
                 {minusIcon[item.childId] ? (

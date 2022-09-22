@@ -53,7 +53,7 @@ function HomeCard() {
       </IndexPositioner>
 
       <CardPositioner>
-        <Link to="/menu-explore/2" className="link-line">
+        <Link to="/menu-explore/1" className="link-line">
           <Card
             icon="1"
             title="코퍼스(Copus)"

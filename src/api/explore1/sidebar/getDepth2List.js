@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 async function getDepth2List(depth, currentId) {
-  //console.log('currentId:::::: ', currentId);
+  console.log('currentId:::::: ', currentId);
   const response = axios({
-    url: `book/${depth}/${currentId}`,
+    url: `/book/${depth}/${currentId}`,
     method: 'get',
     data: {
       currentId: currentId,

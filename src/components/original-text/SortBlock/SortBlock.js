@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { MdDone, MdAdd } from 'react-icons/md';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
 
 const BoxPositioner = styled.div`
@@ -28,7 +28,7 @@ const Title = styled.div`
   font-weight: 200;
 `;
 
-const CircleOpidButton = styled.div`
+const CircleOpenButton = styled.div`
   background: black;
   width: 18px;
   height: 18px;
@@ -43,7 +43,7 @@ const CircleOpidButton = styled.div`
   margin-top: 3px;
   transition: 0.125s all ease-in;
   ${(props) =>
-    props.miduOpid &&
+    props.sortMenuOpen &&
     css`
       background: #ff6b6b;
       &:hover {
@@ -56,7 +56,7 @@ const CircleOpidButton = styled.div`
     `}
 `;
 
-const CategoryPositioner = styled.div`
+const FilterPositioner = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -95,7 +95,7 @@ const ConsonantPositioner = styled.div`
 `;
 
 const CircleColorButton = styled.div`
-  width: 13px;
+  width: ${(props) => props.width};
   height: 13px;
   border-radius: 16px;
   border: 1px solid #ced4da;
@@ -113,22 +113,24 @@ const CircleColorButton = styled.div`
 `;
 
 export const selectedConsonant = createContext();
+export const selectedFilter = createContext();
 
 function SortBlock({ children }) {
   // 분류기준 midu Opid
-  const [miduOpid, setMiduOpid] = useState(true);
-  const handleMiduOpidButton = () => setMiduOpid(!miduOpid);
+  const [sortMenuOpen, setSortMenuOpen] = useState(true);
+  const handleSortMenuOpenButton = () => setSortMenuOpen(!sortMenuOpen);
 
-  // Select Category midu
-  const [selectByBook, setSelectByBook] = useState(true);
-  const [selectByAuthor, setSelectByAuthor] = useState(false);
-  const handleSelectByBook = () => {
-    setSelectByBook(true);
-    setSelectByAuthor(false);
+  // Select Category Filter
+  const [filter, setFilter] = useState('book');
+  const [bookFilter, setbookFilter] = useState(true);
+  const [authorFilter, setauthorFilter] = useState(false);
+  const handlebookFilter = () => {
+    setbookFilter(true);
+    setauthorFilter(false);
   };
-  const handleSelectByAuthor = () => {
-    setSelectByAuthor(true);
-    setSelectByBook(false);
+  const handleauthorFilter = () => {
+    setauthorFilter(true);
+    setbookFilter(false);
   };
 
   // consonant에 따른 link 연결
@@ -140,7 +142,10 @@ function SortBlock({ children }) {
   const byAuthorLink = `/original-text/${literature}/byauthor/`;
 
   // consonant 설정
-  const [consonant, setConsonant] = useState('Z');
+  const { state } = useLocation();
+  const [consonant, setConsonant] = useState(
+    state === null ? 'All' : state.consonant,
+  );
   const consonants = [
     { consonant: '가', id: 'A' },
     { consonant: '나', id: 'B' },
@@ -162,46 +167,62 @@ function SortBlock({ children }) {
     window.scrollTo(0, 0);
   }, [consonant]);
 
+  const navigate = useNavigate();
+  const link4Consonant = '/menu-explore/1';
+
   return (
     <selectedConsonant.Provider value={consonant}>
-      <BoxPositioner>
-        <TitlePositioner onClick={handleMiduOpidButton}>
-          <Title>분류기준</Title>
-          <CircleOpidButton miduOpid={miduOpid}>
-            <MdAdd />
-          </CircleOpidButton>
-        </TitlePositioner>
+      <selectedFilter.Provider value={filter}>
+        <BoxPositioner>
+          <TitlePositioner onClick={handleSortMenuOpenButton}>
+            <Title>분류기준</Title>
+            <CircleOpenButton sortMenuOpen={sortMenuOpen}>
+              <MdAdd />
+            </CircleOpenButton>
+          </TitlePositioner>
 
-        <>
-          <CategoryPositioner>
-            <Link to={byBookLink} className="link-line">
-              <CircleCheckButton onClick={handleSelectByBook}>
-                {selectByBook && <MdDone />}
-              </CircleCheckButton>
-            </Link>
+          <FilterPositioner>
+            <CircleCheckButton onClick={() => setFilter('book')}>
+              {filter === 'book' && <MdDone />}
+            </CircleCheckButton>
             <CategoryName>서명별</CategoryName>
 
-            <Link to={byAuthorLink} className="link-line">
-              <CircleCheckButton onClick={handleSelectByAuthor}>
-                {selectByAuthor && <MdDone />}
-              </CircleCheckButton>
-            </Link>
+            <CircleCheckButton onClick={() => setFilter('author')}>
+              {filter === 'author' && <MdDone />}
+            </CircleCheckButton>
             <CategoryName>저자별</CategoryName>
-          </CategoryPositioner>
-        </>
+          </FilterPositioner>
 
-        <ConsonantPositioner>
-          {consonants.map((item) => (
+          <ConsonantPositioner>
             <CircleColorButton
-              select={item.id === consonant}
-              key={item.id}
-              onClick={() => setConsonant(item.id)}>
-              {item.consonant}
+              select={'All' === consonant}
+              onClick={() => {
+                setConsonant('All');
+                navigate(link4Consonant, {
+                  state: { consonant: 'All', filter: filter },
+                });
+              }}
+              width="30px">
+              전체
             </CircleColorButton>
-          ))}
-        </ConsonantPositioner>
-      </BoxPositioner>
-      {children}
+            {consonants.map((item) => (
+              <CircleColorButton
+                select={item.id === consonant}
+                key={item.id}
+                onClick={() => {
+                  setConsonant(item.id);
+                  navigate(link4Consonant, {
+                    state: { consonant: item.id, filter: filter },
+                  });
+                }}
+                width="13px">
+                {item.consonant}
+              </CircleColorButton>
+            ))}
+          </ConsonantPositioner>
+        </BoxPositioner>
+        {children}
+      </selectedFilter.Provider>
     </selectedConsonant.Provider>
   );
 }

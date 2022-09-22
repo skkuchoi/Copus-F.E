@@ -35,6 +35,7 @@ import Seoji from './pages/menuExplore/seoji/Seoji';
 import Gwoncha from './pages/menuExplore/gwoncha/Gwoncha';
 import Munche from './pages/menuExplore/munche/Munche';
 import Final from './pages/menuExplore/final/Final';
+import Consonant from './pages/menuExplore/consonant/Consonant';
 
 const Container = styled.div`
   position: absolute;
@@ -99,9 +100,10 @@ function App() {
             element={<SearchResult />}
           />
           {/* New Explore;;ㅋㅋ */}
+          <Route path="/menu-explore/1" exact={true} element={<Consonant />} />
           <Route path="/menu-explore/2" exact={true} element={<Seoji />} />
-          <Route path="/menu-explore/3" exact={true} element={<Seoji />} />
-          <Route path="/menu-explore/4" exact={true} element={<Seoji />} />
+          <Route path="/menu-explore/3" exact={true} element={<Gwoncha />} />
+          <Route path="/menu-explore/4" exact={true} element={<Munche />} />
           <Route path="/menu-explore/seoji" exact={true} element={<Seoji />} />
           <Route
             path="/menu-explore/gwoncha/:id"
