@@ -36,6 +36,8 @@ import Gwoncha from './pages/menuExplore/gwoncha/Gwoncha';
 import Munche from './pages/menuExplore/munche/Munche';
 import Final from './pages/menuExplore/final/Final';
 import Consonant from './pages/menuExplore/consonant/Consonant';
+import TestSidebar from './components/testSidebar/TestSidebar';
+import TestEachSidebar from './components/testEachSidebar/TestEachSidebar';
 
 const Container = styled.div`
   position: absolute;
@@ -60,6 +62,17 @@ function App() {
     <Container>
       <FontStyle>
         <Routes>
+          <Route
+            path="/test"
+            exact={true}
+            element={<TestSidebar requestId="가암유고1-권차1" />}
+          />
+          <Route path="/test1" exact={true} element={<TestEachSidebar />} />
+          <Route
+            path="/test1/:seojiId"
+            exact={true}
+            element={<TestEachSidebar />}
+          />
           <Route path="/" exact={true} element={<Home />} />
 
           {/* about page */}

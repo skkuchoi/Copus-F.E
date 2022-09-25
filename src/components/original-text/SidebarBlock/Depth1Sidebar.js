@@ -95,9 +95,9 @@ function Depth1Sidebar() {
   const onClickTitle = (height) => {
     //const gwonchaList = [];
     const moveHeight = height < 400 ? 0 : 300;
-    navigate(link4Seoji, {
-      state: { height: moveHeight, iconState: minusIcon },
-    });
+    // navigate(link4Seoji, {
+    //   state: { height: moveHeight, iconState: minusIcon },
+    // });
   };
 
   return (
@@ -120,8 +120,7 @@ function Depth1Sidebar() {
                     handleIconShape(item.childId);
                   }}
                 />
-              )}
-          {filter==='author' && }
+              )}          
               <ListLi
                 onClick={(target) => {
                   onClickTitle(target.pageY);
