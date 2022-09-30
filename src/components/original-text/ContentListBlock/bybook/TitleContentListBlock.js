@@ -25,11 +25,18 @@ function TitleContentListBlock() {
     return <div>zz</div>;
   return (
     <>
-      <OtherListTableBlock icon="gwoncha">
+      <OtherListTableBlock
+        icon="gwoncha"
+        key={finalJsonDatas.data.gwonchaId}
+        clickId={finalJsonDatas.data.gwonchaId}>
         <TableItem>{finalJsonDatas.data.gwonchaTitle}</TableItem>
       </OtherListTableBlock>
 
-      <OtherListTableBlock marginLeft="39px" icon="munche">
+      <OtherListTableBlock
+        marginLeft="39px"
+        icon="munche"
+        key={finalJsonDatas.data.muncheId}
+        clickId={finalJsonDatas.data.muncheId}>
         <TableItem>{finalJsonDatas.data.muncheTitle}</TableItem>
       </OtherListTableBlock>
 

@@ -1,15 +1,15 @@
 import axios from 'axios';
 
-function getSeoji(depth, currentId) {
-  console.log(currentId);
+function getSeoji(filter, depth, currentId) {
+  //console.log('getSeoji: ', filter, depth, currentId);
   const response = axios({
-    url: `/book/${depth}/${currentId}/`,
+    url: `/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
-  const seojiDatas1 = {
+  const bybook1 = {
     datas: [
       {
-        childId: '가암유고',
+        childId: 'ITKC_MO_1116A',
         childTitle: '가암유고',
       },
       {
@@ -70,7 +70,7 @@ function getSeoji(depth, currentId) {
       },
     ],
   };
-  const seojiDatas2 = {
+  const bybook2 = {
     datas: [
       {
         childId: '나암유고1',
@@ -95,10 +95,10 @@ function getSeoji(depth, currentId) {
     ],
   };
 
-  const seojiAllDatas = {
+  const bybookAll = {
     datas: [
       {
-        childId: '가암유고',
+        childId: 'ITKC_MO_1116A',
         childTitle: '가암유고',
       },
       {
@@ -179,10 +179,45 @@ function getSeoji(depth, currentId) {
       },
     ],
   };
-  if (currentId === 'A') return JSON.parse(JSON.stringify(seojiDatas1));
-  else if (currentId === 'B') return JSON.parse(JSON.stringify(seojiDatas2));
-  else if (currentId === 'All')
-    return JSON.parse(JSON.stringify(seojiAllDatas));
+
+  const byauthor1 = {
+    datas: [
+      {
+        childId: 'ITKC_MO_1036A',
+        childTitle: '비수재집',
+      },
+    ],
+  };
+
+  const byauthor2 = {
+    datas: [
+      {
+        childId: 'ITKC_MO_0827A',
+        childTitle: '한사집',
+      },
+    ],
+  };
+
+  switch (filter) {
+    case 'book':
+      if (currentId === 'A') {
+        return JSON.parse(JSON.stringify(bybook1));
+      } else if (currentId === 'B') {
+        return JSON.parse(JSON.stringify(bybook2));
+      } else if (currentId === 'all') {
+        return JSON.parse(JSON.stringify(bybookAll));
+      }
+      break;
+    case 'author':
+      if (currentId === '강규환') {
+        return JSON.parse(JSON.stringify(byauthor1));
+      } else if (currentId === '나규환') {
+        return JSON.parse(JSON.stringify(byauthor2));
+      } else return JSON.parse(JSON.stringify({ datas: [] }));
+
+    default:
+      break;
+  }
 }
 
 export default getSeoji;

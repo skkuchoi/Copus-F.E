@@ -1,24 +1,38 @@
 import axios from 'axios';
 
-function getMunche(depth, currentId) {
+function getMunche(filter, depth, currentId) {
   const response = axios({
-    url: `/book/${depth}/${currentId}/`,
+    url: `/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
-  const muncheDatas1 = {
+  const bybook1 = {
     datas: [
-      { childId: '가암유고-可庵遺稿卷之一-賦', childTitle: '賦' },
-      { childId: '가암유고-可庵遺稿卷之一-詩', childTitle: '詩' },
+      { childId: 'ITKC_MO_1116A_0010_010', childTitle: '賦' },
+      { childId: 'ITKC_MO_1116A_0010_020', childTitle: '詩' },
     ],
   };
-  const muncheDatas2 = {
-    datas: [{ childId: '가주집-家州集序-序', childTitle: '[序]' }],
+  const bybook2 = {
+    datas: [{ childId: 'ITKC_MO_1116A_0020_010', childTitle: '詩' }],
   };
-  if (currentId.includes('가암유고'))
-    return JSON.parse(JSON.stringify(muncheDatas1));
-  else if (currentId.includes('가주집'))
-    return JSON.parse(JSON.stringify(muncheDatas2));
-  else return JSON.parse(JSON.stringify({ datas: [] }));
+  // 이런 조건문은 내가 편의를 위해 적은 것 그냥 받은 데이터 return만 하면됨.
+  const byauthor1 = {
+    datas: [{ childId: 'ITKC_MO_1036A_0010_010', childTitle: '詩' }],
+  };
+  switch (filter) {
+    case 'book':
+      if (currentId === 'ITKC_MO_1116A_0010')
+        return JSON.parse(JSON.stringify(bybook1));
+      else if (currentId === 'ITKC_MO_1116A_0020')
+        return JSON.parse(JSON.stringify(bybook2));
+      else return JSON.parse(JSON.stringify({ datas: [] }));
+    case 'author':
+      if (currentId === 'ITKC_MO_1036A_0010')
+        return JSON.parse(JSON.stringify(byauthor1));
+      else return JSON.parse(JSON.stringify({ datas: [] }));
+      break;
+    default:
+      break;
+  }
 }
 
 export default getMunche;

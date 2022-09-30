@@ -20,13 +20,15 @@ function MuncheContentListBlock() {
     [clickGwonchaContext],
   );
   console.log(muncheJsonDatas);
+  console.log(clickGwonchaContext);
   if (muncheJsonDatas.data === null || muncheJsonDatas.data === undefined)
     return <div>zz</div>;
   return (
     <>
       {muncheJsonDatas.data.datas.map((item) => (
         <>
-          <OtherListTableBlock icon="gwoncha">
+          <OtherListTableBlock icon="gwoncha" key={item.gwonchaId}
+              clickId={item.gwonchaId}>
             <TableItem>{item.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
 

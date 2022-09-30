@@ -1,12 +1,13 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ContentListTitleBlock from '../original-text/ContentListBlock/ContentListTitleBlock';
 import DisplaySelectedListBlock from '../original-text/DisplayBlock/DisplaySelectedListBlock';
 
-import Sidebar from '../original-text/SidebarBlock/Sidebar';
+import BookSidebar from '../original-text/SidebarBlock/BookSidebar';
+import AuthorSidebar from '../original-text/SidebarBlock/AuthorSidebar';
 
 import SortBlock from '../original-text/SortBlock/SortBlock';
-import { leftBlockDepth } from '../../pages/menuExplore/consonant/Consonant';
+import { leftBlockDepth } from '../../pages/menuExplore/MenuExploreBook';
 import BookTableRowBlock from '../original-text/ContentListBlock/BookTableRowBlock';
 import BookContentListBlock from '../original-text/ContentListBlock/bybook/BookContentListBlock';
 import GwonchaContentListBlock from '../original-text/ContentListBlock/bybook/GwonchaContentListBlock';
@@ -17,17 +18,21 @@ import Content from '../original-text/ContentBlock/Content';
 const MainContentBlock = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
-  height: 75vh;
+  height: 70vh;
   margin: 1px 20px;
 `;
 
+export const authorContext = createContext();
 export const seojiContext = createContext();
 export const gwonchaContext = createContext();
 export const muncheContext = createContext();
 export const finalContext = createContext();
 
-function ContentLayout() {
+function ContentLayout({ filter }) {
   const depthContext = useContext(leftBlockDepth);
+
+  // 저자
+  const [clickAuthor, setClickAuthor] = useState('');
 
   // 권차
   const [clickSeoji, setClickSeoji] = useState('');
@@ -40,63 +45,75 @@ function ContentLayout() {
 
   //최종정보 Content
   const [clickFinal, setClickFinal] = useState('');
+
   return (
     <>
-      <seojiContext.Provider
-        value={{ clickSeoji: clickSeoji, setClickSeoji: setClickSeoji }}>
-        <gwonchaContext.Provider
+      <authorContext.Provider
+        value={{
+          clickAuthor: clickAuthor,
+          setClickAuthor: setClickAuthor,
+        }}>
+        <seojiContext.Provider
           value={{
-            clickGwoncha: clickGwoncha,
-            setClickGwoncha: setClickGwoncha,
+            clickSeoji: clickSeoji,
+            setClickSeoji: setClickSeoji,
           }}>
-          <muncheContext.Provider
+          <gwonchaContext.Provider
             value={{
-              clickMunche: clickMunche,
-              setClickMunche: setClickMunche,
+              clickGwoncha: clickGwoncha,
+              setClickGwoncha: setClickGwoncha,
             }}>
-            <finalContext.Provider
+            <muncheContext.Provider
               value={{
-                clickFinal: clickFinal,
-                setClickFinal: setClickFinal,
+                clickMunche: clickMunche,
+                setClickMunche: setClickMunche,
               }}>
-              <DisplaySelectedListBlock />
-              <SortBlock>
-                <MainContentBlock>
-                  <Sidebar />
+              <finalContext.Provider
+                value={{
+                  clickFinal: clickFinal,
+                  setClickFinal: setClickFinal,
+                }}>
+                <DisplaySelectedListBlock />
+                <SortBlock>
+                  <MainContentBlock>
+                    {filter === 'book' && <BookSidebar />}
+                    {filter === 'author' && <AuthorSidebar />}
 
-                  {depthContext.depth === 0 && (
-                    <ContentListTitleBlock title={'총 리스트'}>
-                      <BookTableRowBlock />
-                      <BookContentListBlock />
-                    </ContentListTitleBlock>
-                  )}
+                    {(depthContext.depth === 0 ||
+                      depthContext.depth === -1) && (
+                      <ContentListTitleBlock title={'총 리스트'}>
+                        <BookTableRowBlock />
+                        <BookContentListBlock />
+                      </ContentListTitleBlock>
+                    )}
 
-                  {depthContext.depth === 1 && (
-                    <ContentListTitleBlock title={'총 리스트'}>
-                      <GwonchaContentListBlock />
-                    </ContentListTitleBlock>
-                  )}
-                  {depthContext.depth === 2 && (
-                    <ContentListTitleBlock title={'총 리스트'}>
-                      <MuncheContentListBlock />
-                    </ContentListTitleBlock>
-                  )}
-                  {depthContext.depth === 3 && (
-                    <ContentListTitleBlock title={'총 리스트'}>
-                      <TitleContentListBlock />
-                    </ContentListTitleBlock>
-                  )}
-                  {depthContext.depth === 4 && (
-                    <ContentListTitleBlock>
-                      <Content />
-                    </ContentListTitleBlock>
-                  )}
-                </MainContentBlock>
-              </SortBlock>
-            </finalContext.Provider>
-          </muncheContext.Provider>
-        </gwonchaContext.Provider>
-      </seojiContext.Provider>
+                    {depthContext.depth === 1 && (
+                      <ContentListTitleBlock title={'총 리스트'}>
+                        <GwonchaContentListBlock />
+                      </ContentListTitleBlock>
+                    )}
+                    {depthContext.depth === 2 && (
+                      <ContentListTitleBlock title={'총 리스트'}>
+                        <MuncheContentListBlock />
+                      </ContentListTitleBlock>
+                    )}
+                    {depthContext.depth === 3 && (
+                      <ContentListTitleBlock title={'총 리스트'}>
+                        <TitleContentListBlock />
+                      </ContentListTitleBlock>
+                    )}
+                    {depthContext.depth === 4 && (
+                      <ContentListTitleBlock>
+                        <Content />
+                      </ContentListTitleBlock>
+                    )}
+                  </MainContentBlock>
+                </SortBlock>
+              </finalContext.Provider>
+            </muncheContext.Provider>
+          </gwonchaContext.Provider>
+        </seojiContext.Provider>
+      </authorContext.Provider>
     </>
   );
 }

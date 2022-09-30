@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
 
 const DisplayPositioner = styled.div`
   background-color: #f2f2f2;
@@ -68,19 +67,9 @@ const OptionElement = styled.div`
 `;
 
 function DisplaySelectedListBlock() {
-  const { consonant, authorname, bookname, gwoncha, munche, title } =
-    useParams();
-
   return (
     <DisplayPositioner>
-      <LiteratureTitle>연행록</LiteratureTitle>
-
-      {consonant && <EachElementTitle>{consonant}</EachElementTitle>}
-      {authorname && <EachElementTitle>{authorname}</EachElementTitle>}
-      {bookname && <EachElementTitle>{bookname}</EachElementTitle>}
-      {gwoncha && <EachElementTitle>{gwoncha}</EachElementTitle>}
-      {munche && <EachElementTitle>{munche}</EachElementTitle>}
-      {title && <EachElementTitle>{title}</EachElementTitle>}
+      <LiteratureTitle>한국문집총간</LiteratureTitle>
     </DisplayPositioner>
   );
 }

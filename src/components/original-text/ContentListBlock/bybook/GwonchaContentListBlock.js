@@ -16,27 +16,30 @@ function GwonchaContentListBlock() {
   const clickSeojiContext = useContext(seojiContext);
   const [gwonchaJsonDatas] = useAsync(
     () => getRightGwoncha(clickSeojiContext),
-    [clickSeojiContext],
+    [clickSeojiContext.clickSeoji],
   );
+
+  console.log('right block : gwonchaJsonDatas: ', gwonchaJsonDatas);
   if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
     return <div>zz</div>;
   return (
     <>
-      {gwonchaJsonDatas.data.datas.map((item) => (
+      {gwonchaJsonDatas.data.datas.map((gwoncha) => (
         <>
           <OtherListTableBlock
             icon="gwoncha"
-            key={item.gwonchaId}
-            clickId={item.gwonchaId}>
-            <TableItem>{item.gwonchaTitle}</TableItem>
+            key={gwoncha.gwonchaId}
+            clickId={gwoncha.gwonchaId}>
+            <TableItem>{gwoncha.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
 
-          {item.munches.map((item) => (
+          {gwoncha.munches.map((item) => (
             <OtherListTableBlock
               marginLeft="39px"
               icon="munche"
               key={item.muncheId}
-              clickId={item.muncheId}>
+              clickId={item.muncheId}
+              parentId={gwoncha.gwonchaId}>
               <TableItem>{item.muncheTitle}</TableItem>
             </OtherListTableBlock>
           ))}

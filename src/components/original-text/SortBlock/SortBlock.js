@@ -120,32 +120,14 @@ function SortBlock({ children }) {
   const [sortMenuOpen, setSortMenuOpen] = useState(true);
   const handleSortMenuOpenButton = () => setSortMenuOpen(!sortMenuOpen);
 
-  // Select Category Filter
-  const [filter, setFilter] = useState('book');
-  const [bookFilter, setbookFilter] = useState(true);
-  const [authorFilter, setauthorFilter] = useState(false);
-  const handlebookFilter = () => {
-    setbookFilter(true);
-    setauthorFilter(false);
-  };
-  const handleauthorFilter = () => {
-    setauthorFilter(true);
-    setbookFilter(false);
-  };
-
-  // consonant에 따른 link 연결
-  const { literature } = useParams();
-  const { pathname } = useLocation();
-  const includeByBook = pathname.includes('bybook');
-  const includeByAuthor = pathname.includes('byauthor');
-  const byBookLink = `/original-text/${literature}/bybook/`;
-  const byAuthorLink = `/original-text/${literature}/byauthor/`;
-
   // consonant 설정
-  const { state } = useLocation();
-  const [consonant, setConsonant] = useState(
-    state === null ? 'All' : state.consonant,
+  const { pathname } = useLocation();
+  const [consonant, setConsonant] = useState('all');
+  // Select Category Filter
+  const [filter, setFilter] = useState(
+    pathname.includes('book') ? 'book' : 'author',
   );
+
   const consonants = [
     { consonant: '가', id: 'A' },
     { consonant: '나', id: 'B' },
@@ -165,10 +147,10 @@ function SortBlock({ children }) {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [consonant]);
+  }, [filter, consonant]);
 
   const navigate = useNavigate();
-  const link4Consonant = '/menu-explore/1';
+  const link4Consonant = '/menu-explore/';
 
   return (
     <selectedConsonant.Provider value={consonant}>
@@ -182,12 +164,20 @@ function SortBlock({ children }) {
           </TitlePositioner>
 
           <FilterPositioner>
-            <CircleCheckButton onClick={() => setFilter('book')}>
+            <CircleCheckButton
+              onClick={() => {
+                setFilter('book');
+                navigate(link4Consonant + 'book/all');
+              }}>
               {filter === 'book' && <MdDone />}
             </CircleCheckButton>
             <CategoryName>서명별</CategoryName>
 
-            <CircleCheckButton onClick={() => setFilter('author')}>
+            <CircleCheckButton
+              onClick={() => {
+                setFilter('author');
+                navigate(link4Consonant + 'author/all');
+              }}>
               {filter === 'author' && <MdDone />}
             </CircleCheckButton>
             <CategoryName>저자별</CategoryName>
@@ -195,12 +185,10 @@ function SortBlock({ children }) {
 
           <ConsonantPositioner>
             <CircleColorButton
-              select={'All' === consonant}
+              select={'all' === consonant}
               onClick={() => {
-                setConsonant('All');
-                navigate(link4Consonant, {
-                  state: { consonant: 'All', filter: filter },
-                });
+                setConsonant('all');
+                window.location.replace(`/menu-explore/${filter}/all`);
               }}
               width="30px">
               전체
@@ -211,9 +199,7 @@ function SortBlock({ children }) {
                 key={item.id}
                 onClick={() => {
                   setConsonant(item.id);
-                  navigate(link4Consonant, {
-                    state: { consonant: item.id, filter: filter },
-                  });
+                  navigate(link4Consonant + filter + '/' + item.id);
                 }}
                 width="13px">
                 {item.consonant}

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
-import { leftBlockDepth } from '../../../pages/menuExplore/consonant/Consonant';
+import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
 import {
   gwonchaContext,
   muncheContext,
@@ -49,12 +49,13 @@ function OtherListTableBlock({
   icon = '',
   numbering = 1,
   clickId = '',
+  parentId = '',
   children,
 }) {
   const depthContext = useContext(leftBlockDepth);
   const clickGwonchaContext = useContext(gwonchaContext);
-  const ClickMuncheContext = useContext(muncheContext);
-  const ClickFinalContext = useContext(finalContext);
+  const clickMuncheContext = useContext(muncheContext);
+  const clickFinalContext = useContext(finalContext);
   return (
     <Positioner
       marginLeft={marginLeft}
@@ -63,11 +64,15 @@ function OtherListTableBlock({
           depthContext.setDepth(2);
           clickGwonchaContext.setClickGwoncha(clickId);
         } else if (icon === 'munche') {
+          if (parentId !== '') {
+            depthContext.setDepth(2);
+            clickGwonchaContext.setClickGwoncha(parentId);
+          }
           depthContext.setDepth(3);
-          ClickMuncheContext.setClickMunche(clickId);
+          clickMuncheContext.setClickMunche(clickId);
         } else if (icon === 'final') {
           depthContext.setDepth(4);
-          ClickFinalContext.setClickFinal(clickId);
+          clickFinalContext.setClickFinal(clickId);
         }
       }}>
       <IconPositioner>

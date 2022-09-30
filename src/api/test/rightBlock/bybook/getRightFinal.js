@@ -7,41 +7,84 @@ function getRightFinal(muncheId) {
     method: 'get',
   });
   const muncheDatas1 = {
-    seojiId: '가암유고',
+    seojiId: 'ITKC_MO_1116A',
     seojiTitle: '가암유고',
-    gwonchaId: '가암유고-可庵遺稿卷之一',
+    gwonchaId: 'ITKC_MO_1116A_0010',
     gwonchaTitle: '可庵遺稿卷之一',
-    muncheTitle: '賦1',
+    muncheTitle: '賦',
     finals: [
       {
-        finalId: '가암유고-可庵遺稿卷之一-賦-出師再上表賦 應製',
+        finalId: 'ITKC_MO_1116A_0010_010_0010',
         finalTitle: '出師再上表賦 應製',
       },
       {
-        finalId: '가암유고-可庵遺稿卷之一-賦-卧念公服坐賦',
+        finalId: 'ITKC_MO_1116A_0010_010_0020',
         finalTitle: '卧念公服坐賦',
       },
     ],
   };
   const muncheDatas2 = {
-    seojiId: '가암유고',
+    seojiId: 'ITKC_MO_1116A',
     seojiTitle: '가암유고',
-    gwonchaId: '가암유고-可庵遺稿卷之一',
+    gwonchaId: 'ITKC_MO_1116A_0010',
     gwonchaTitle: '可庵遺稿卷之一',
-    muncheTitle: '賦1',
+    muncheTitle: '詩',
     finals: [
       {
-        finalId: '가주집-家州集序-序',
-        finalTitle: '家州集序[鄭斗卿]',
+        finalId: 'ITKC_MO_1116A_0010_020_0010',
+        finalTitle: '擬古。續行路難。丁丑',
+      },
+      {
+        finalId: 'ITKC_MO_1116A_0010_020_0020',
+        finalTitle: '擬古。息夫人',
       },
     ],
   };
 
-  if (muncheId.clickMunche.includes('가암유고'))
+  const muncheDatas3 = {
+    seojiId: 'ITKC_MO_1116A',
+    seojiTitle: '가암유고',
+    gwonchaId: 'ITKC_MO_1116A_0020',
+    gwonchaTitle: '可庵遺稿卷之二',
+    muncheTitle: '詩',
+    finals: [
+      {
+        finalId: 'ITKC_MO_1116A_0020_010_0010',
+        finalTitle: '大殿春帖字',
+      },
+      {
+        finalId: 'ITKC_MO_1116A_0020_010_0020',
+        finalTitle: '謁道峯書院',
+      },
+    ],
+  };
+
+  const muncheDatasA = {
+    seojiId: 'ITKC_MO_1036A',
+    seojiTitle: '비수재집',
+    gwonchaId: 'ITKC_MO_1036A_0010',
+    gwonchaTitle: '賁需齋先生文集卷之一',
+    muncheTitle: '䟽',
+    finals: [
+      {
+        finalId: 'ITKC_MO_1036A_0010_010_0010',
+        finalTitle: '擬上時務封事',
+      },
+      {
+        finalId: 'ITKC_MO_1036A_0010_010_0020',
+        finalTitle: '代嶺南儒生。請德巖書院賜額䟽',
+      },
+    ],
+  };
+
+  if (muncheId.clickMunche === 'ITKC_MO_1116A_0010_010')
     return JSON.parse(JSON.stringify(muncheDatas1));
-  else if (muncheId.clickMunche.includes('가주집'))
+  else if (muncheId.clickMunche === 'ITKC_MO_1116A_0010_020')
     return JSON.parse(JSON.stringify(muncheDatas2));
-  else return JSON.parse(JSON.stringify(muncheDatas2));
+  else if (muncheId.clickMunche === 'ITKC_MO_1116A_0020_010')
+    return JSON.parse(JSON.stringify(muncheDatas3));
+    else if(muncheId.clickMunche === 'ITKC_MO_1036A_0010_010')return JSON.parse(JSON.stringify(muncheDatasA));
+  else return JSON.parse(JSON.stringify([]));
 }
 
 export default getRightFinal;

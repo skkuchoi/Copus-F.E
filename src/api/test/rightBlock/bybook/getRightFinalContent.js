@@ -8,40 +8,21 @@ function getRightFinalContent(finalId) {
   });
 
   const finalDatasA = {
-    seojiId: '가암유고',
+    seojiId: 'ITKC_MO_1116A',
     seojiTitle: '가암유고',
-    gwonchaId: '가암유고-可庵遺稿卷之一',
+    gwonchaId: 'ITKC_MO_1116A_0010',
     gwonchaTitle: '可庵遺稿卷之一',
-    muncheId: '가암유고-可庵遺稿卷之一-賦',
-    muncheTitle: '賦1',
+    muncheId: 'ITKC_MO_1116A_0010_010',
+    muncheTitle: '賦',
     finalData: [
       {
-        title: '가암유고-可庵遺稿卷之一',
-        content: '可庵遺稿卷之一',
+        title: 'title',
+        content: 'content',
       },
     ],
   };
 
-  const finalDatasB = {
-    seojiId: '가주집',
-    seojiTitle: '가주집',
-    gwonchaId: '가주집-可庵遺稿卷之一',
-    gwonchaTitle: '可庵遺稿卷之一',
-    muncheId: '가주집-可庵遺稿卷之一-賦',
-    muncheTitle: '賦1',
-    finalData: [
-      {
-        title: '가주집-可庵遺稿卷之一',
-        content: '可庵遺稿卷之一',
-      },
-    ],
-  };
-
-  if (finalId.clickFinal.includes('가암유고'))
-    return JSON.parse(JSON.stringify(finalDatasA));
-  else if (finalId.clickFinal.includes('가주집'))
-    return JSON.parse(JSON.stringify(finalDatasB));
-  else return JSON.parse(JSON.stringify(finalDatasB));
+  return JSON.parse(JSON.stringify(finalDatasA));
 }
 
 export default getRightFinalContent;

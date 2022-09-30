@@ -1,22 +1,15 @@
-import React, {
-  useRef,
-  useContext,
-  useState,
-  useEffect,
-  createContext,
-} from 'react';
+import React, { useRef, useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { TiPlusOutline, TiMinusOutline } from 'react-icons/ti';
+
 import useAsync from '../../../hooks/useAsync';
 import { selectedConsonant, selectedFilter } from '../SortBlock/SortBlock';
-import { useLocation, useNavigate } from 'react-router-dom';
-import getLeftDepth1List from '../../../api/explore1/sidebar/left/getLeftDepth1List';
+
 import getSeoji from '../../../api/test/leftBlock/bybook/getSeoji';
 import { HiOutlineDocumentText } from 'react-icons/hi';
 import getGwoncha from '../../../api/test/leftBlock/bybook/getGwoncha';
 import getMunche from '../../../api/test/leftBlock/bybook/getMunche';
 import getFinal from '../../../api/test/leftBlock/bybook/getFinal';
-import { leftBlockDepth } from '../../../pages/menuExplore/consonant/Consonant';
+import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
 import {
   seojiContext,
   gwonchaContext,
@@ -26,7 +19,7 @@ import {
 const Container = styled.div`
   border: 1px solid #d9d9d9;
   border-right: none;
-  height: 85vh;
+  height: 80vh;
   overflow-y: scroll;
   overflow-x: scroll;
 
@@ -48,7 +41,7 @@ const ListItemPositioner = styled.div`
   flex-direction: row;
   align-items: left;
   padding: 5px 10px;
-
+  width: 500px;
   .list-icon {
     color: gray;
     margin-right: 3px;
@@ -67,7 +60,7 @@ const ListLi = styled.li`
   }
 `;
 
-function Sidebar() {
+function BookSidebar() {
   const container = useRef();
 
   useEffect(() => {
@@ -95,7 +88,10 @@ function Sidebar() {
   const [finalListDatas, setFinalListDatas] = useState([]);
 
   // 서지 api 요청, consonant가 바뀔 때마다
-  const [seojiJsonDatas] = useAsync(() => getSeoji(0, consonant), [consonant]);
+  const [seojiJsonDatas] = useAsync(
+    () => getSeoji(filter, 0, consonant),
+    [consonant],
+  );
   // 서지 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (seojiJsonDatas.data !== null) {
@@ -116,10 +112,10 @@ function Sidebar() {
 
   // 권차 api 요청, seojiTitle이 바뀔 때마다
   const [gwonchaJsonDatas] = useAsync(
-    () => getGwoncha(1, clickSeojiContext.clickSeoji),
+    () => getGwoncha(filter, 1, clickSeojiContext.clickSeoji),
     [clickSeojiContext.clickSeoji, depthContext.depth],
   );
-
+  //console.log('권차 사이드바 갖와: ', gwonchaJsonDatas);
   //권차 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (gwonchaJsonDatas.data !== null) {
@@ -144,7 +140,7 @@ function Sidebar() {
 
   // 문체 api 요청, click gwonch 했을 때마다
   const [muncheJsonDatas] = useAsync(
-    () => getMunche(2, clickGwonchaContext.clickGwoncha),
+    () => getMunche(filter, 2, clickGwonchaContext.clickGwoncha),
     [clickGwonchaContext.clickGwoncha],
   );
 
@@ -172,7 +168,7 @@ function Sidebar() {
 
   // 최종정보 api 요청, click munche 했을 때마다
   const [finalJsonDatas] = useAsync(
-    () => getFinal(3, clickMuncheContext.clickMunche),
+    () => getFinal(filter, 3, clickMuncheContext.clickMunche),
     [clickMuncheContext.clickMunche],
   );
 
@@ -195,20 +191,11 @@ function Sidebar() {
     }
   }, [finalJsonDatas]);
 
-  //최종정보
-
   // set scroll 0 whenever click filter || consonant
   useEffect(() => {
     container.current.scrollTo(0, 0);
-
-    // setGwonchaListDatas([]);
-    // setMuncheListDatas([]);
-    // setFinalListDatas([]);
-    // setIncludeGwonchaData({});
-    // setIncludeMuncheData({});
-    // setIncludeFinalData({});
   }, [filter, consonant]);
-  //const moveHeight = height < 400 ? 0 : 300;
+
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||
@@ -293,4 +280,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default BookSidebar;

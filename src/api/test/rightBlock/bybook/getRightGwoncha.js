@@ -1,37 +1,37 @@
 import axios from 'axios';
 
 function getRightGwoncha(seojiId) {
-  console.log('서지 아이디는: ', seojiId.clickSeoji);
+  console.log('seoji Id 요청: ', seojiId);
   const response = axios({
     url: `/gwoncha/${seojiId.clickSeoji}`,
     method: 'get',
   });
 
   const gwonchaDatasA = {
-    seojiId: '가암유고',
+    seojiId: 'ITKC_MO_1116A',
     seojiTitle: '가암유고',
     datas: [
       {
-        gwonchaId: '가암유고-可庵遺稿卷之一',
+        gwonchaId: 'ITKC_MO_1116A_0010',
         gwonchaTitle: '可庵遺稿卷之一',
         munches: [
           {
-            muncheId: '가암유고-可庵遺稿卷之一-賦',
+            muncheId: 'ITKC_MO_1116A_0010_010',
             muncheTitle: '賦',
+          },
+          {
+            muncheId: 'ITKC_MO_1116A_0010_020',
+            muncheTitle: '詩',
           },
         ],
       },
       {
-        gwonchaId: '가암유고-可庵遺稿卷之二',
+        gwonchaId: 'ITKC_MO_1116A_0020',
         gwonchaTitle: '可庵遺稿卷之二',
         munches: [
           {
-            muncheId: '가암유고-可庵遺稿卷之二-賦',
-            muncheTitle: '賦',
-          },
-          {
-            muncheId: '가암유고-可庵遺稿卷之二-賦',
-            muncheTitle: '賦',
+            muncheId: 'ITKC_MO_1116A_0020_010',
+            muncheTitle: '詩',
           },
         ],
       },
@@ -69,10 +69,39 @@ function getRightGwoncha(seojiId) {
     ],
   };
 
-  if (seojiId.clickSeoji.includes('가암유고'))
+  const gwonchaDatasC = {
+    seojiId: 'ITKC_MO_1036A',
+    seojiTitle: '비수재집',
+    datas: [
+      {
+        gwonchaId: 'ITKC_MO_1036A_0010',
+        gwonchaTitle: '賁需齋先生文集卷之一',
+        munches: [
+          {
+            muncheId: 'ITKC_MO_1036A_0010_010',
+            muncheTitle: '詩',
+          },
+        ],
+      },
+      {
+        gwonchaId: 'ITKC_MO_1036A_0020',
+        gwonchaTitle: '賁需齋先生文集卷之二',
+        munches: [
+          {
+            muncheId: 'ITKC_MO_1036A_0020_010',
+            muncheTitle: '䟽',
+          },
+        ],
+      },
+    ],
+  };
+
+  if (seojiId.clickSeoji === 'ITKC_MO_1116A')
     return JSON.parse(JSON.stringify(gwonchaDatasA));
   else if (seojiId.clickSeoji.includes('가주집'))
     return JSON.parse(JSON.stringify(gwonchaDatasB));
+  else if (seojiId.clickSeoji === 'ITKC_MO_1036A')
+    return JSON.parse(JSON.stringify(gwonchaDatasC));
   else return JSON.parse(JSON.stringify(gwonchaDatasB));
 }
 

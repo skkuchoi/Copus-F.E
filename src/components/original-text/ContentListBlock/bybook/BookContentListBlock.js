@@ -1,11 +1,10 @@
-import React, { useContext, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import getRightSeoji from '../../../../api/test/rightBlock/bybook/getRightSeoji';
 import useAsync from '../../../../hooks/useAsync';
-import { leftBlockDepth } from '../../../../pages/menuExplore/consonant/Consonant';
-import { clickSeojiContext } from '../../SidebarBlock/Sidebar';
-import { selectedConsonant } from '../../SortBlock/SortBlock';
+
+import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import BookTableBlock from '../BookTableBlock';
 
 const TableItem = styled.p`
@@ -37,13 +36,16 @@ const BugaButton = styled.div`
 `;
 function BookContentListBlock() {
   let id = 1;
-  const depthContext = useContext(leftBlockDepth);
+
   const consonant = useContext(selectedConsonant);
+  const filter = useContext(selectedFilter);
 
   const [seojiJsonDatas] = useAsync(
-    () => getRightSeoji(consonant),
+    () => getRightSeoji(filter, consonant),
     [consonant],
   );
+
+  //console.log('right block : seojiJsonDatas: ', seojiJsonDatas);
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <div>zz</div>;
   return (
@@ -52,7 +54,8 @@ function BookContentListBlock() {
         <BookTableBlock
           bgColor="#edeaea"
           key={item.seojiId}
-          clickId={item.seojiId}>
+          clickId={item.seojiId}
+          authorName={filter === 'author' ? item.authorName : ''}>
           <TableItem>{id++}</TableItem>
           <TableItem>{item.seojiTitle}</TableItem>
           <TableItem>{item.authorName}</TableItem>

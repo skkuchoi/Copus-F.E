@@ -10,6 +10,24 @@ const ContentPositioner = styled.div`
   flex-direction: column;
 `;
 
+const ContentRoute = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const RouteText = styled.h6`
+  font-size: 16px;
+  margin: 0;
+  margin-bottom: 5px;
+  ::before {
+    content: '▶';
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 10px;
+    position: relative;
+    top: -2px;
+  }
+`;
 const Title = styled.div`
   font-size: 25px;
   font-weight: bold;
@@ -92,25 +110,33 @@ export default function Content() {
   const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
   const content =
     '湖天寒欲雪。陪坐獨春風。承訓方知悔。繙書枉用工。正心除外騖。觀理貴中通。曾傳尋門路。庶幾次第功。';
-
+  if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)
+    return <div>zz</div>;
   return (
-    <ContentPositioner>
-      <Title>{title}</Title>
+    <>
+      <ContentRoute>
+        <RouteText>{finalDataJsonDatas.data.seojiTitle}</RouteText>
+        <RouteText>{finalDataJsonDatas.data.gwonchaTitle}</RouteText>
+        <RouteText>{finalDataJsonDatas.data.muncheTitle}</RouteText>
+      </ContentRoute>
+      <ContentPositioner>
+        <Title>{title}</Title>
 
-      <SubTitle>
-        {title}
-        <Wonju>{wonju}</Wonju>
-        <Page>{page}</Page>
-      </SubTitle>
+        <SubTitle>
+          {title}
+          <Wonju>{wonju}</Wonju>
+          <Page>{page}</Page>
+        </SubTitle>
 
-      <CopyBlock>
-        <DciInformation>[DCI]{dci}</DciInformation>
-        <CopyButton>DCI 복사</CopyButton>
-        <CopyButton>URL 복사</CopyButton>
-      </CopyBlock>
+        <CopyBlock>
+          <DciInformation>[DCI]{dci}</DciInformation>
+          <CopyButton>DCI 복사</CopyButton>
+          <CopyButton>URL 복사</CopyButton>
+        </CopyBlock>
 
-      <ContentText>{content}</ContentText>
-      <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
-    </ContentPositioner>
+        <ContentText>{content}</ContentText>
+        <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
+      </ContentPositioner>
+    </>
   );
 }

@@ -16,28 +16,8 @@ import NotWorking from './pages/NotWorking/NotWorking';
 
 import SearchResult from './pages/searchResult/SearchResult';
 
-import OriginalTextLiterature from './pages/original-text/OriginalTextLiterature';
-import OriginalTextBy from './pages/original-text/OriginalTextBy';
-
-import BookOriginalTextDetail from './pages/original-text/bybook/detail/OriginalTextDetail';
-import BookOriginalTextCategory from './pages/original-text/bybook/category/OriginalTextCategory';
-import BookOriginalTextGwoncha from './pages/original-text/bybook/gwoncha/OriginalTextGwoncha';
-import BookOriginalTextMunche from './pages/original-text/bybook/munche/OriginalTextMunche';
-import BookOriginalTextTitle from './pages/original-text/bybook/title/OriginalTextTitle';
-
-import AuthorOriginalTextDetail from './pages/original-text/byauthor/detail/OriginalTextDetail';
-import AuthorOriginalTextCategory from './pages/original-text/byauthor/category/OriginalTextCategory';
-import AuthorOriginalTextGwoncha from './pages/original-text/byauthor/gwoncha/OriginalTextGwoncha';
-import AuthorOriginalTextMunche from './pages/original-text/byauthor/munche/OriginalTextMunche';
-import AuthorOriginalTextTitle from './pages/original-text/byauthor/title/OriginalTextTitle';
-
-import Seoji from './pages/menuExplore/seoji/Seoji';
-import Gwoncha from './pages/menuExplore/gwoncha/Gwoncha';
-import Munche from './pages/menuExplore/munche/Munche';
-import Final from './pages/menuExplore/final/Final';
-import Consonant from './pages/menuExplore/consonant/Consonant';
-import TestSidebar from './components/testSidebar/TestSidebar';
-import TestEachSidebar from './components/testEachSidebar/TestEachSidebar';
+import MenuExploreAuthor from './pages/menuExplore/MenuExploreAuthor';
+import MenuExploreBook from './pages/menuExplore/MenuExploreBook';
 
 const Container = styled.div`
   position: absolute;
@@ -62,26 +42,6 @@ function App() {
     <Container>
       <FontStyle>
         <Routes>
-          <Route
-            path="/test"
-            exact={true}
-            element={<TestSidebar requestId="가암유고1-권차1" />}
-          />
-          <Route
-            path="/test1"
-            exact={true}
-            element={
-              <TestEachSidebar
-                consonant="A"
-                requestId="가암유고1-권차1-문체1"
-              />
-            }
-          />
-          <Route
-            path="/test1/:seojiId"
-            exact={true}
-            element={<TestEachSidebar />}
-          />
           <Route path="/" exact={true} element={<Home />} />
 
           {/* about page */}
@@ -121,9 +81,19 @@ function App() {
             exact={true}
             element={<SearchResult />}
           />
+
           {/* New Explore;;ㅋㅋ */}
-          <Route path="/menu-explore" exact={true} element={<Consonant />} />
-          
+
+          <Route
+            path="/menu-explore/book/:consonant"
+            exact={true}
+            element={<MenuExploreBook filter="book" />}
+          />
+          <Route
+            path="/menu-explore/author/:consonant"
+            exact={true}
+            element={<MenuExploreBook filter="author" />}
+          />
 
           <Route path="/server-error" element={<NotWorking />} />
           <Route path="*" element={<NotFound />} />

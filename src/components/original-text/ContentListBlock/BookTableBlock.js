@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { leftBlockDepth } from '../../../pages/menuExplore/consonant/Consonant';
-import { seojiContext } from '../../shared/ContentLayout';
+import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
+import { authorContext, seojiContext } from '../../shared/ContentLayout';
 
 const ContentListTablePositioner = styled.div`
   display: grid;
@@ -22,17 +22,26 @@ function BookTableBlock({
   border = 'none',
   bgColor = 'none',
   clickId = '',
+  authorName = '',
   children,
 }) {
   const depthContext = useContext(leftBlockDepth);
   const clickSeojiContext = useContext(seojiContext);
+  const clickAuthorContext = useContext(authorContext);
+  //console.log('전달받은 clickId: ', clickId);
   return (
     <ContentListTablePositioner
       border={border}
       bgColor={bgColor}
       onClick={() => {
+        // depthContext.setDepth(0);
+        if (authorName !== '') {
+          clickAuthorContext.setClickAuthor(authorName);
+          depthContext.setDepth(0);
+        }
         depthContext.setDepth(1);
         clickSeojiContext.setClickSeoji(clickId);
+        //console.log('seojiContext 변경됐어: ', clickSeojiContext.clickSeoji);
       }}>
       {children}
     </ContentListTablePositioner>

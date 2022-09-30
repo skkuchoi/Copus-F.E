@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import '../../shared/linkStyle.css';
 
@@ -22,12 +21,15 @@ const Title = styled.h6`
 `;
 
 function ContentListTitleBlock({ title = '', children }) {
-  return (
-    <TitlePositioner>
-      {title !== '' && <Title>{title}</Title>}
-      {children}
-    </TitlePositioner>
-  );
+  if (title !== '') {
+    return (
+      <TitlePositioner>
+        <Title>{title}</Title>
+        {children}
+      </TitlePositioner>
+    );
+  }
+  return <TitlePositioner>{children}</TitlePositioner>;
 }
 
 export default ContentListTitleBlock;

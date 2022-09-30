@@ -1,30 +1,77 @@
 import axios from 'axios';
 
-function getFinal(depth, currentId) {
+function getFinal(filter, depth, currentId) {
   const response = axios({
-    url: `/book/${depth}/${currentId}/`,
+    url: `/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
-  const muncheDatas1 = {
+  const bybook1 = {
     datas: [
       {
-        childId: '가암유고-可庵遺稿卷之一-賦-出師再上表賦 應製',
+        childId: 'ITKC_MO_1116A_0010_010_0010',
         childTitle: '出師再上表賦 應製',
       },
       {
-        childId: '가암유고-可庵遺稿卷之一-賦-卧念公服坐賦',
+        childId: 'ITKC_MO_1116A_0010_010_0020',
         childTitle: '卧念公服坐賦',
       },
     ],
   };
-  const muncheDatas2 = {
-    datas: [{ childId: '가주집-家州集序-序', childTitle: '家州集序[鄭斗卿]' }],
+  const bybook2 = {
+    datas: [
+      {
+        childId: 'ITKC_MO_1116A_0010_020_0010',
+        childTitle: '擬古。續行路難。丁丑',
+      },
+      {
+        childId: 'ITKC_MO_1116A_0010_020_0020',
+        childTitle: '擬古。息夫人',
+      },
+    ],
   };
-  if (currentId.includes('가암유고'))
-    return JSON.parse(JSON.stringify(muncheDatas1));
-  else if (currentId.includes('가주집'))
-    return JSON.parse(JSON.stringify(muncheDatas2));
-  else return JSON.parse(JSON.stringify({ datas: [] }));
+  const bybook3 = {
+    datas: [
+      {
+        childId: 'ITKC_MO_1116A_0020_010_0010',
+        childTitle: '大殿春帖字',
+      },
+      {
+        childId: 'ITKC_MO_1116A_0020_010_0020',
+        childTitle: '謁道峯書院',
+      },
+    ],
+  };
+
+  const byauthor1 = {
+    datas: [
+      {
+        childId: 'ITKC_MO_1036A_0010_010_0010',
+        childTitle: '訪朴玉瑞。不遇。壬寅',
+      },
+      {
+        childId: 'ITKC_MO_1036A_0010_010_0020',
+        childTitle: '自警',
+      },
+    ],
+  };
+
+  switch (filter) {
+    case 'book':
+      if (currentId === 'ITKC_MO_1116A_0010_010')
+        return JSON.parse(JSON.stringify(bybook1));
+      else if (currentId === 'ITKC_MO_1116A_0010_020')
+        return JSON.parse(JSON.stringify(bybook2));
+      else if (currentId === 'ITKC_MO_1116A_0020_010')
+        return JSON.parse(JSON.stringify(bybook3));
+      else return JSON.parse(JSON.stringify({ datas: [] }));
+    case 'author':
+      if (currentId === 'ITKC_MO_1036A_0010_010')
+        return JSON.parse(JSON.stringify(byauthor1));
+      else return JSON.parse(JSON.stringify({ datas: [] }));
+
+    default:
+      return;
+  }
 }
 
 export default getFinal;
