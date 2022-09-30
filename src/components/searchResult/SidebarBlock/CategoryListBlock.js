@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { IoMdBook } from 'react-icons/io';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
+import { totalFilter } from '../SearchResultLayout';
 
 const CategoryListPositioner = styled.div`
   display: flex;
@@ -67,13 +68,22 @@ function CategoryListBlock({
   const link4AuthorName = `/search-result/author-name/${keyword}`;
   const link4Content = `/search-result/content/${keyword}`;
 
+  const totalDetailFilter = useContext(totalFilter);
   if (filter === 'total')
     return (
       <CategoryListPositioner>
         <CategoryListItemPositioner>
           <IoMdBook className="document-icon" />
           <Link to={link4Total} className="link-line">
-            <CategoryListItemName className="focus">
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'total'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('total');
+              }}>
               전체({totalCount})
             </CategoryListItemName>
           </Link>
@@ -84,7 +94,15 @@ function CategoryListBlock({
             to={link4Total}
             className="link-line"
             state={{ display: 'bookTitle' }}>
-            <CategoryListItemName className="total-not-focus">
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'bookTitle'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('bookTitle');
+              }}>
               서명({bookTitleCount})
             </CategoryListItemName>
           </Link>
@@ -96,7 +114,15 @@ function CategoryListBlock({
             to={link4Total}
             className="link-line"
             state={{ display: 'authorName' }}>
-            <CategoryListItemName className="total-not-focus">
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'authorName'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('authorName');
+              }}>
               저/편/필자({authorNameCount})
             </CategoryListItemName>
           </Link>
@@ -104,8 +130,19 @@ function CategoryListBlock({
 
         <CategoryListItemPositioner>
           <IoMdBook className="document-icon" />
-          <Link to={link4Content} className="link-line">
-            <CategoryListItemName className="total-not-focus">
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'gwonchaTitle' }}>
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'gwonchaTitle'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('gwonchaTitle');
+              }}>
               권차({gwonchaTitleCount})
             </CategoryListItemName>
           </Link>
@@ -113,8 +150,19 @@ function CategoryListBlock({
 
         <CategoryListItemPositioner>
           <IoMdBook className="document-icon" />
-          <Link to={link4Content} className="link-line">
-            <CategoryListItemName className="total-not-focus">
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'muncheTitle' }}>
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'muncheTitle'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('muncheTitle');
+              }}>
               문체({muncheTitleCount})
             </CategoryListItemName>
           </Link>
@@ -126,7 +174,15 @@ function CategoryListBlock({
             to={link4Total}
             className="link-line"
             state={{ display: 'content' }}>
-            <CategoryListItemName className="total-not-focus">
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'content'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('content');
+              }}>
               원문({contentCount})
             </CategoryListItemName>
           </Link>
@@ -134,8 +190,19 @@ function CategoryListBlock({
 
         <CategoryListItemPositioner>
           <IoMdBook className="document-icon" />
-          <Link to={link4Content} className="link-line">
-            <CategoryListItemName className="total-not-focus">
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'dataId' }}>
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'dataId'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('dataId');
+              }}>
               자료ID({dataIdCount})
             </CategoryListItemName>
           </Link>

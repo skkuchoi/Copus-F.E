@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ResultDataBlock from './ResultDataBlock/ResultDataBlock';
 import DisplaySelectedListBlock from './DisplayBlock/DisplaySelectedListBlock';
@@ -20,12 +20,17 @@ const ContentPositioner = styled.div`
   flex-direction: column;
 `;
 
+export const totalFilter = createContext();
+
 function SearchResultLayout() {
   const { keyword } = useParams();
   const { pathname } = useLocation();
 
+  const [totalDetailFilter, setTotalDetailFilter] = useState('total');
   let filter;
-
+  useEffect(() => {
+    console.log(totalDetailFilter);
+  }, [totalDetailFilter]);
   const filterUri = {
     total: 'total',
     'book-title': 'bookTitle',
@@ -49,13 +54,19 @@ function SearchResultLayout() {
   if (leftDatas.data === null) return <div>zz</div>;
   return (
     <>
-      <DisplaySelectedListBlock totalCount={leftDatas.data.totalCount} />
-      <MainContentBlock>
-        <SidebarBlock leftDatas={leftDatas.data} />
-        <ContentPositioner>
-          <ResultDataBlock />
-        </ContentPositioner>
-      </MainContentBlock>
+      <totalFilter.Provider
+        value={{
+          totalDetailFilter: totalDetailFilter,
+          setTotalDetailFilter: setTotalDetailFilter,
+        }}>
+        <DisplaySelectedListBlock totalCount={leftDatas.data.totalCount} />
+        <MainContentBlock>
+          <SidebarBlock leftDatas={leftDatas.data} />
+          <ContentPositioner>
+            <ResultDataBlock />
+          </ContentPositioner>
+        </MainContentBlock>
+      </totalFilter.Provider>
     </>
   );
 }
