@@ -22,6 +22,9 @@ const Card = styled.div`
   width: 1500px;
   background-image: url(${cardBg1});
   background-size: 100% 100%;
+  @media screen and (max-width : 800px){
+    display : none;
+  }
 `;
 
 const FontBlock = styled.div`

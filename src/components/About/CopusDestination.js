@@ -39,7 +39,7 @@ const ContentBlock =styled.div`
 const TextBlock = styled.div`
     display : flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     margin-bottom : 10px;
     margin-top: 10px;
@@ -57,43 +57,43 @@ const TextStyle2 = styled.div`
 
 const GlassImg = styled.div`
     height : 100px;
-    width : 100px;
+    width : 140px;
     background-image: url(${glassImg});
-    background-size: 100% 100%;
-    background-color: yellow;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 100%;
-    margin-right : 10px;
+    background-size: 100% 100% ;
+    //background-color: yellow;
+    //box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    //border-radius: 100%;
+    //margin-right : 10px;
 `
 
 const PlusImg = styled.div`
     height : 100px;
-    width : 100px;
+    width : 270px;
     background-image: url(${plusImg});
     background-size: 100% 100%;
-    background-color: yellow;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 100%;
+    //background-color: yellow;
+    //box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    //border-radius: 100%;
 `
 
 const CollaborationImg = styled.div`
     height : 100px;
-    width : 150px;
+    width : 240px;
     background-image: url(${collaboration});
     background-size: 100% 100%;
-    background-color: white;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 100%;
+    //background-color: white;
+    //box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    //border-radius: 100%;
 `
 
 const HatImg = styled.div`
     height : 100px;
-    width : 200px;
+    width : 300px;
     background-image: url(${hatImg});
     background-size: 100% 100%;
-    background-color: white;
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 100%;
+    //background-color: white;
+    //box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+    //border-radius: 100%;
 `
 
 function CopusDestination(){

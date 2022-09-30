@@ -27,6 +27,10 @@ const Card = styled.div`
   background-image: url(${copusImg});
   background-size: 100% 100%;
   margin-top : 20px;
+  @media screen and (max-width : 800px){
+    height : 300px;
+    width : 500px; 
+  }
 `;
 
 function WhatIsCopus () {
