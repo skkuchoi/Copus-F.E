@@ -67,7 +67,16 @@ function App() {
             exact={true}
             element={<TestSidebar requestId="가암유고1-권차1" />}
           />
-          <Route path="/test1" exact={true} element={<TestEachSidebar />} />
+          <Route
+            path="/test1"
+            exact={true}
+            element={
+              <TestEachSidebar
+                consonant="A"
+                requestId="가암유고1-권차1-문체1"
+              />
+            }
+          />
           <Route
             path="/test1/:seojiId"
             exact={true}
@@ -113,106 +122,8 @@ function App() {
             element={<SearchResult />}
           />
           {/* New Explore;;ㅋㅋ */}
-          <Route path="/menu-explore/1" exact={true} element={<Consonant />} />
-          <Route path="/menu-explore/2" exact={true} element={<Seoji />} />
-          <Route path="/menu-explore/3" exact={true} element={<Gwoncha />} />
-          <Route path="/menu-explore/4" exact={true} element={<Munche />} />
-          <Route path="/menu-explore/seoji" exact={true} element={<Seoji />} />
-          <Route
-            path="/menu-explore/gwoncha/:id"
-            exact={true}
-            element={<Gwoncha />}
-          />
-          <Route
-            path="/menu-explore/munche/:id"
-            exact={true}
-            element={<Munche />}
-          />
-          <Route
-            path="/menu-explore/final/:id"
-            exact={true}
-            element={<Final />}
-          />
-          {/* Original - Text */}
-          <Route
-            path="/original-text/:literature"
-            exact={true}
-            element={<OriginalTextLiterature />}
-          />
-
-          {/* OriginalText / bybook */}
-          <Route
-            path="/original-text/:literature/bybook"
-            exact={true}
-            element={<OriginalTextBy />}
-          />
-
-          <Route
-            path="/original-text/:literature/bybook/:consonant"
-            exact={true}
-            element={<BookOriginalTextCategory />}
-          />
-
-          <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname"
-            exact={true}
-            element={<BookOriginalTextGwoncha />}
-          />
-
-          <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname/:gwoncha"
-            exact={true}
-            element={<BookOriginalTextMunche />}
-          />
-
-          <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname/:gwoncha/:munche"
-            exact={true}
-            element={<BookOriginalTextTitle />}
-          />
-
-          <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname/:gwoncha/:munche/:title"
-            exact={true}
-            element={<BookOriginalTextDetail />}
-          />
-
-          {/* OriginalText / byauthor */}
-          <Route
-            path="/original-text/:literature/byauthor"
-            exact={true}
-            element={<OriginalTextBy />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant"
-            exact={true}
-            element={<AuthorOriginalTextCategory />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname"
-            exact={true}
-            element={<AuthorOriginalTextGwoncha />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname/:gwoncha"
-            exact={true}
-            element={<AuthorOriginalTextMunche />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname/:gwoncha/:munche"
-            exact={true}
-            element={<AuthorOriginalTextTitle />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname/:gwoncha/:munche/:title"
-            exact={true}
-            element={<AuthorOriginalTextDetail />}
-          />
+          <Route path="/menu-explore" exact={true} element={<Consonant />} />
+          
 
           <Route path="/server-error" element={<NotWorking />} />
           <Route path="*" element={<NotFound />} />

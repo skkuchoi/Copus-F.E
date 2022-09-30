@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
 import OtherListTableBlock from '../OtherListTableBlock';
+import useAsync from '../../../../hooks/useAsync';
+import getRightGwoncha from '../../../../api/test/rightBlock/bybook/getRightGwoncha';
+import { seojiContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -10,56 +13,32 @@ const TableItem = styled.p`
 `;
 
 function GwonchaContentListBlock() {
-  const rightDatas = {
-    seojiId: 'seojiId',
-    seojiTitle: 'seojiTitle',
-    datas: [
-      {
-        gwonchaId: 'gwonchaId1',
-        gwonchaTitle: 'gwonchaTitle',
-        munches: [
-          {
-            muncheId: 'muncheId3',
-            muncheTitle: 'muncheTitle',
-          },
-        ],
-      },
-      {
-        gwonchaId: 'gwonchaId2',
-        gwonchaTitle: 'gwonchaTitle',
-        munches: [
-          {
-            muncheId: 'muncheId1',
-            muncheTitle: 'muncheTitle',
-          },
-          {
-            muncheId: 'muncheId2',
-            muncheTitle: 'muncheTitle',
-          },
-        ],
-      },
-    ],
-  };
-  const realDatas = JSON.parse(JSON.stringify(rightDatas));
-
-  const link4Munche = '/menu-explore/munche/';
-
+  const clickSeojiContext = useContext(seojiContext);
+  const [gwonchaJsonDatas] = useAsync(
+    () => getRightGwoncha(clickSeojiContext),
+    [clickSeojiContext],
+  );
+  if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
+    return <div>zz</div>;
   return (
     <>
-      {realDatas.datas.map((item) => (
+      {gwonchaJsonDatas.data.datas.map((item) => (
         <>
-          <OtherListTableBlock iconNum="1" key={item.gwonchaId}>
+          <OtherListTableBlock
+            icon="gwoncha"
+            key={item.gwonchaId}
+            clickId={item.gwonchaId}>
             <TableItem>{item.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
+
           {item.munches.map((item) => (
-            <Link
-              to={link4Munche + item.muncheId}
-              className="link-line"
-              key={item.muncheId}>
-              <OtherListTableBlock marginLeft="39px" iconNum="2">
-                <TableItem>{item.muncheTitle}</TableItem>
-              </OtherListTableBlock>
-            </Link>
+            <OtherListTableBlock
+              marginLeft="39px"
+              icon="munche"
+              key={item.muncheId}
+              clickId={item.muncheId}>
+              <TableItem>{item.muncheTitle}</TableItem>
+            </OtherListTableBlock>
           ))}
         </>
       ))}

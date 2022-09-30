@@ -116,197 +116,16 @@ function TestSidebar({ requestId }) {
       },
     ],
   };
-  const allDatas = {
-    seoji: [
-      {
-        childId: '가암유고1',
-        childTitle: '가암유고1',
-      },
-      {
-        childId: '가암유고2',
-        childTitle: '가암유고2',
-      },
-      {
-        childId: '가암유고3',
-        childTitle: '가암유고3',
-      },
-      {
-        childId: '가암유고4',
-        childTitle: '가암유고4',
-      },
-      {
-        childId: '가암유고5',
-        childTitle: '가암유고5',
-      },
-      {
-        childId: '가암유고6',
-        childTitle: '가암유고6',
-      },
-      {
-        childId: '가암유고7',
-        childTitle: '가암유고7',
-      },
-      {
-        childId: '가암유고8',
-        childTitle: '가암유고8',
-      },
-      {
-        childId: '가암유고9',
-        childTitle: '가암유고9',
-      },
-      {
-        childId: '가암유고10',
-        childTitle: '가암유고10',
-      },
-      {
-        childId: '가암유고11',
-        childTitle: '가암유고11',
-      },
-      {
-        childId: '가암유고12',
-        childTitle: '가암유고12',
-      },
-      {
-        childId: '가암유고13',
-        childTitle: '가암유고13',
-      },
-      {
-        childId: '가암유고14',
-        childTitle: '가암유고14',
-      },
-      {
-        childId: '가암유고15',
-        childTitle: '가암유고15',
-      },
-      {
-        childId: '가암유고16',
-        childTitle: '가암유고16',
-      },
-      {
-        childId: '가암유고17',
-        childTitle: '가암유고17',
-      },
-      {
-        childId: '가암유고18',
-        childTitle: '가암유고18',
-      },
-      {
-        childId: '가암유고19',
-        childTitle: '가암유고19',
-      },
-      {
-        childId: '가암유고20',
-        childTitle: '가암유고20',
-      },
-      {
-        childId: '가암유고21',
-        childTitle: '가암유고21',
-      },
-    ],
-    gwoncha: [
-      {
-        parentId: '가암유고1',
-        children: [
-          { childId: '가암유고1-권차1', childTitle: '가암유고1-권차1' },
-          { childId: '가암유고1-권차2', childTitle: '가암유고1-권차2' },
-        ],
-      },
-      {
-        parentId: '가암유고2',
-        childId: '가암유고2-권차1',
-        childTitle: '가암유고2-권차1',
-      },
-      {
-        parentId: '가암유고3',
-        childId: '가암유고3',
-        childTitle: '가암유고3',
-      },
-      {
-        parentId: '가암유고4',
-        childId: '가암유고4',
-        childTitle: '가암유고4',
-      },
-      {
-        parentId: '가암유고5',
-        childId: '가암유고5',
-        childTitle: '가암유고5',
-      },
-      {
-        parentId: '가암유고6',
-        childId: '가암유고6',
-        childTitle: '가암유고6',
-      },
-      {
-        parentId: '가암유고7',
-        childId: '가암유고7',
-        childTitle: '가암유고7',
-      },
-      {
-        parentId: '가암유고8',
-        childId: '가암유고8',
-        childTitle: '가암유고8',
-      },
-      {
-        childId: '가암유고9',
-        childTitle: '가암유고9',
-      },
-      {
-        childId: '가암유고10',
-        childTitle: '가암유고10',
-      },
-      {
-        childId: '가암유고11',
-        childTitle: '가암유고11',
-      },
-      {
-        childId: '가암유고12',
-        childTitle: '가암유고12',
-      },
-      {
-        childId: '가암유고13',
-        childTitle: '가암유고13',
-      },
-      {
-        childId: '가암유고14',
-        childTitle: '가암유고14',
-      },
-      {
-        childId: '가암유고15',
-        childTitle: '가암유고15',
-      },
-      {
-        childId: '가암유고16',
-        childTitle: '가암유고16',
-      },
-      {
-        childId: '가암유고17',
-        childTitle: '가암유고17',
-      },
-      {
-        childId: '가암유고18',
-        childTitle: '가암유고18',
-      },
-      {
-        childId: '가암유고19',
-        childTitle: '가암유고19',
-      },
-      {
-        childId: '가암유고20',
-        childTitle: '가암유고20',
-      },
-      {
-        childId: '가암유고21',
-        childTitle: '가암유고21',
-      },
-    ],
-  };
 
   const [gwonchaListData, setGwonchaListData] = useState({});
-  const onClickSeojiTitle = (id) => {
+  const onClickSeojiTitle = (id, data) => {
     setGwonchaListData((prevGwonchaListData) => ({
       ...prevGwonchaListData,
       [id]: !prevGwonchaListData[id],
+      [id + '-view']: !prevGwonchaListData[id],
+      [id + '-data']: data,
     }));
+    console.log(gwonchaListData);
   };
 
   const [muncheListData, setMuncheListData] = useState({});
@@ -328,7 +147,7 @@ function TestSidebar({ requestId }) {
         <>
           <li
             style={{ cursor: 'pointer' }}
-            onClick={() => onClickSeojiTitle(seoji.childId)}>
+            onClick={() => onClickSeojiTitle(seoji.childId, seoji.childTitle)}>
             {seoji.childTitle}
           </li>
           {test2Datas.gwoncha.map((gwoncha) => (

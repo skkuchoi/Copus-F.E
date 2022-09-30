@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import getRightFinalContent from '../../../api/test/rightBlock/bybook/getRightFinalContent';
+import useAsync from '../../../hooks/useAsync';
+import { finalContext } from '../../shared/ContentLayout';
 
 const ContentPositioner = styled.div`
   padding: 12px 0px;
@@ -74,7 +77,22 @@ const Origin = styled.div`
   font-size: 12px;
 `;
 
-export default function Content({ title, wonju, page, dci, content }) {
+export default function Content() {
+  const clickFinalContext = useContext(finalContext);
+
+  const [finalDataJsonDatas] = useAsync(
+    () => getRightFinalContent(clickFinalContext),
+    [clickFinalContext],
+  );
+  console.log('final content data는: ', finalDataJsonDatas);
+
+  const title = '上蘆沙先生';
+  const wonju = '癸丑';
+  const page = 'b137_261a';
+  const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
+  const content =
+    '湖天寒欲雪。陪坐獨春風。承訓方知悔。繙書枉用工。正心除外騖。觀理貴中通。曾傳尋門路。庶幾次第功。';
+
   return (
     <ContentPositioner>
       <Title>{title}</Title>

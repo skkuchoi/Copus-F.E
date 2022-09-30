@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import getRightSeoji from '../../../../api/test/rightBlock/bybook/getRightSeoji';
+import useAsync from '../../../../hooks/useAsync';
+import { leftBlockDepth } from '../../../../pages/menuExplore/consonant/Consonant';
+import { clickSeojiContext } from '../../SidebarBlock/Sidebar';
+import { selectedConsonant } from '../../SortBlock/SortBlock';
 import BookTableBlock from '../BookTableBlock';
 
 const TableItem = styled.p`
@@ -32,99 +37,46 @@ const BugaButton = styled.div`
 `;
 function BookContentListBlock() {
   let id = 1;
-  const books = [
-    {
-      id: 1,
-      name: '월고집(月皐集)',
-      author: '조성가(趙性家)',
-      zipsu: '속98집',
-      year: '1929',
-    },
-    {
-      id: 2,
-      name: '월고집(月皐集)',
-      author: '조성가(趙性家)',
-      zipsu: '속98집',
-      year: '1929',
-    },
-    {
-      id: 3,
-      name: '월고집(月皐集)',
-      author: '조성가(趙性家)',
-      zipsu: '속98집',
-      year: '1929',
-    },
-  ];
+  const depthContext = useContext(leftBlockDepth);
+  const consonant = useContext(selectedConsonant);
 
-  const rightDatas = {
-    count: '',
-    datas: [
-      {
-        seojiId: 'seojiId',
-        seojiTitle: 'seojiTitle',
-        authorName: 'authorName',
-        zipsuStart: 'zipsuStart',
-        zipsuEnd: 'zipsuEnd',
-        publishYear: 'publishYear',
-        buga: {
-          //부가 정보 있을 시 value == 서지 ID
-          beomrye: 'beomrye',
-          chapter: 'chapter', //목차
-          haejae: 'haejae',
-        },
-      },
-      {
-        seojiId: 'seojiId',
-        seojiTitle: 'seojiTitle',
-        authorName: 'authorName',
-        zipsuStart: 'zipsuStart',
-        zipsuEnd: 'zipsuEnd',
-        publishYear: 'publishYear',
-        buga: {
-          //부가 정보 있을 시 value == 서지 ID
-          beomrye: 'beomrye',
-          chapter: 'chapter', //목차
-          haejae: 'haejae',
-        },
-      },
-    ],
-  };
-  const realDatas = JSON.parse(JSON.stringify(rightDatas));
-
-  const { literature, consonant } = useParams();
-
-  const link = '/menu-explore/gwoncha/';
-
+  const [seojiJsonDatas] = useAsync(
+    () => getRightSeoji(consonant),
+    [consonant],
+  );
+  if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
+    return <div>zz</div>;
   return (
     <>
-      {realDatas.datas.map((item) => (
-        <Link to={link + item.seojiId} className="link-line" key={id}>
-          <BookTableBlock bgColor="#edeaea">
-            <TableItem>{id++}</TableItem>
-            <TableItem>{item.seojiTitle}</TableItem>
-            <TableItem>{item.authorName}</TableItem>
-            <TableItem>{item.zipsuStart}</TableItem>
-            <TableItem>{item.publishYear}</TableItem>
+      {seojiJsonDatas.data.datas.map((item) => (
+        <BookTableBlock
+          bgColor="#edeaea"
+          key={item.seojiId}
+          clickId={item.seojiId}>
+          <TableItem>{id++}</TableItem>
+          <TableItem>{item.seojiTitle}</TableItem>
+          <TableItem>{item.authorName}</TableItem>
+          <TableItem>{item.zipsuStart}</TableItem>
+          <TableItem>{item.publishYear}</TableItem>
 
-            <Buga>
-              {item.buga.beomrye != null && (
-                <Link to="/" className="link-line">
-                  <BugaButton>{item.buga.beomrye}</BugaButton>
-                </Link>
-              )}
-              {item.buga.chapter != null && (
-                <Link to="/" className="link-line">
-                  <BugaButton>{item.buga.chapter}</BugaButton>
-                </Link>
-              )}
-              {item.buga.haejae != null && (
-                <Link to="/" className="link-line">
-                  <BugaButton>{item.buga.haejae}</BugaButton>
-                </Link>
-              )}
-            </Buga>
-          </BookTableBlock>
-        </Link>
+          <Buga>
+            {item.buga.beomrye != null && (
+              <Link to="/" className="link-line">
+                <BugaButton>{item.buga.beomrye}</BugaButton>
+              </Link>
+            )}
+            {item.buga.chapter != null && (
+              <Link to="/" className="link-line">
+                <BugaButton>{item.buga.chapter}</BugaButton>
+              </Link>
+            )}
+            {item.buga.haejae != null && (
+              <Link to="/" className="link-line">
+                <BugaButton>{item.buga.haejae}</BugaButton>
+              </Link>
+            )}
+          </Buga>
+        </BookTableBlock>
       ))}
     </>
   );

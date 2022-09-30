@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import OtherListTableBlock from '../OtherListTableBlock';
+import useAsync from '../../../../hooks/useAsync';
+import getRightFinal from '../../../../api/test/rightBlock/bybook/getRightFinal';
+import { muncheContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -9,39 +12,36 @@ const TableItem = styled.p`
 `;
 
 function TitleContentListBlock() {
-  const titles = [
-    { id: 1, name: '上蘆沙先生 癸丑' },
-    { id: 2, name: '石隅軒酬王大猷 師亨○二首' },
-    { id: 3, name: '與抱甕盧時用 兢壽 讀書山房。及其歲暮先歸。拈韻相酬。' },
-  ];
+  let numbering = 1;
 
-  const { literature, consonant, bookname, gwoncha, munche } = useParams();
+  const clickMuncheContext = useContext(muncheContext);
+  const [finalJsonDatas] = useAsync(
+    () => getRightFinal(clickMuncheContext),
+    [clickMuncheContext],
+  );
 
-  const link = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/${munche}/`;
-  const link4Gwoncha = `/original-text/${literature}/bybook/${consonant}/${bookname}/`;
-  const link4Munche = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
-
-  //title에도 원주가 있으므로 여기에서 파싱 작업이 필요하다.
+  console.log(finalJsonDatas);
+  if (finalJsonDatas.data === null || finalJsonDatas.data === undefined)
+    return <div>zz</div>;
   return (
     <>
-      <Link to={link4Gwoncha} className="link-line">
-        <OtherListTableBlock>
-          <TableItem>{gwoncha}</TableItem>
-        </OtherListTableBlock>
-      </Link>
+      <OtherListTableBlock icon="gwoncha">
+        <TableItem>{finalJsonDatas.data.gwonchaTitle}</TableItem>
+      </OtherListTableBlock>
 
-      <Link to={link4Munche} className="link-line">
-        <OtherListTableBlock marginLeft="39px">
-          <TableItem>{munche}</TableItem>
-        </OtherListTableBlock>
-      </Link>
+      <OtherListTableBlock marginLeft="39px" icon="munche">
+        <TableItem>{finalJsonDatas.data.muncheTitle}</TableItem>
+      </OtherListTableBlock>
 
-      {titles.map((item) => (
-        <Link to={link + item.name} className="link-line" key={item.id}>
-          <OtherListTableBlock marginLeft="65px">
-            <TableItem>{item.name}</TableItem>
-          </OtherListTableBlock>
-        </Link>
+      {finalJsonDatas.data.finals.map((item) => (
+        <OtherListTableBlock
+          marginLeft="65px"
+          icon="final"
+          numbering={numbering++}
+          key={item.finalId}
+          clickId={item.finalId}>
+          <TableItem>{item.finalTitle}</TableItem>
+        </OtherListTableBlock>
       ))}
     </>
   );

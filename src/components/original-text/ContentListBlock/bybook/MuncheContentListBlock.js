@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
 import OtherListTableBlock from '../OtherListTableBlock';
+import useAsync from '../../../../hooks/useAsync';
+import getRightMunche from '../../../../api/test/rightBlock/bybook/getRightMunche';
+import { gwonchaContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -11,54 +14,33 @@ const TableItem = styled.p`
 
 function MuncheContentListBlock() {
   let numbering = 1;
-  const rightDatas = {
-    seojiId: 'seojiId',
-    seojiTitle: 'seojiTitle',
-    gwonchaId: 'gwonchaId',
-    gwonchaTitle: 'gwonchaTitle',
-    muncheTitle: 'muncheTitle',
-    finals: [
-      {
-        finalId: 'finalId',
-        finalTitle: 'finalTitle',
-      },
-      {
-        finalId: 'finalId',
-        finalTitle: 'finalTitle',
-      },
-    ],
-  };
-
-  const realDatas = JSON.parse(JSON.stringify(rightDatas));
-
-  const link4Gwoncha = '/menu-explore/munche/';
-  const link4Munche = '/menu-explore/final/';
-
-  const { literature, consonant, bookname, gwoncha } = useParams();
-
-  const link = `/original-text/${literature}/bybook/${consonant}/${bookname}/${gwoncha}/`;
-
+  const clickGwonchaContext = useContext(gwonchaContext);
+  const [muncheJsonDatas] = useAsync(
+    () => getRightMunche(clickGwonchaContext),
+    [clickGwonchaContext],
+  );
+  console.log(muncheJsonDatas);
+  if (muncheJsonDatas.data === null || muncheJsonDatas.data === undefined)
+    return <div>zz</div>;
   return (
     <>
-      <OtherListTableBlock iconNum="1">
-        <TableItem>{realDatas.gwonchaTitle}</TableItem>
-      </OtherListTableBlock>
-      <OtherListTableBlock marginLeft="39px" iconNum="2">
-        <TableItem>{realDatas.muncheTitle}</TableItem>
-      </OtherListTableBlock>
-
-      {realDatas.finals.map((item) => (
-        <Link
-          to={link4Munche + item.finalId}
-          className="link-line"
-          key={item.finalId}>
-          <OtherListTableBlock
-            marginLeft="65px"
-            iconNum="0"
-            numbering={numbering++}>
-            <TableItem>{item.finalTitle}</TableItem>
+      {muncheJsonDatas.data.datas.map((item) => (
+        <>
+          <OtherListTableBlock icon="gwoncha">
+            <TableItem>{item.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
-        </Link>
+
+          {item.munches.map((item) => (
+            <OtherListTableBlock
+              marginLeft="39px"
+              icon="munche"
+              numbering={numbering++}
+              key={item.muncheId}
+              clickId={item.muncheId}>
+              <TableItem>{item.muncheTitle}</TableItem>
+            </OtherListTableBlock>
+          ))}
+        </>
       ))}
     </>
   );

@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import { leftBlockDepth } from '../../../pages/menuExplore/consonant/Consonant';
+import { seojiContext } from '../../shared/ContentLayout';
 
 const ContentListTablePositioner = styled.div`
   display: grid;
@@ -9,15 +11,29 @@ const ContentListTablePositioner = styled.div`
   border-top: ${(props) => props.border};
   border-bottom: 1.5px solid #dadce0;
   text-align: center;
-  
+
   &:hover {
     background-color: ${(props) => props.bgColor};
+    cursor: pointer;
   }
 `;
 
-function BookTableBlock({ border = 'none', bgColor = 'none', children }) {
+function BookTableBlock({
+  border = 'none',
+  bgColor = 'none',
+  clickId = '',
+  children,
+}) {
+  const depthContext = useContext(leftBlockDepth);
+  const clickSeojiContext = useContext(seojiContext);
   return (
-    <ContentListTablePositioner border={border} bgColor={bgColor}>
+    <ContentListTablePositioner
+      border={border}
+      bgColor={bgColor}
+      onClick={() => {
+        depthContext.setDepth(1);
+        clickSeojiContext.setClickSeoji(clickId);
+      }}>
       {children}
     </ContentListTablePositioner>
   );

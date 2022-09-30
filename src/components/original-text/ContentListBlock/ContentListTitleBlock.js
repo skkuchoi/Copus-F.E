@@ -5,12 +5,12 @@ import '../../shared/linkStyle.css';
 
 const TitlePositioner = styled.div`
   margin: 10px 0px;
-  margin-left:20px;
+  margin-left: 20px;
 `;
 
 const Title = styled.h6`
   font-size: 16px;
-  margin:0;
+  margin: 0;
   margin-bottom: 5px;
   ::before {
     content: '▼';
@@ -24,7 +24,7 @@ const Title = styled.h6`
 function ContentListTitleBlock({ title = '', children }) {
   return (
     <TitlePositioner>
-      <Title>{title}</Title>
+      {title !== '' && <Title>{title}</Title>}
       {children}
     </TitlePositioner>
   );
