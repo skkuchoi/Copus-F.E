@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function getFinal(filter, depth, currentId) {
   const response = axios({
-    url: `/${filter}/${depth}/${currentId}/`,
+    url: `/category/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
   const bybook1 = {

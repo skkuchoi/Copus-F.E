@@ -3,7 +3,7 @@ import axios from 'axios';
 function getSeoji(filter, depth, currentId) {
   //console.log('getSeoji: ', filter, depth, currentId);
   const response = axios({
-    url: `/${filter}/${depth}/${currentId}/`,
+    url: `/category/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
   const bybook1 = {

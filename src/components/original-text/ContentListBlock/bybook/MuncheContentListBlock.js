@@ -27,8 +27,11 @@ function MuncheContentListBlock() {
     <>
       {muncheJsonDatas.data.datas.map((item) => (
         <>
-          <OtherListTableBlock icon="gwoncha" key={item.gwonchaId}
-              clickId={item.gwonchaId}>
+          <OtherListTableBlock
+            icon="gwoncha"
+            key={item.gwonchaId}
+            clickId={item.gwonchaId}
+            currentTitle={item.gwonchaTitle}>
             <TableItem>{item.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
 
@@ -38,7 +41,8 @@ function MuncheContentListBlock() {
               icon="munche"
               numbering={numbering++}
               key={item.muncheId}
-              clickId={item.muncheId}>
+              clickId={item.muncheId}
+              currentTitle={item.muncheTitle}>
               <TableItem>{item.muncheTitle}</TableItem>
             </OtherListTableBlock>
           ))}

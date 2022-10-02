@@ -3,7 +3,7 @@ import axios from 'axios';
 function getRightMunche(gwonchaId) {
   console.log('권차 아이디는: ', gwonchaId.clickGwoncha);
   const response = axios({
-    url: `/gwoncha/${gwonchaId.clickGwoncha}`,
+    url: `/article/gwoncha/${gwonchaId.clickGwoncha}`,
     method: 'get',
   });
 

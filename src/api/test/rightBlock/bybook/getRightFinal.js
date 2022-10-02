@@ -3,7 +3,7 @@ import axios from 'axios';
 function getRightFinal(muncheId) {
   console.log('문체 아이디는: ', muncheId.clickMunche);
   const response = axios({
-    url: `/munche/${muncheId.clickMunche}`,
+    url: `/article/munche/${muncheId.clickMunche}`,
     method: 'get',
   });
   const muncheDatas1 = {

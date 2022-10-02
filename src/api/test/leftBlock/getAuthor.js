@@ -3,7 +3,7 @@ import axios from 'axios';
 function getAuthor(filter, depth, currentId) {
   //console.log('getAuthor:::: ,', filter, depth, currentId);
   const response = axios({
-    url: `/${filter}/${depth}/${currentId}/`,
+    url: `/category/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
   const byauthor1 = {

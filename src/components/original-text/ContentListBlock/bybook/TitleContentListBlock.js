@@ -28,7 +28,8 @@ function TitleContentListBlock() {
       <OtherListTableBlock
         icon="gwoncha"
         key={finalJsonDatas.data.gwonchaId}
-        clickId={finalJsonDatas.data.gwonchaId}>
+        clickId={finalJsonDatas.data.gwonchaId}
+        currentTitle={finalJsonDatas.data.gwonchaTitle}>
         <TableItem>{finalJsonDatas.data.gwonchaTitle}</TableItem>
       </OtherListTableBlock>
 
@@ -36,7 +37,8 @@ function TitleContentListBlock() {
         marginLeft="39px"
         icon="munche"
         key={finalJsonDatas.data.muncheId}
-        clickId={finalJsonDatas.data.muncheId}>
+        clickId={finalJsonDatas.data.muncheId}
+        currentTitle={finalJsonDatas.data.muncheTitle}>
         <TableItem>{finalJsonDatas.data.muncheTitle}</TableItem>
       </OtherListTableBlock>
 
@@ -46,7 +48,8 @@ function TitleContentListBlock() {
           icon="final"
           numbering={numbering++}
           key={item.finalId}
-          clickId={item.finalId}>
+          clickId={item.finalId}
+          currentTitle={item.finalTitle}>
           <TableItem>{item.finalTitle}</TableItem>
         </OtherListTableBlock>
       ))}

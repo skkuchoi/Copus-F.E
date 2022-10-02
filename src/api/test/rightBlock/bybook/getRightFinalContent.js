@@ -3,7 +3,7 @@ import axios from 'axios';
 function getRightFinalContent(finalId) {
   console.log('최종정보 아이디는: ', finalId.clickFinal);
   const response = axios({
-    url: `/final/${finalId.clickFinal}`,
+    url: `/article/final/${finalId.clickFinal}`,
     method: 'get',
   });
 

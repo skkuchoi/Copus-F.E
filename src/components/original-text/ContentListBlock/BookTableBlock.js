@@ -1,7 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
-import { authorContext, seojiContext } from '../../shared/ContentLayout';
+import {
+  currentFocusTitleContext,
+  authorContext,
+  seojiContext,
+} from '../../shared/ContentLayout';
 
 const ContentListTablePositioner = styled.div`
   display: grid;
@@ -23,9 +27,11 @@ function BookTableBlock({
   bgColor = 'none',
   clickId = '',
   authorName = '',
+  currentTitle = '',
   children,
 }) {
   const depthContext = useContext(leftBlockDepth);
+  const currentFocusTitle = useContext(currentFocusTitleContext);
   const clickSeojiContext = useContext(seojiContext);
   const clickAuthorContext = useContext(authorContext);
   //console.log('전달받은 clickId: ', clickId);
@@ -42,6 +48,7 @@ function BookTableBlock({
         depthContext.setDepth(1);
         clickSeojiContext.setClickSeoji(clickId);
         //console.log('seojiContext 변경됐어: ', clickSeojiContext.clickSeoji);
+        currentFocusTitle.setCurrentFocusTitle(currentTitle);
       }}>
       {children}
     </ContentListTablePositioner>

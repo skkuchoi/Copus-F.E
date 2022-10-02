@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function getRightSeoji(filter, consonant) {
   const response = axios({
-    url: '/seoji',
+    url: '/article/seoji',
     method: 'get',
     data: {
       keyword: consonant,
@@ -17,8 +17,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: 'ITKC_MO_1116A',
         seojiTitle: '가암유고',
         authorName: '저자명',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1929',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -31,8 +31,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: '가주집',
         seojiTitle: '가주집',
         authorName: '저자명',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1234',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -51,8 +51,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: '나암유고',
         seojiTitle: '나암유고',
         authorName: '저자명',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1929',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -65,8 +65,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: '나주집',
         seojiTitle: '나주집',
         authorName: '저자명',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1234',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -85,8 +85,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: 'ITKC_MO_1036A',
         seojiTitle: '비수재집',
         authorName: '강규환',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1929',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -105,8 +105,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: 'ITKC_MO_0827A',
         seojiTitle: '한사집',
         authorName: '나대수',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1929',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -125,8 +125,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: 'ITKC_MO_1036A',
         seojiTitle: '비수재집',
         authorName: '강규환',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1929',
         buga: {
           //부가 정보 있을 시 value == 서지 ID
@@ -139,8 +139,8 @@ function getRightSeoji(filter, consonant) {
         seojiId: 'ITKC_MO_0827A',
         seojiTitle: '한사집',
         authorName: '강대수',
-        zipsuStart: '속23집',
-        zipsuEnd: '속23집',
+
+        zipsu: '속98집',
         publishYear: '1929',
         buga: {
           //부가 정보 있을 시 value == 서지 ID

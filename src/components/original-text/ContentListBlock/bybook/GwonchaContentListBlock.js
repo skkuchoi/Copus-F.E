@@ -29,7 +29,8 @@ function GwonchaContentListBlock() {
           <OtherListTableBlock
             icon="gwoncha"
             key={gwoncha.gwonchaId}
-            clickId={gwoncha.gwonchaId}>
+            clickId={gwoncha.gwonchaId}
+            currentTitle={gwoncha.gwonchaTitle}>
             <TableItem>{gwoncha.gwonchaTitle}</TableItem>
           </OtherListTableBlock>
 
@@ -39,7 +40,8 @@ function GwonchaContentListBlock() {
               icon="munche"
               key={item.muncheId}
               clickId={item.muncheId}
-              parentId={gwoncha.gwonchaId}>
+              parentId={gwoncha.gwonchaId}
+              currentTitle={item.muncheTitle}>
               <TableItem>{item.muncheTitle}</TableItem>
             </OtherListTableBlock>
           ))}

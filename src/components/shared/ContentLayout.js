@@ -21,7 +21,7 @@ const MainContentBlock = styled.div`
   height: 70vh;
   margin: 1px 20px;
 `;
-
+export const currentFocusTitleContext = createContext();
 export const authorContext = createContext();
 export const seojiContext = createContext();
 export const gwonchaContext = createContext();
@@ -31,6 +31,8 @@ export const finalContext = createContext();
 function ContentLayout({ filter }) {
   const depthContext = useContext(leftBlockDepth);
 
+  // 현재 선택된 아이
+  const [currentFocusTitle, setCurrentFocusTitle] = useState('');
   // 저자
   const [clickAuthor, setClickAuthor] = useState('');
 
@@ -48,72 +50,78 @@ function ContentLayout({ filter }) {
 
   return (
     <>
-      <authorContext.Provider
+      <currentFocusTitleContext.Provider
         value={{
-          clickAuthor: clickAuthor,
-          setClickAuthor: setClickAuthor,
+          currentFocusTitle: currentFocusTitle,
+          setCurrentFocusTitle: setCurrentFocusTitle,
         }}>
-        <seojiContext.Provider
+        <authorContext.Provider
           value={{
-            clickSeoji: clickSeoji,
-            setClickSeoji: setClickSeoji,
+            clickAuthor: clickAuthor,
+            setClickAuthor: setClickAuthor,
           }}>
-          <gwonchaContext.Provider
+          <seojiContext.Provider
             value={{
-              clickGwoncha: clickGwoncha,
-              setClickGwoncha: setClickGwoncha,
+              clickSeoji: clickSeoji,
+              setClickSeoji: setClickSeoji,
             }}>
-            <muncheContext.Provider
+            <gwonchaContext.Provider
               value={{
-                clickMunche: clickMunche,
-                setClickMunche: setClickMunche,
+                clickGwoncha: clickGwoncha,
+                setClickGwoncha: setClickGwoncha,
               }}>
-              <finalContext.Provider
+              <muncheContext.Provider
                 value={{
-                  clickFinal: clickFinal,
-                  setClickFinal: setClickFinal,
+                  clickMunche: clickMunche,
+                  setClickMunche: setClickMunche,
                 }}>
-                <DisplaySelectedListBlock />
-                <SortBlock>
-                  <MainContentBlock>
-                    {filter === 'book' && <BookSidebar />}
-                    {filter === 'author' && <AuthorSidebar />}
+                <finalContext.Provider
+                  value={{
+                    clickFinal: clickFinal,
+                    setClickFinal: setClickFinal,
+                  }}>
+                  <DisplaySelectedListBlock />
+                  <SortBlock>
+                    <MainContentBlock>
+                      {filter === 'book' && <BookSidebar />}
+                      {filter === 'author' && <AuthorSidebar />}
 
-                    {(depthContext.depth === 0 ||
-                      depthContext.depth === -1) && (
-                      <ContentListTitleBlock title={'총 리스트'}>
-                        <BookTableRowBlock />
-                        <BookContentListBlock />
-                      </ContentListTitleBlock>
-                    )}
+                      {(depthContext.depth === 0 ||
+                        depthContext.depth === -1) && (
+                        <ContentListTitleBlock title={'총 리스트'}>
+                          <BookTableRowBlock />
+                          <BookContentListBlock />
+                        </ContentListTitleBlock>
+                      )}
 
-                    {depthContext.depth === 1 && (
-                      <ContentListTitleBlock title={'총 리스트'}>
-                        <GwonchaContentListBlock />
-                      </ContentListTitleBlock>
-                    )}
-                    {depthContext.depth === 2 && (
-                      <ContentListTitleBlock title={'총 리스트'}>
-                        <MuncheContentListBlock />
-                      </ContentListTitleBlock>
-                    )}
-                    {depthContext.depth === 3 && (
-                      <ContentListTitleBlock title={'총 리스트'}>
-                        <TitleContentListBlock />
-                      </ContentListTitleBlock>
-                    )}
-                    {depthContext.depth === 4 && (
-                      <ContentListTitleBlock>
-                        <Content />
-                      </ContentListTitleBlock>
-                    )}
-                  </MainContentBlock>
-                </SortBlock>
-              </finalContext.Provider>
-            </muncheContext.Provider>
-          </gwonchaContext.Provider>
-        </seojiContext.Provider>
-      </authorContext.Provider>
+                      {depthContext.depth === 1 && (
+                        <ContentListTitleBlock title={'총 리스트'}>
+                          <GwonchaContentListBlock />
+                        </ContentListTitleBlock>
+                      )}
+                      {depthContext.depth === 2 && (
+                        <ContentListTitleBlock title={'총 리스트'}>
+                          <MuncheContentListBlock />
+                        </ContentListTitleBlock>
+                      )}
+                      {depthContext.depth === 3 && (
+                        <ContentListTitleBlock title={'총 리스트'}>
+                          <TitleContentListBlock />
+                        </ContentListTitleBlock>
+                      )}
+                      {depthContext.depth === 4 && (
+                        <ContentListTitleBlock>
+                          <Content />
+                        </ContentListTitleBlock>
+                      )}
+                    </MainContentBlock>
+                  </SortBlock>
+                </finalContext.Provider>
+              </muncheContext.Provider>
+            </gwonchaContext.Provider>
+          </seojiContext.Provider>
+        </authorContext.Provider>
+      </currentFocusTitleContext.Provider>
     </>
   );
 }

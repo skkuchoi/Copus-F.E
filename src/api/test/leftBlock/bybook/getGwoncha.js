@@ -3,7 +3,7 @@ import axios from 'axios';
 function getGwoncha(filter, depth, currentId) {
   console.log('권차 좌측 가져와 : ', filter, depth, currentId);
   const response = axios({
-    url: `/${filter}/${depth}/${currentId}/`,
+    url: `/category/${filter}/${depth}/${currentId}/`,
     method: 'get',
   });
   const bybook1 = {

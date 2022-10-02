@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import getRightSeoji from '../../../../api/test/rightBlock/bybook/getRightSeoji';
@@ -34,6 +34,7 @@ const BugaButton = styled.div`
     background-color: black;
   }
 `;
+
 function BookContentListBlock() {
   let id = 1;
 
@@ -45,6 +46,7 @@ function BookContentListBlock() {
     [consonant],
   );
 
+  // 집수 function
   //console.log('right block : seojiJsonDatas: ', seojiJsonDatas);
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <div>zz</div>;
@@ -55,11 +57,13 @@ function BookContentListBlock() {
           bgColor="#edeaea"
           key={item.seojiId}
           clickId={item.seojiId}
-          authorName={filter === 'author' ? item.authorName : ''}>
+          authorName={filter === 'author' ? item.authorName : ''}
+          currentTitle={item.seojiTitle}>
           <TableItem>{id++}</TableItem>
           <TableItem>{item.seojiTitle}</TableItem>
           <TableItem>{item.authorName}</TableItem>
-          <TableItem>{item.zipsuStart}</TableItem>
+
+          <TableItem>{item.zipsu}</TableItem>
           <TableItem>{item.publishYear}</TableItem>
 
           <Buga>

@@ -3,7 +3,7 @@ import axios from 'axios';
 function getRightGwoncha(seojiId) {
   console.log('seoji Id 요청: ', seojiId);
   const response = axios({
-    url: `/gwoncha/${seojiId.clickSeoji}`,
+    url: `/article/gwoncha/${seojiId.clickSeoji}`,
     method: 'get',
   });
 

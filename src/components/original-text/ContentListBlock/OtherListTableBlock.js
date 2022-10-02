@@ -4,6 +4,7 @@ import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
 import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
 import {
+  currentFocusTitleContext,
   gwonchaContext,
   muncheContext,
   finalContext,
@@ -50,9 +51,11 @@ function OtherListTableBlock({
   numbering = 1,
   clickId = '',
   parentId = '',
+  currentTitle = '',
   children,
 }) {
   const depthContext = useContext(leftBlockDepth);
+  const currentFocusTitle = useContext(currentFocusTitleContext);
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
@@ -74,6 +77,7 @@ function OtherListTableBlock({
           depthContext.setDepth(4);
           clickFinalContext.setClickFinal(clickId);
         }
+        currentFocusTitle.setCurrentFocusTitle(currentTitle);
       }}>
       <IconPositioner>
         {icon === 'final' && (

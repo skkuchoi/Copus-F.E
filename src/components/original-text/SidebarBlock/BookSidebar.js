@@ -11,6 +11,7 @@ import getMunche from '../../../api/test/leftBlock/bybook/getMunche';
 import getFinal from '../../../api/test/leftBlock/bybook/getFinal';
 import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
 import {
+  currentFocusTitleContext,
   seojiContext,
   gwonchaContext,
   muncheContext,
@@ -49,6 +50,9 @@ const ListItemPositioner = styled.div`
     top: 4px;
     padding-left: ${(props) => props.padding};
   }
+  .focus {
+    background-color: #f0be86;
+  }
 `;
 
 const ListLi = styled.li`
@@ -72,6 +76,7 @@ function BookSidebar() {
   const filter = useContext(selectedFilter);
   const depthContext = useContext(leftBlockDepth);
 
+  const currentFocusTitle = useContext(currentFocusTitleContext);
   const clickSeojiContext = useContext(seojiContext);
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
@@ -196,6 +201,10 @@ function BookSidebar() {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
 
+  useEffect(() => {
+    console.log('currentFocusTitle : ', currentFocusTitle.currentFocusTitle);
+  }, [currentFocusTitle.currentFocusTitle]);
+
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||
@@ -215,9 +224,15 @@ function BookSidebar() {
             <HiOutlineDocumentText className="list-icon" />
             <ListLi
               onClick={(target) => {
+                currentFocusTitle.setCurrentFocusTitle(seoji.childTitle);
                 clickSeojiContext.setClickSeoji(seoji.childId);
                 depthContext.setDepth(1);
-              }}>
+              }}
+              className={
+                currentFocusTitle.currentFocusTitle === seoji.childTitle
+                  ? 'focus'
+                  : ''
+              }>
               {seoji.childTitle}
             </ListLi>
           </ListItemPositioner>
@@ -232,7 +247,16 @@ function BookSidebar() {
                       onClick={(target) => {
                         clickGwonchaContext.setClickGwoncha(gwoncha.childId);
                         depthContext.setDepth(2);
-                      }}>
+                        currentFocusTitle.setCurrentFocusTitle(
+                          gwoncha.childTitle,
+                        );
+                      }}
+                      className={
+                        currentFocusTitle.currentFocusTitle ===
+                        gwoncha.childTitle
+                          ? 'focus'
+                          : ''
+                      }>
                       {gwoncha.childTitle}
                     </ListLi>
                   </ListItemPositioner>
@@ -249,7 +273,16 @@ function BookSidebar() {
                                   munche.childId,
                                 );
                                 depthContext.setDepth(3);
-                              }}>
+                                currentFocusTitle.setCurrentFocusTitle(
+                                  munche.childTitle,
+                                );
+                              }}
+                              className={
+                                currentFocusTitle.currentFocusTitle ===
+                                munche.childTitle
+                                  ? 'focus'
+                                  : ''
+                              }>
                               {munche.childTitle}
                             </ListLi>
                           </ListItemPositioner>
@@ -262,7 +295,16 @@ function BookSidebar() {
                                   <ListLi
                                     onClick={(target) => {
                                       depthContext.setDepth(4);
-                                    }}>
+                                      currentFocusTitle.setCurrentFocusTitle(
+                                        final.childTitle,
+                                      );
+                                    }}
+                                    className={
+                                      currentFocusTitle.currentFocusTitle ===
+                                      final.childTitle
+                                        ? 'focus'
+                                        : ''
+                                    }>
                                     {final.childTitle}
                                   </ListLi>
                                 </ListItemPositioner>
