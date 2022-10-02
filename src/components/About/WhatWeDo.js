@@ -39,7 +39,6 @@ const Card2 = styled.div`
   height: 270px;
   width: 300px;
   background-color: none;
-  //border-radius: 10px;
   border-style: none solid;
   border-color: #d3d3d3;
   display: flex;
