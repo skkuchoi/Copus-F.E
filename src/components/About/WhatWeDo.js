@@ -84,8 +84,6 @@ const CardFontBlock1 = styled.div`
 `;
 const CardTitleStyle = styled.div`
   font-size: 20px;
-  //margin-left: 10px;
-  //color : rgba(188, 248, 183, 0.4);
   font-weight: bold;
   margin-bottom: 10px;
 `;
