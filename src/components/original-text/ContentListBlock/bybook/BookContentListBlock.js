@@ -34,6 +34,27 @@ const BugaButton = styled.div`
     background-color: black;
   }
 `;
+function beomryePopUp() {
+  let options =
+    'toolbar=no,scrollbars=yes,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
+
+  window.open('/beomrye', '_blank', options);
+}
+
+function chapterPopUp() {
+  let options =
+    'toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
+
+  window.open('/chapter', '_blank', options);
+}
+
+function haejaePopUp() {
+  let options =
+    'toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
+
+  window.open('/haejae', '_blank', options);
+}
+
 function BookContentListBlock() {
   let id = 1;
 
@@ -64,19 +85,23 @@ function BookContentListBlock() {
 
           <Buga>
             {item.buga.beomrye != null && (
-              <Link to="/" className="link-line">
-                <BugaButton>{item.buga.beomrye}</BugaButton>
-              </Link>
+              //<Link className="link-line">
+              <BugaButton onClick={beomryePopUp}>
+                {item.buga.beomrye}
+              </BugaButton>
+              //</Link>
             )}
             {item.buga.chapter != null && (
-              <Link to="/" className="link-line">
-                <BugaButton>{item.buga.chapter}</BugaButton>
-              </Link>
+              //<Link to="/" className="link-line">
+              <BugaButton onClick={chapterPopUp}>
+                {item.buga.chapter}
+              </BugaButton>
+              //</Link>
             )}
             {item.buga.haejae != null && (
-              <Link to="/" className="link-line">
-                <BugaButton>{item.buga.haejae}</BugaButton>
-              </Link>
+              //<Link to="/" className="link-line">
+              <BugaButton onClick={haejaePopUp}>{item.buga.haejae}</BugaButton>
+              //</Link>
             )}
           </Buga>
         </BookTableBlock>
