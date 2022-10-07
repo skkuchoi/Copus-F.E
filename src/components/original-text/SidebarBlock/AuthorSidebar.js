@@ -144,7 +144,7 @@ function AuthorSidebar() {
 
   // 권차 api 요청, seojiTitle이 바뀔 때마다
   const [gwonchaJsonDatas] = useAsync(
-    () => getGwoncha(filter, depthContext.depth, clickSeojiContext.clickSeoji),
+    () => getGwoncha(filter, 1, clickSeojiContext.clickSeoji),
     [clickSeojiContext.clickSeoji, depthContext.depth],
   );
   //console.log('권차 사이드바 갖와: ', gwonchaJsonDatas);
