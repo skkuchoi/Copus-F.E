@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useState } from 'react';
 import ContentLayout from '../../components/shared/ContentLayout';
 import Layout from '../../components/shared/Layout';
 
@@ -7,7 +7,7 @@ export const leftBlockDepth = createContext({
   setDepth: () => {},
 });
 
-function MenuExploreBook({ filter }) {
+function MenuExplore({ filter }) {
   const [leftDepth, setLeftDepth] = useState(filter === 'book' ? 0 : -1);
   // useEffect(() => {
   //   console.log('book\'s depth가 변경되었음: ', leftDepth);
@@ -22,4 +22,4 @@ function MenuExploreBook({ filter }) {
   );
 }
 
-export default MenuExploreBook;
+export default MenuExplore;

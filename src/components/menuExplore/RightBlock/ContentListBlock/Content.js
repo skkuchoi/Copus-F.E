@@ -1,8 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import getRightFinalContent from '../../../api/test/rightBlock/bybook/getRightFinalContent';
-import useAsync from '../../../hooks/useAsync';
-import { finalContext } from '../../shared/ContentLayout';
+
+import useAsync from '../../../../hooks/useAsync';
+import getRightFinalContent from '../../../../api/explore/rightblock/getRightFinalContent';
+
+import { finalContext } from '../../../shared/ContentLayout';
 
 const ContentPositioner = styled.div`
   padding: 12px 0px;

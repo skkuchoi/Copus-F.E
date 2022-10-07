@@ -16,8 +16,7 @@ import NotWorking from './pages/NotWorking/NotWorking';
 
 import SearchResult from './pages/searchResult/SearchResult';
 
-import MenuExploreAuthor from './pages/menuExplore/MenuExploreAuthor';
-import MenuExploreBook from './pages/menuExplore/MenuExploreBook';
+import MenuExplore from './pages/menuExplore/MenuExplore';
 
 const Container = styled.div`
   position: absolute;
@@ -87,12 +86,12 @@ function App() {
           <Route
             path="/menu-explore/book/:consonant"
             exact={true}
-            element={<MenuExploreBook filter="book" />}
+            element={<MenuExplore filter="book" />}
           />
           <Route
             path="/menu-explore/author/:consonant"
             exact={true}
-            element={<MenuExploreBook filter="author" />}
+            element={<MenuExplore filter="author" />}
           />
 
           <Route path="/server-error" element={<NotWorking />} />

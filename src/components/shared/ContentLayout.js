@@ -1,19 +1,20 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import ContentListTitleBlock from '../original-text/ContentListBlock/ContentListTitleBlock';
-import DisplaySelectedListBlock from '../original-text/DisplayBlock/DisplaySelectedListBlock';
 
-import BookSidebar from '../original-text/SidebarBlock/BookSidebar';
-import AuthorSidebar from '../original-text/SidebarBlock/AuthorSidebar';
+import DisplaySelectedListBlock from '../menuExplore/DisplayBlock/DisplaySelectedListBlock';
+import SortBlock from '../menuExplore/SortBlock/SortBlock';
+import BookSidebar from '../menuExplore/SidebarBlock/BookSidebar';
+import AuthorSidebar from '../menuExplore/SidebarBlock/AuthorSidebar';
 
-import SortBlock from '../original-text/SortBlock/SortBlock';
-import { leftBlockDepth } from '../../pages/menuExplore/MenuExploreBook';
-import BookTableRowBlock from '../original-text/ContentListBlock/BookTableRowBlock';
-import BookContentListBlock from '../original-text/ContentListBlock/bybook/BookContentListBlock';
-import GwonchaContentListBlock from '../original-text/ContentListBlock/bybook/GwonchaContentListBlock';
-import MuncheContentListBlock from '../original-text/ContentListBlock/bybook/MuncheContentListBlock';
-import TitleContentListBlock from '../original-text/ContentListBlock/bybook/TitleContentListBlock';
-import Content from '../original-text/ContentBlock/Content';
+import ContentListTitleBlock from '../menuExplore/ContentListBlock/ContentListTitleBlock';
+import BookTableRowBlock from '../menuExplore/ContentListBlock/BookTableRowBlock';
+import BookContentListBlock from '../menuExplore/ContentListBlock/bybook/BookContentListBlock';
+import GwonchaContentListBlock from '../menuExplore/ContentListBlock/bybook/GwonchaContentListBlock';
+import MuncheContentListBlock from '../menuExplore/ContentListBlock/bybook/MuncheContentListBlock';
+import TitleContentListBlock from '../menuExplore/ContentListBlock/bybook/TitleContentListBlock';
+import Content from '../menuExplore/ContentBlock/Content';
+
+import { leftBlockDepth } from '../../pages/menuExplore/MenuExplore';
 
 const MainContentBlock = styled.div`
   display: grid;
@@ -21,6 +22,7 @@ const MainContentBlock = styled.div`
   height: 70vh;
   margin: 1px 20px;
 `;
+
 export const currentFocusTitleContext = createContext();
 export const authorContext = createContext();
 export const seojiContext = createContext();

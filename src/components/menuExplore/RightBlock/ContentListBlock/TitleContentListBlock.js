@@ -1,9 +1,10 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
 import OtherListTableBlock from '../OtherListTableBlock';
+
 import useAsync from '../../../../hooks/useAsync';
-import getRightFinal from '../../../../api/test/rightBlock/bybook/getRightFinal';
+import getRightFinal from '../../../../api/explore/rightblock/getRightFinal';
+
 import { muncheContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`

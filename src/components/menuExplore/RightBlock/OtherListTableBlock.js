@@ -45,6 +45,7 @@ const TextPositioner = styled.div`
   align-items: center;
 `;
 
+// props가 너무 많아서 코드 짤 때 헷갈림...
 function OtherListTableBlock({
   marginLeft = '13px',
   icon = '',
@@ -59,6 +60,7 @@ function OtherListTableBlock({
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
+
   return (
     <Positioner
       marginLeft={marginLeft}
@@ -80,14 +82,14 @@ function OtherListTableBlock({
         currentFocusTitle.setCurrentFocusTitle(currentTitle);
       }}>
       <IconPositioner>
-        {icon === 'final' && (
-          <TitleNumbering className="arrow-icon">{numbering}</TitleNumbering>
-        )}
         {icon === 'gwoncha' && (
           <FaArrowAltCircleRight className="arrow-icon" size="19" />
         )}
         {icon === 'munche' && (
           <IoIosArrowForward className="arrow-icon" size="19" />
+        )}
+        {icon === 'final' && (
+          <TitleNumbering className="arrow-icon">{numbering}</TitleNumbering>
         )}
       </IconPositioner>
       <TextPositioner>{children}</TextPositioner>

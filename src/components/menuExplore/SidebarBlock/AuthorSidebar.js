@@ -3,19 +3,22 @@ import styled from 'styled-components';
 import { HiOutlineDocumentText } from 'react-icons/hi';
 
 import useAsync from '../../../hooks/useAsync';
+
+import getLeftAuthor from '../../../api/explore/leftblock/getLeftAuthor';
 import getLeftSeoji from '../../../api/explore/leftblock/getLeftSeoji';
 import getLeftGwoncha from '../../../api/explore/leftblock/getLeftGwoncha';
 import getLeftMunche from '../../../api/explore/leftblock/getLeftMunche';
 import getLeftFinal from '../../../api/explore/leftblock/getLeftFinal';
 
 import { selectedConsonant, selectedFilter } from '../SortBlock/SortBlock';
-import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
+import { leftBlockDepth } from '../../../pages/menuExplore/MenuExplore';
 import {
-  currentFocusTitleContext,
+  authorContext,
   seojiContext,
   gwonchaContext,
   muncheContext,
 } from '../../shared/ContentLayout';
+import getAuthor from '../../../api/test/leftBlock/getAuthor';
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
@@ -50,9 +53,6 @@ const ListItemPositioner = styled.div`
     top: 4px;
     padding-left: ${(props) => props.padding};
   }
-  .focus {
-    background-color: #f0be86;
-  }
 `;
 
 const ListLi = styled.li`
@@ -64,7 +64,7 @@ const ListLi = styled.li`
   }
 `;
 
-function BookSidebar() {
+function AuthorSidebar() {
   const container = useRef();
 
   useEffect(() => {
@@ -76,11 +76,14 @@ function BookSidebar() {
   const filter = useContext(selectedFilter);
   const depthContext = useContext(leftBlockDepth);
 
-  const currentFocusTitle = useContext(currentFocusTitleContext);
+  const clickAuthorContext = useContext(authorContext);
   const clickSeojiContext = useContext(seojiContext);
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
 
+  const [authorListDatas, setAuthorListDatas] = useState([]);
+
+  const [includeSeojiData, setIncludeSeojiData] = useState({});
   const [seojiListDatas, setSeojiListDatas] = useState([]);
 
   const [includeGwonchaData, setIncludeGwonchaData] = useState({});
@@ -92,33 +95,61 @@ function BookSidebar() {
   const [includeFinalData, setIncludeFinalData] = useState({});
   const [finalListDatas, setFinalListDatas] = useState([]);
 
-  // 서지 api 요청, consonant가 바뀔 때마다 OK
-  const [seojiJsonDatas] = useAsync(
-    () => getLeftSeoji(filter, 0, consonant),
+  const [authorJsonDatas] = useAsync(
+    () => getLeftAuthor(filter, -1, consonant),
     [consonant],
   );
-  // 서지 api 요청 데이터인 json이 바뀔 때마다 OK
+  // 서지 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
-    if (seojiJsonDatas.data !== null) {
+    if (authorJsonDatas.data !== null) {
       let tempArray = [];
-      seojiJsonDatas.data.datas.map((seoji) => {
+      authorJsonDatas.data.datas.map((author) => {
         tempArray.push({
-          childId: seoji.childId,
-          childTitle: seoji.childTitle,
+          childId: author.childId,
+          childTitle: author.childTitle,
         });
       });
-      setSeojiListDatas(tempArray);
-      depthContext.setDepth(0);
+      setAuthorListDatas(tempArray);
+      depthContext.setDepth(-1);
+    }
+  }, [authorJsonDatas]);
+
+  // 서지 api 요청, consonant가 바뀔 때마다
+  const [seojiJsonDatas] = useAsync(
+    () => getLeftSeoji(filter, 0, clickAuthorContext.clickAuthor),
+    [clickAuthorContext.clickAuthor, depthContext.depth],
+  );
+
+  // 서지 api 요청 데이터인 json이 바뀔 때마다
+  useEffect(() => {
+    if (seojiJsonDatas.data !== null) {
+      seojiJsonDatas.data.datas.map((seoji) => {
+        if (!includeSeojiData[seoji.childId]) {
+          setSeojiListDatas((prev) => [
+            ...prev,
+            { childId: seoji.childId, childTitle: seoji.childTitle },
+          ]);
+          setIncludeSeojiData((prev) => ({
+            ...prev,
+            [seoji.childId]: seoji.childId,
+          }));
+          depthContext.setDepth(0);
+        }
+      });
     }
   }, [seojiJsonDatas]);
 
-  // 권차 api 요청, seojiTitle이 바뀔 때마다 OK
+  console.log(seojiListDatas);
+  // 권차
+  //const [clickSeoji, setClickSeoji] = useState('');
+
+  // 권차 api 요청, seojiTitle이 바뀔 때마다
   const [gwonchaJsonDatas] = useAsync(
     () => getLeftGwoncha(filter, 1, clickSeojiContext.clickSeoji),
-    [clickSeojiContext.clickSeoji],
+    [clickSeojiContext.clickSeoji, depthContext.depth],
   );
-
-  //권차 api 요청 데이터인 json이 바뀔 때마다 OK
+  //console.log('권차 사이드바 갖와: ', gwonchaJsonDatas);
+  //권차 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (gwonchaJsonDatas.data !== null) {
       gwonchaJsonDatas.data.datas.map((gwoncha) => {
@@ -132,18 +163,22 @@ function BookSidebar() {
             [gwoncha.childId]: gwoncha.childId,
           }));
           depthContext.setDepth(1);
+          console.log('context: ', depthContext.depth);
         }
       });
     }
   }, [gwonchaJsonDatas]);
 
-  // 문체 api 요청, click gwoncha 했을 때마다 ok
+  // //문체
+  // const [clickGwoncha, setClickGwoncha] = useState('');
+
+  // 문체 api 요청, click gwonch 했을 때마다
   const [muncheJsonDatas] = useAsync(
     () => getLeftMunche(filter, 2, clickGwonchaContext.clickGwoncha),
     [clickGwonchaContext.clickGwoncha],
   );
 
-  //문체 api 요청 데이터인 json이 바뀔 때마다 ok
+  //문체 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (muncheJsonDatas.data !== null) {
       muncheJsonDatas.data.datas.map((munche) => {
@@ -162,13 +197,16 @@ function BookSidebar() {
     }
   }, [muncheJsonDatas]);
 
-  // 최종정보 api 요청, click munche 했을 때마다 ok
+  // //최종정보
+  // const [clickMunche, setClickMunche] = useState('');
+
+  // 최종정보 api 요청, click munche 했을 때마다
   const [finalJsonDatas] = useAsync(
     () => getLeftFinal(filter, 3, clickMuncheContext.clickMunche),
     [clickMuncheContext.clickMunche],
   );
 
-  //문체 api 요청 데이터인 json이 바뀔 때마다 ok
+  //문체 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (finalJsonDatas.data !== null) {
       finalJsonDatas.data.datas.map((final) => {
@@ -192,11 +230,9 @@ function BookSidebar() {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
 
-  useEffect(() => {
-    console.log('currentFocusTitle : ', currentFocusTitle.currentFocusTitle);
-  }, [currentFocusTitle.currentFocusTitle]);
-
   if (
+    authorListDatas === null ||
+    authorListDatas === undefined ||
     seojiListDatas === null ||
     seojiListDatas === undefined ||
     gwonchaListDatas === null ||
@@ -209,96 +245,84 @@ function BookSidebar() {
     return <div>zz</div>;
   return (
     <Container ref={container}>
-      {seojiListDatas.map((seoji) => (
+      {authorListDatas.map((author) => (
         <>
           <ListItemPositioner padding="0px">
             <HiOutlineDocumentText className="list-icon" />
             <ListLi
               onClick={(target) => {
-                currentFocusTitle.setCurrentFocusTitle(seoji.childTitle);
-                clickSeojiContext.setClickSeoji(seoji.childId);
-                depthContext.setDepth(1);
-              }}
-              className={
-                currentFocusTitle.currentFocusTitle === seoji.childTitle
-                  ? 'focus'
-                  : ''
-              }>
-              {seoji.childTitle}
+                clickAuthorContext.setClickAuthor(author.childId);
+                depthContext.setDepth(0);
+              }}>
+              {author.childTitle}
             </ListLi>
           </ListItemPositioner>
-
-          {gwonchaListDatas.map(
-            (gwoncha) =>
-              gwoncha.childId.includes(seoji.childId) && (
+          {seojiListDatas.map(
+            (seoji) =>
+              clickAuthorContext.clickAuthor.includes(author.childId) && (
                 <>
                   <ListItemPositioner padding="20px">
                     <HiOutlineDocumentText className="list-icon" />
                     <ListLi
                       onClick={(target) => {
-                        clickGwonchaContext.setClickGwoncha(gwoncha.childId);
-                        depthContext.setDepth(2);
-                        currentFocusTitle.setCurrentFocusTitle(
-                          gwoncha.childTitle,
-                        );
-                      }}
-                      className={
-                        currentFocusTitle.currentFocusTitle ===
-                        gwoncha.childTitle
-                          ? 'focus'
-                          : ''
-                      }>
-                      {gwoncha.childTitle}
+                        clickSeojiContext.setClickSeoji(seoji.childId);
+                        depthContext.setDepth(1);
+                      }}>
+                      {seoji.childTitle}
                     </ListLi>
                   </ListItemPositioner>
 
-                  {muncheListDatas.map(
-                    (munche) =>
-                      munche.childId.includes(gwoncha.childId) && (
+                  {gwonchaListDatas.map(
+                    (gwoncha) =>
+                      gwoncha.childId.includes(seoji.childId) && (
                         <>
                           <ListItemPositioner padding="40px">
                             <HiOutlineDocumentText className="list-icon" />
                             <ListLi
                               onClick={(target) => {
-                                clickMuncheContext.setClickMunche(
-                                  munche.childId,
+                                clickGwonchaContext.setClickGwoncha(
+                                  gwoncha.childId,
                                 );
-                                depthContext.setDepth(3);
-                                currentFocusTitle.setCurrentFocusTitle(
-                                  munche.childTitle,
-                                );
-                              }}
-                              className={
-                                currentFocusTitle.currentFocusTitle ===
-                                munche.childTitle
-                                  ? 'focus'
-                                  : ''
-                              }>
-                              {munche.childTitle}
+                                depthContext.setDepth(2);
+                              }}>
+                              {gwoncha.childTitle}
                             </ListLi>
                           </ListItemPositioner>
 
-                          {finalListDatas.map(
-                            (final) =>
-                              final.childId.includes(munche.childId) && (
-                                <ListItemPositioner padding="60px">
-                                  <HiOutlineDocumentText className="list-icon" />
-                                  <ListLi
-                                    onClick={(target) => {
-                                      depthContext.setDepth(4);
-                                      currentFocusTitle.setCurrentFocusTitle(
-                                        final.childTitle,
-                                      );
-                                    }}
-                                    className={
-                                      currentFocusTitle.currentFocusTitle ===
-                                      final.childTitle
-                                        ? 'focus'
-                                        : ''
-                                    }>
-                                    {final.childTitle}
-                                  </ListLi>
-                                </ListItemPositioner>
+                          {muncheListDatas.map(
+                            (munche) =>
+                              munche.childId.includes(gwoncha.childId) && (
+                                <>
+                                  <ListItemPositioner padding="60px">
+                                    <HiOutlineDocumentText className="list-icon" />
+                                    <ListLi
+                                      onClick={(target) => {
+                                        clickMuncheContext.setClickMunche(
+                                          munche.childId,
+                                        );
+                                        depthContext.setDepth(3);
+                                      }}>
+                                      {munche.childTitle}
+                                    </ListLi>
+                                  </ListItemPositioner>
+
+                                  {finalListDatas.map(
+                                    (final) =>
+                                      final.childId.includes(
+                                        munche.childId,
+                                      ) && (
+                                        <ListItemPositioner padding="80px">
+                                          <HiOutlineDocumentText className="list-icon" />
+                                          <ListLi
+                                            onClick={(target) => {
+                                              depthContext.setDepth(4);
+                                            }}>
+                                            {final.childTitle}
+                                          </ListLi>
+                                        </ListItemPositioner>
+                                      ),
+                                  )}
+                                </>
                               ),
                           )}
                         </>
@@ -313,4 +337,4 @@ function BookSidebar() {
   );
 }
 
-export default BookSidebar;
+export default AuthorSidebar;

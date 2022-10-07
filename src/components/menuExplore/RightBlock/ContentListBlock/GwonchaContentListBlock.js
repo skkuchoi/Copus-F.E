@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
 import OtherListTableBlock from '../OtherListTableBlock';
+
 import useAsync from '../../../../hooks/useAsync';
 import getRightGwoncha from '../../../../api/explore/rightblock/getRightGwoncha';
+
 import { seojiContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`
@@ -20,7 +21,7 @@ function GwonchaContentListBlock() {
   );
   
   if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
-    return <div>zz</div>;
+    return <div>로딩</div>;
   return (
     <>
       {gwonchaJsonDatas.data.datas.map((gwoncha) => (

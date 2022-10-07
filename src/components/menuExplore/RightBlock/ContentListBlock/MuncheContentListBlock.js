@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
 import OtherListTableBlock from '../OtherListTableBlock';
+
 import useAsync from '../../../../hooks/useAsync';
-import getRightMunche from '../../../../api/test/rightBlock/bybook/getRightMunche';
+import getRightMunche from '../../../../api/explore/rightblock/getRightMunche';
+
 import { gwonchaContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`
@@ -19,9 +20,9 @@ function MuncheContentListBlock() {
     () => getRightMunche(clickGwonchaContext),
     [clickGwonchaContext],
   );
-  
+
   if (muncheJsonDatas.data === null || muncheJsonDatas.data === undefined)
-    return <div>zz</div>;
+    return <div>로딩</div>;
   return (
     <>
       {muncheJsonDatas.data.datas.map((item) => (

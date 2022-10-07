@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
-import useAsync from '../../../../hooks/useAsync';
-import { authorContext } from '../../../shared/ContentLayout';
-
-import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import BookTableBlock from '../BookTableBlock';
+
+import useAsync from '../../../../hooks/useAsync';
+import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
+
+import { authorContext } from '../../../shared/ContentLayout';
+import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -43,6 +44,7 @@ function BookContentListBlock() {
   const filter = useContext(selectedFilter);
   const clickAuthorContext = useContext(authorContext);
 
+  // seojiKeyword 세팅
   let seojiKeyword;
   if (clickAuthorContext.clickAuthor) seojiKeyword = 'authorName';
   else if (consonant === 'all') seojiKeyword = 'all';
@@ -57,7 +59,7 @@ function BookContentListBlock() {
   );
 
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
-    return <div>zz</div>;
+    return <div>로딩</div>;
   return (
     <>
       {seojiJsonDatas.data.datas.map((item) => (
