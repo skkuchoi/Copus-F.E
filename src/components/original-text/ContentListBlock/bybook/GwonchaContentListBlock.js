@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import '../../../shared/linkStyle.css';
 import OtherListTableBlock from '../OtherListTableBlock';
 import useAsync from '../../../../hooks/useAsync';
-import getRightGwoncha from '../../../../api/test/rightBlock/bybook/getRightGwoncha';
+import getRightGwoncha from '../../../../api/explore/rightblock/getRightGwoncha';
 import { seojiContext } from '../../../shared/ContentLayout';
 
 const TableItem = styled.p`
@@ -18,8 +18,7 @@ function GwonchaContentListBlock() {
     () => getRightGwoncha(clickSeojiContext),
     [clickSeojiContext.clickSeoji],
   );
-
-  console.log('right block : gwonchaJsonDatas: ', gwonchaJsonDatas);
+  
   if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
     return <div>zz</div>;
   return (

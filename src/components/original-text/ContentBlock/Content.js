@@ -102,7 +102,6 @@ export default function Content() {
     () => getRightFinalContent(clickFinalContext),
     [clickFinalContext],
   );
-  console.log('final content data는: ', finalDataJsonDatas);
 
   const testTitle = '河東寮羲允<원주>載文</원주>過余書室。拈韻志喜。<원주>二首</원주>';
 

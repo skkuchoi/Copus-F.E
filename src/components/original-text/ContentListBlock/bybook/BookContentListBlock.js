@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import getRightSeoji from '../../../../api/test/rightBlock/bybook/getRightSeoji';
+import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
 import useAsync from '../../../../hooks/useAsync';
+import { authorContext } from '../../../shared/ContentLayout';
 
 import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import BookTableBlock from '../BookTableBlock';
@@ -40,14 +41,21 @@ function BookContentListBlock() {
 
   const consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
+  const clickAuthorContext = useContext(authorContext);
+
+  let seojiKeyword;
+  if (clickAuthorContext.clickAuthor) seojiKeyword = 'authorName';
+  else if (consonant === 'all') seojiKeyword = 'all';
+  else if (filter === 'book') seojiKeyword = 'bookTitleConsonant';
+  else if (filter === 'author' && consonant)
+    seojiKeyword = 'authorNameConsonant';
+  else seojiKeyword = 'authorName';
 
   const [seojiJsonDatas] = useAsync(
-    () => getRightSeoji(filter, consonant),
-    [consonant],
+    () => getRightSeoji(filter, seojiKeyword, consonant),
+    [consonant, clickAuthorContext.clickAuthor],
   );
 
-  // 집수 function
-  //console.log('right block : seojiJsonDatas: ', seojiJsonDatas);
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <div>zz</div>;
   return (

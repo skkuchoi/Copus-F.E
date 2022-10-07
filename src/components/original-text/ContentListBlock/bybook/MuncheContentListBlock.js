@@ -19,8 +19,7 @@ function MuncheContentListBlock() {
     () => getRightMunche(clickGwonchaContext),
     [clickGwonchaContext],
   );
-  console.log(muncheJsonDatas);
-  console.log(clickGwonchaContext);
+  
   if (muncheJsonDatas.data === null || muncheJsonDatas.data === undefined)
     return <div>zz</div>;
   return (

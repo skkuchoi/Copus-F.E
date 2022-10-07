@@ -20,7 +20,6 @@ function TitleContentListBlock() {
     [clickMuncheContext],
   );
 
-  console.log(finalJsonDatas);
   if (finalJsonDatas.data === null || finalJsonDatas.data === undefined)
     return <div>zz</div>;
   return (

@@ -1,14 +1,16 @@
 import React, { useRef, useContext, useState, useEffect } from 'react';
 import styled from 'styled-components';
+import { HiOutlineDocumentText } from 'react-icons/hi';
 
 import useAsync from '../../../hooks/useAsync';
-import { selectedConsonant, selectedFilter } from '../SortBlock/SortBlock';
 
-import getSeoji from '../../../api/test/leftBlock/bybook/getSeoji';
-import { HiOutlineDocumentText } from 'react-icons/hi';
-import getGwoncha from '../../../api/test/leftBlock/bybook/getGwoncha';
-import getMunche from '../../../api/test/leftBlock/bybook/getMunche';
-import getFinal from '../../../api/test/leftBlock/bybook/getFinal';
+import getLeftAuthor from '../../../api/explore/leftblock/getLeftAuthor';
+import getLeftSeoji from '../../../api/explore/leftblock/getLeftSeoji';
+import getLeftGwoncha from '../../../api/explore/leftblock/getLeftGwoncha';
+import getLeftMunche from '../../../api/explore/leftblock/getLeftMunche';
+import getLeftFinal from '../../../api/explore/leftblock/getLeftFinal';
+
+import { selectedConsonant, selectedFilter } from '../SortBlock/SortBlock';
 import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
 import {
   authorContext,
@@ -94,7 +96,7 @@ function AuthorSidebar() {
   const [finalListDatas, setFinalListDatas] = useState([]);
 
   const [authorJsonDatas] = useAsync(
-    () => getAuthor(filter, -1, consonant),
+    () => getLeftAuthor(filter, -1, consonant),
     [consonant],
   );
   // 서지 api 요청 데이터인 json이 바뀔 때마다
@@ -112,14 +114,12 @@ function AuthorSidebar() {
     }
   }, [authorJsonDatas]);
 
-  //console.log('authorJsonDatas: ', authorJsonDatas);
-
   // 서지 api 요청, consonant가 바뀔 때마다
   const [seojiJsonDatas] = useAsync(
-    () => getSeoji(filter, 0, clickAuthorContext.clickAuthor),
+    () => getLeftSeoji(filter, 0, clickAuthorContext.clickAuthor),
     [clickAuthorContext.clickAuthor, depthContext.depth],
   );
-  //console.log('seojiJsonDatas: ', seojiJsonDatas);
+
   // 서지 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (seojiJsonDatas.data !== null) {
@@ -139,12 +139,13 @@ function AuthorSidebar() {
     }
   }, [seojiJsonDatas]);
 
+  console.log(seojiListDatas);
   // 권차
   //const [clickSeoji, setClickSeoji] = useState('');
 
   // 권차 api 요청, seojiTitle이 바뀔 때마다
   const [gwonchaJsonDatas] = useAsync(
-    () => getGwoncha(filter, 1, clickSeojiContext.clickSeoji),
+    () => getLeftGwoncha(filter, 1, clickSeojiContext.clickSeoji),
     [clickSeojiContext.clickSeoji, depthContext.depth],
   );
   //console.log('권차 사이드바 갖와: ', gwonchaJsonDatas);
@@ -173,7 +174,7 @@ function AuthorSidebar() {
 
   // 문체 api 요청, click gwonch 했을 때마다
   const [muncheJsonDatas] = useAsync(
-    () => getMunche(filter, 2, clickGwonchaContext.clickGwoncha),
+    () => getLeftMunche(filter, 2, clickGwonchaContext.clickGwoncha),
     [clickGwonchaContext.clickGwoncha],
   );
 
@@ -201,7 +202,7 @@ function AuthorSidebar() {
 
   // 최종정보 api 요청, click munche 했을 때마다
   const [finalJsonDatas] = useAsync(
-    () => getFinal(filter, 3, clickMuncheContext.clickMunche),
+    () => getLeftFinal(filter, 3, clickMuncheContext.clickMunche),
     [clickMuncheContext.clickMunche],
   );
 
