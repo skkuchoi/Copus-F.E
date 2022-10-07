@@ -27,16 +27,16 @@ const Container = styled.div`
 `;
 function App() {
   // 미디어쿼리 작업할 때 쓰세용
-  // const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+  const [innerWidth, setInnerWidth] = useState(window.innerWidth);
 
-  // useEffect(() => {
-  //   const resizeListener = () => {
-  //     setInnerWidth(window.innerWidth);
-  //   };
-  //   window.addEventListener('resize', resizeListener);
-  // });
+  useEffect(() => {
+    const resizeListener = () => {
+      setInnerWidth(window.innerWidth);
+    };
+    window.addEventListener('resize', resizeListener);
+  });
 
-  // console.log('innerWidth: ', innerWidth);
+  console.log('innerWidth: ', innerWidth);
   return (
     <Container>
       <FontStyle>
