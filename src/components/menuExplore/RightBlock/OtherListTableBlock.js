@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { FaArrowAltCircleRight } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
-import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
+import { leftBlockDepth } from '../../../pages/menuExplore/MenuExplore';
 import {
   currentFocusTitleContext,
   gwonchaContext,

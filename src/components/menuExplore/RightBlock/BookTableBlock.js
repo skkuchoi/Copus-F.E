@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
-import { leftBlockDepth } from '../../../pages/menuExplore/MenuExploreBook';
+import { leftBlockDepth } from '../../../pages/menuExplore/MenuExplore';
 import {
   currentFocusTitleContext,
   authorContext,

@@ -18,7 +18,6 @@ import {
   gwonchaContext,
   muncheContext,
 } from '../../shared/ContentLayout';
-import getAuthor from '../../../api/test/leftBlock/getAuthor';
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
