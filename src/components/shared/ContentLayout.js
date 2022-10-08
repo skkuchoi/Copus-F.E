@@ -6,13 +6,13 @@ import SortBlock from '../menuExplore/SortBlock/SortBlock';
 import BookSidebar from '../menuExplore/SidebarBlock/BookSidebar';
 import AuthorSidebar from '../menuExplore/SidebarBlock/AuthorSidebar';
 
-import ContentListTitleBlock from '../menuExplore/RightBlock/ContentListTitleBlock';
-import BookTableRowBlock from '../menuExplore/RightBlock/BookTableRowBlock';
-import BookContentListBlock from '../menuExplore/RightBlock/ContentListBlock/BookContentListBlock';
-import GwonchaContentListBlock from '../menuExplore/RightBlock/ContentListBlock/GwonchaContentListBlock';
-import MuncheContentListBlock from '../menuExplore/RightBlock/ContentListBlock/MuncheContentListBlock';
-import TitleContentListBlock from '../menuExplore/RightBlock/ContentListBlock/TitleContentListBlock';
-import Content from '../menuExplore/RightBlock/ContentListBlock/Content';
+import ContentListTitleBlock from '../menuExplore/ContentListBlock/ContentListTitleBlock';
+import BookTableRowBlock from '../menuExplore/ContentListBlock/BookTableRowBlock';
+import BookContentListBlock from '../menuExplore/ContentListBlock/bybook/BookContentListBlock';
+import GwonchaContentListBlock from '../menuExplore/ContentListBlock/bybook/GwonchaContentListBlock';
+import MuncheContentListBlock from '../menuExplore/ContentListBlock/bybook/MuncheContentListBlock';
+import TitleContentListBlock from '../menuExplore/ContentListBlock/bybook/TitleContentListBlock';
+import Content from '../menuExplore/ContentBlock/Content';
 
 import { leftBlockDepth } from '../../pages/menuExplore/MenuExplore';
 

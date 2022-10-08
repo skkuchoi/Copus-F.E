@@ -14,9 +14,6 @@ const BoxPositioner = styled.div`
   justify-content: left;
   padding-left: 20px;
   margin-top: 12px;
-  @media screen and (max-width: 800px) {
-    justify-content: center;
-  }
 `;
 
 const TitlePositioner = styled.div`
@@ -57,9 +54,6 @@ const CircleOpenButton = styled.div`
       }
       transform: rotate(45deg);
     `}
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
 `;
 
 const FilterPositioner = styled.div`
@@ -67,9 +61,6 @@ const FilterPositioner = styled.div`
   flex-direction: row;
   align-items: center;
   margin-left: 20px;
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
 `;
 
 const CircleCheckButton = styled.div`
@@ -101,9 +92,6 @@ const ConsonantPositioner = styled.div`
   margin-left: 8px;
   border-left: 1px solid #ced4da;
   padding-left: 15px;
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
 `;
 
 const CircleColorButton = styled.div`
@@ -174,53 +162,50 @@ function SortBlock({ children }) {
               <MdAdd />
             </CircleOpenButton>
           </TitlePositioner>
-          {sortMenuOpen && (
-            <>
-              <FilterPositioner>
-                <CircleCheckButton
-                  onClick={() => {
-                    setFilter('book');
-                    navigate(link4Consonant + 'book/all');
-                  }}>
-                  {filter === 'book' && <MdDone />}
-                </CircleCheckButton>
-                <CategoryName>서명별</CategoryName>
 
-                <CircleCheckButton
-                  onClick={() => {
-                    setFilter('author');
-                    navigate(link4Consonant + 'author/all');
-                  }}>
-                  {filter === 'author' && <MdDone />}
-                </CircleCheckButton>
-                <CategoryName>저자별</CategoryName>
-              </FilterPositioner>
+          <FilterPositioner>
+            <CircleCheckButton
+              onClick={() => {
+                setFilter('book');
+                navigate(link4Consonant + 'book/all');
+              }}>
+              {filter === 'book' && <MdDone />}
+            </CircleCheckButton>
+            <CategoryName>서명별</CategoryName>
 
-              <ConsonantPositioner>
-                <CircleColorButton
-                  select={'all' === consonant}
-                  onClick={() => {
-                    setConsonant('all');
-                    window.location.replace(`/menu-explore/${filter}/all`);
-                  }}
-                  width="30px">
-                  전체
-                </CircleColorButton>
-                {consonants.map((item) => (
-                  <CircleColorButton
-                    select={item.id === consonant}
-                    key={item.id}
-                    onClick={() => {
-                      setConsonant(item.id);
-                      navigate(link4Consonant + filter + '/' + item.id);
-                    }}
-                    width="13px">
-                    {item.consonant}
-                  </CircleColorButton>
-                ))}
-              </ConsonantPositioner>
-            </>
-          )}
+            <CircleCheckButton
+              onClick={() => {
+                setFilter('author');
+                navigate(link4Consonant + 'author/all');
+              }}>
+              {filter === 'author' && <MdDone />}
+            </CircleCheckButton>
+            <CategoryName>저자별</CategoryName>
+          </FilterPositioner>
+
+          <ConsonantPositioner>
+            <CircleColorButton
+              select={'all' === consonant}
+              onClick={() => {
+                setConsonant('all');
+                window.location.replace(`/menu-explore/${filter}/all`);
+              }}
+              width="30px">
+              전체
+            </CircleColorButton>
+            {consonants.map((item) => (
+              <CircleColorButton
+                select={item.id === consonant}
+                key={item.id}
+                onClick={() => {
+                  setConsonant(item.id);
+                  navigate(link4Consonant + filter + '/' + item.id);
+                }}
+                width="13px">
+                {item.consonant}
+              </CircleColorButton>
+            ))}
+          </ConsonantPositioner>
         </BoxPositioner>
         {children}
       </selectedFilter.Provider>
