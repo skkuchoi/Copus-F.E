@@ -7,6 +7,8 @@ import useAsync from '../../../../hooks/useAsync';
 import getRightMunche from '../../../../api/explore/rightblock/getRightMunche';
 
 import { gwonchaContext } from '../../../shared/ContentLayout';
+import parseGwoncha from '../../../../utils/parseGwoncha';
+import parseMunche from '../../../../utils/parseMunche';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -31,8 +33,8 @@ function MuncheContentListBlock() {
             icon="gwoncha"
             key={item.gwonchaId}
             clickId={item.gwonchaId}
-            currentTitle={item.gwonchaTitle}>
-            <TableItem>{item.gwonchaTitle}</TableItem>
+            currentTitle={parseGwoncha(item.gwonchaTitle)}>
+            <TableItem>{parseGwoncha(item.gwonchaTitle)}</TableItem>
           </OtherListTableBlock>
 
           {item.munches.map((item) => (
@@ -42,8 +44,8 @@ function MuncheContentListBlock() {
               numbering={numbering++}
               key={item.muncheId}
               clickId={item.muncheId}
-              currentTitle={item.muncheTitle}>
-              <TableItem>{item.muncheTitle}</TableItem>
+              currentTitle={parseMunche(item.muncheTitle)}>
+              <TableItem>{parseMunche(item.muncheTitle)}</TableItem>
             </OtherListTableBlock>
           ))}
         </>

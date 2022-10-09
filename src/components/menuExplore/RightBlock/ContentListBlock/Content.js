@@ -105,9 +105,10 @@ export default function Content() {
     [clickFinalContext],
   );
 
-  const testTitle = '河東寮羲允<원주>載文</원주>過余書室。拈韻志喜。<원주>二首</원주>';
+  console.log('final content: ', finalDataJsonDatas);
 
-  
+  const testTitle =
+    '河東寮羲允<원주>載文</원주>過余書室。拈韻志喜。<원주>二首</원주>';
 
   const title = '上蘆沙先生';
   const wonju = '癸丑';

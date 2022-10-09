@@ -7,8 +7,21 @@ import getRightFinal from '../../../../api/explore/rightblock/getRightFinal';
 
 import { muncheContext } from '../../../shared/ContentLayout';
 
+import parseGwoncha from '../../../../utils/parseGwoncha';
+import parseMunche from '../../../../utils/parseMunche';
+import parseTitle from '../../../../utils/parseTitle';
+
 const TableItem = styled.p`
   font-size: 15px;
+  margin: 0;
+`;
+
+const FinalTitle = styled.span`
+  font-size: 15px;
+  margin: 0;
+`;
+const FinalWonju = styled.span`
+  font-size: 12px;
   margin: 0;
 `;
 
@@ -21,16 +34,22 @@ function TitleContentListBlock() {
     [clickMuncheContext],
   );
 
-  if (finalJsonDatas.data === null || finalJsonDatas.data === undefined)
-    return <div>zz</div>;
+  console.log('final data', finalJsonDatas);
+  if (
+    finalJsonDatas.data === null ||
+    finalJsonDatas.data === undefined ||
+    finalJsonDatas.data.datas === null ||
+    finalJsonDatas.data.datas === undefined
+  )
+    return <div>로딩</div>;
   return (
     <>
       <OtherListTableBlock
         icon="gwoncha"
         key={finalJsonDatas.data.gwonchaId}
         clickId={finalJsonDatas.data.gwonchaId}
-        currentTitle={finalJsonDatas.data.gwonchaTitle}>
-        <TableItem>{finalJsonDatas.data.gwonchaTitle}</TableItem>
+        currentTitle={parseGwoncha(finalJsonDatas.data.gwonchaTitle)}>
+        <TableItem>{parseGwoncha(finalJsonDatas.data.gwonchaTitle)}</TableItem>
       </OtherListTableBlock>
 
       <OtherListTableBlock
@@ -38,11 +57,11 @@ function TitleContentListBlock() {
         icon="munche"
         key={finalJsonDatas.data.muncheId}
         clickId={finalJsonDatas.data.muncheId}
-        currentTitle={finalJsonDatas.data.muncheTitle}>
-        <TableItem>{finalJsonDatas.data.muncheTitle}</TableItem>
+        currentTitle={parseMunche(finalJsonDatas.data.muncheTitle)}>
+        <TableItem>{parseMunche(finalJsonDatas.data.muncheTitle)}</TableItem>
       </OtherListTableBlock>
 
-      {finalJsonDatas.data.finals.map((item) => (
+      {finalJsonDatas.data.datas.map((item) => (
         <OtherListTableBlock
           marginLeft="65px"
           icon="final"
@@ -50,7 +69,13 @@ function TitleContentListBlock() {
           key={item.finalId}
           clickId={item.finalId}
           currentTitle={item.finalTitle}>
-          <TableItem>{item.finalTitle}</TableItem>
+          <TableItem>
+            {parseTitle(item.finalTitle).map((el) => (
+              <FinalTitle>
+                &nbsp; {el.title}&nbsp;<FinalWonju>{el.wonju}</FinalWonju>
+              </FinalTitle>
+            ))}
+          </TableItem>
         </OtherListTableBlock>
       ))}
     </>
