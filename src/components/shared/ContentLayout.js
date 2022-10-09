@@ -19,7 +19,7 @@ import { leftBlockDepth } from '../../pages/menuExplore/MenuExplore';
 const MainContentBlock = styled.div`
   display: grid;
   grid-template-columns: 1fr 4fr;
-  height: 70vh;
+  height: fit-content;
   margin: 1px 20px;
 `;
 

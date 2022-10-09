@@ -5,7 +5,7 @@ function getLeftSeoji(filter, depth, currentId) {
     url: `/category/${filter}/${depth}/${currentId}`,
     method: 'get',
   });
-  // console.log('response', response);
+  console.log('response', response);
   return response;
 }
 

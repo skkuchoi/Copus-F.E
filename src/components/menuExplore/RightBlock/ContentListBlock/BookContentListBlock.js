@@ -58,8 +58,6 @@ function BookContentListBlock() {
     [consonant, clickAuthorContext.clickAuthor],
   );
 
-  console.log('seojiJsonDatas:', seojiJsonDatas);
-
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <div>로딩</div>;
   return (
