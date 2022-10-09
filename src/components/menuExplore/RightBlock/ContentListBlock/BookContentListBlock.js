@@ -58,6 +58,8 @@ function BookContentListBlock() {
     [consonant, clickAuthorContext.clickAuthor],
   );
 
+  console.log('seojiJsonDatas:', seojiJsonDatas);
+
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <div>로딩</div>;
   return (
@@ -79,17 +81,17 @@ function BookContentListBlock() {
           <Buga>
             {item.buga.beomrye != null && (
               <Link to="/" className="link-line">
-                <BugaButton>{item.buga.beomrye}</BugaButton>
+                <BugaButton>{item.publishYear}</BugaButton>
               </Link>
             )}
             {item.buga.chapter != null && (
               <Link to="/" className="link-line">
-                <BugaButton>{item.buga.chapter}</BugaButton>
+                <BugaButton>{item.publishYear}</BugaButton>
               </Link>
             )}
             {item.buga.haejae != null && (
               <Link to="/" className="link-line">
-                <BugaButton>{item.buga.haejae}</BugaButton>
+                <BugaButton>{item.publishYear}</BugaButton>
               </Link>
             )}
           </Buga>

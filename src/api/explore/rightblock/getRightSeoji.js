@@ -1,18 +1,20 @@
 import axios from 'axios';
 
 function getRightSeoji(filter, seojiKeyword, consonant) {
-  console.log('seojiKeyword는 ', seojiKeyword);
-  console.log(filter, consonant);
+  console.log('seojiKeyword:', seojiKeyword, 'keyword:', consonant);
   const response = axios({
     url: '/article/seoji',
     method: 'get',
-    data: {
+    params: {
       seojiKeyword: seojiKeyword,
       keyword: consonant,
-      ordering: filter,
     },
   });
 
+  console.log('response', response);
+
+
+  return response;
   const bybook1 = {
     count: '2',
     datas: [
@@ -155,23 +157,23 @@ function getRightSeoji(filter, seojiKeyword, consonant) {
     ],
   };
 
-  switch (filter) {
-    case 'book':
-      if (consonant === 'A') return JSON.parse(JSON.stringify(bybook1));
-      else if (consonant === 'B') return JSON.parse(JSON.stringify(bybook2));
-      else if (consonant === 'all') return JSON.parse(JSON.stringify(bybook1));
-      break;
-    case 'author':
-      if (seojiKeyword === 'authorName')
-        return JSON.parse(JSON.stringify(byauthor1));
-      else if (consonant === 'A') return JSON.parse(JSON.stringify(byauthor1));
-      else if (consonant === 'B') return JSON.parse(JSON.stringify(byauthor2));
-      else if (consonant === 'all')
-        return JSON.parse(JSON.stringify(byauthorAll));
-      break;
-    default:
-      return;
-  }
+  // switch (filter) {
+  //   case 'book':
+  //     if (consonant === 'A') return JSON.parse(JSON.stringify(bybook1));
+  //     else if (consonant === 'B') return JSON.parse(JSON.stringify(bybook2));
+  //     else if (consonant === 'all') return JSON.parse(JSON.stringify(bybook1));
+  //     break;
+  //   case 'author':
+  //     if (seojiKeyword === 'authorName')
+  //       return JSON.parse(JSON.stringify(byauthor1));
+  //     else if (consonant === 'A') return JSON.parse(JSON.stringify(byauthor1));
+  //     else if (consonant === 'B') return JSON.parse(JSON.stringify(byauthor2));
+  //     else if (consonant === 'all')
+  //       return JSON.parse(JSON.stringify(byauthorAll));
+  //     break;
+  //   default:
+  //     return;
+  // }
 }
 
 export default getRightSeoji;
