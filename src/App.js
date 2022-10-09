@@ -18,6 +18,10 @@ import SearchResult from './pages/searchResult/SearchResult';
 
 import MenuExplore from './pages/menuExplore/MenuExplore';
 
+import Beomrye from './pages/original-text/side/Beomrye';
+import Chapter from './pages/original-text/side/Chapter';
+import Haejae from './pages/original-text/side/Haejae';
+
 const Container = styled.div`
   position: absolute;
   top: 0;
@@ -96,6 +100,10 @@ function App() {
 
           <Route path="/server-error" element={<NotWorking />} />
           <Route path="*" element={<NotFound />} />
+
+          <Route path="/beomrye" exact={true} element={<Beomrye />} />
+          <Route path="/chapter" exact={true} element={<Chapter />} />
+          <Route path="/haejae" exact={true} element={<Haejae />} />
         </Routes>
       </FontStyle>
     </Container>
