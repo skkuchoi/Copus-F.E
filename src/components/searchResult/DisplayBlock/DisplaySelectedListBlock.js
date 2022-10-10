@@ -46,7 +46,7 @@ function DisplaySelectedListBlock({ totalCount }) {
         <SearchResultNumber>{totalCount}</SearchResultNumber>
         건의 검색결과
       </ResultNumberPositioner>
-      
+
       <Keyword>검색어: {keyword}</Keyword>
     </DisplayPositioner>
   );

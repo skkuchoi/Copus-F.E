@@ -1,9 +1,12 @@
 import Pagination from './Pagination';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CategoryListItemTitleBlock from './CategoryListItemTitleBlock';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import NoExistDataBlock from './NoExistDataBlock';
+import useAsync from '../../../hooks/useAsync';
+import getRightSearchResult from '../../../api/search/getRightSearchResult';
+import { totalFilter } from '../SearchResultLayout';
 
 const ResultListPositioner = styled.div`
   width: 98%;
@@ -60,18 +63,30 @@ const OriginalText = styled.div`
   color: gray;
 `;
 
-function ResultDataBlock({ rightDatas }) {
+function ResultDataBlock() {
   let id = 1;
+
+  // useContext
+  const totalDetailFilter = useContext(totalFilter);
 
   //SearchFilter Settings
   const { pathname } = useLocation();
+  const { keyword } = useParams();
   const filterUri = {
-    total: '전체',
-    'book-title': '서명',
-    'author-name': '저자',
-    content: '원문',
+    total: 'total',
+    'book-title': 'bookTitle',
+    'author-name': 'authorName',
+    'gwoncha-title': 'gwonchaTitle',
+    'munche-title': 'muncheTitle',
+    content: 'content',
+    'data-id': 'dataId',
   };
-  const searchFilter = filterUri[pathname.split('/')[2]];
+  const filter = filterUri[pathname.split('/')[2]];
+
+  const [rightDatas] = useAsync(
+    () => getRightSearchResult(filter, keyword),
+    [filter],
+  );
 
   //Pagination
   const [limitPage, setLimitPage] = useState(10);
@@ -79,203 +94,674 @@ function ResultDataBlock({ rightDatas }) {
   const offset = (currentPage - 1) * limitPage;
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchFilter]);
-  
-  if (searchFilter === '전체') {
-    return (
-      <>
-        <CategoryListItemTitleBlock title="서명" number={rightDatas.count} />
-        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+  }, [filter]);
+
+  console.log(totalDetailFilter.totalDetailFilter);
+  // 로딩 페이지
+  if (rightDatas.data === null) return <div>zz</div>;
+  switch (filter) {
+    case 'total':
+      switch (totalDetailFilter.totalDetailFilter) {
+        case 'total':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <CategoryListItemTitleBlock
+                title="저/편/필자"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.gwonchaTitle}{' '}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.muncheTitle}{' '}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <CategoryListItemTitleBlock
+                title="원문"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.gwonchaTitle}{' '}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.muncheTitle}{' '}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                          {/* <SubInformationText>{item.page}</SubInformationText> */}
+                        </SubInformation>
+                        <OriginalText>{item.contentPartition}</OriginalText>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+        case 'bookTitle':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+        case 'authorName':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+        case 'gwonchaTitle':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+        case 'muncheTitle':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+        case 'content':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+        case 'dataId':
+          return (
+            <>
+              <CategoryListItemTitleBlock
+                title="서명"
+                number={rightDatas.data.count}
+              />
+              {rightDatas.data.datas
+                .slice(offset, offset + limitPage)
+                .map((item) => (
+                  <>
+                    <ResultListPositioner>
+                      <Id> {id++}. </Id>
+                      <ResultInformation>
+                        <Title>{item.seojiTitle}</Title>
+                        <SubInformation>
+                          <SubInformationText>
+                            {item.authorName}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {item.publishYear}{' '}
+                          </SubInformationText>
+                        </SubInformation>
+                      </ResultInformation>
+                    </ResultListPositioner>
+                  </>
+                ))}
+
+              <br />
+
+              <Pagination
+                totalContent={rightDatas.data.datas.length}
+                limitPage={limitPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          );
+
+        default:
+          break;
+      }
+      break;
+    case 'bookTitle':
+      if (!rightDatas.data.count)
+        return (
           <>
-            <ResultListPositioner>
-              <Id> {id++}. </Id>
-              <ResultInformation>
-                <Title>{item.seojiTitle}</Title>
-                <SubInformation>
-                  <SubInformationText>{item.authorName}</SubInformationText>
-                  <SubInformationText>{item.publishYear} </SubInformationText>
-                </SubInformation>
-              </ResultInformation>
-            </ResultListPositioner>
+            <CategoryListItemTitleBlock
+              title="서명"
+              number={rightDatas.data.count}
+            />
+            <NoExistDataBlock />
           </>
-        ))}
+        );
 
-        <br />
-
-        <CategoryListItemTitleBlock
-          title="저/편/필자"
-          number={rightDatas.count}
-        />
-        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
-          <>
-            <ResultListPositioner>
-              <Id> {id++}. </Id>
-              <ResultInformation>
-                <Title>{item.seojiTitle}</Title>
-                <SubInformation>
-                  <SubInformationText>{item.authorName}</SubInformationText>
-                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
-                  <SubInformationText>{item.muncheTitle} </SubInformationText>
-                  <SubInformationText>{item.publishYear} </SubInformationText>
-                </SubInformation>
-              </ResultInformation>
-            </ResultListPositioner>
-          </>
-        ))}
-
-        <br />
-
-        <CategoryListItemTitleBlock title="원문" number={rightDatas.count} />
-        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
-          <>
-            <ResultListPositioner>
-              <Id> {id++}. </Id>
-              <ResultInformation>
-                <Title>{item.seojiTitle}</Title>
-                <SubInformation>
-                  <SubInformationText>{item.authorName}</SubInformationText>
-                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
-                  <SubInformationText>{item.muncheTitle} </SubInformationText>
-                  <SubInformationText>{item.publishYear} </SubInformationText>
-                  {/* <SubInformationText>{item.page}</SubInformationText> */}
-                </SubInformation>
-                <OriginalText>{item.contentPartition}</OriginalText>
-              </ResultInformation>
-            </ResultListPositioner>
-          </>
-        ))}
-
-        <Pagination
-          totalContent={rightDatas.datas.length}
-          limitPage={limitPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </>
-    );
-  } else if (searchFilter === '서명') {
-    if (!rightDatas.count)
       return (
         <>
-          <CategoryListItemTitleBlock title="서명" number={rightDatas.count} />
-          <NoExistDataBlock />
+          <CategoryListItemTitleBlock
+            title="서명"
+            number={rightDatas.data.count}
+          />
+
+          {rightDatas.data.datas
+            .slice(offset, offset + limitPage)
+            .map((item) => (
+              <>
+                <ResultListPositioner>
+                  <Id> {id++}. </Id>
+
+                  <ResultInformation>
+                    <Title>{item.seojiTitle}</Title>
+
+                    <SubInformation>
+                      <SubInformationText>{item.authorName}</SubInformationText>
+                      <SubInformationText>
+                        {item.publishYear}
+                      </SubInformationText>
+                    </SubInformation>
+                  </ResultInformation>
+                </ResultListPositioner>
+              </>
+            ))}
+
+          <Pagination
+            totalContent={rightDatas.data.datas.length}
+            limitPage={limitPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </>
       );
-    return (
-      <>
-        <CategoryListItemTitleBlock title="서명" number={rightDatas.count} />
-
-        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+    case 'authorName':
+      if (!rightDatas.data.count)
+        return (
           <>
-            <ResultListPositioner>
-              <Id> {id++}. </Id>
-
-              <ResultInformation>
-                <Title>{item.seojiTitle}</Title>
-
-                <SubInformation>
-                  <SubInformationText>{item.authorName}</SubInformationText>
-                  <SubInformationText>{item.publishYear} </SubInformationText>
-                </SubInformation>
-              </ResultInformation>
-            </ResultListPositioner>
+            <CategoryListItemTitleBlock
+              title="저/편/필자"
+              number={rightDatas.data.count}
+            />
+            <NoExistDataBlock />
           </>
-        ))}
-
-        <Pagination
-          totalContent={rightDatas.datas.length}
-          limitPage={limitPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </>
-    );
-  } else if (searchFilter === '저자') {
-    if (!rightDatas.count)
+        );
       return (
         <>
           <CategoryListItemTitleBlock
             title="저/편/필자"
-            number={rightDatas.count}
+            number={rightDatas.data.count}
           />
-          <NoExistDataBlock />
+
+          {rightDatas.data.datas
+            .slice(offset, offset + limitPage)
+            .map((item) => (
+              <>
+                <ResultListPositioner>
+                  <Id> {id++}. </Id>
+
+                  <ResultInformation>
+                    <Title>{item.seojiTitle}</Title>
+
+                    <SubInformation>
+                      <SubInformationText>{item.authorName}</SubInformationText>
+                      <SubInformationText>
+                        {item.gwonchaTitle}{' '}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.muncheTitle}{' '}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.publishYear}{' '}
+                      </SubInformationText>
+                    </SubInformation>
+                  </ResultInformation>
+                </ResultListPositioner>
+              </>
+            ))}
+
+          <Pagination
+            totalContent={rightDatas.data.datas.length}
+            limitPage={limitPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </>
       );
-    return (
-      <>
-        <CategoryListItemTitleBlock
-          title="저/편/필자"
-          number={rightDatas.count}
-        />
-
-        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+    case 'gwonchaTitle':
+      if (!rightDatas.data.count)
+        return (
           <>
-            <ResultListPositioner>
-              <Id> {id++}. </Id>
-
-              <ResultInformation>
-                <Title>{item.seojiTitle}</Title>
-
-                <SubInformation>
-                  <SubInformationText>{item.authorName}</SubInformationText>
-                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
-                  <SubInformationText>{item.muncheTitle} </SubInformationText>
-                  <SubInformationText>{item.publishYear} </SubInformationText>
-                </SubInformation>
-              </ResultInformation>
-            </ResultListPositioner>
+            <CategoryListItemTitleBlock
+              title="권차"
+              number={rightDatas.data.count}
+            />
+            <NoExistDataBlock />
           </>
-        ))}
-
-        <Pagination
-          totalContent={rightDatas.datas.length}
-          limitPage={limitPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </>
-    );
-  } else if (searchFilter === '원문') {
-    if (!rightDatas.count)
+        );
       return (
         <>
-          <CategoryListItemTitleBlock title="원문" number={rightDatas.count} />
-          <NoExistDataBlock />
+          <CategoryListItemTitleBlock
+            title="권차"
+            number={rightDatas.data.count}
+          />
+
+          {rightDatas.data.datas
+            .slice(offset, offset + limitPage)
+            .map((item) => (
+              <>
+                <ResultListPositioner>
+                  <Id> {id++}. </Id>
+
+                  <ResultInformation>
+                    <Title>{item.seojiTitle}</Title>
+
+                    <SubInformation>
+                      <SubInformationText>{item.authorName}</SubInformationText>
+                      <SubInformationText>
+                        {item.gwonchaTitle}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.publishYear}{' '}
+                      </SubInformationText>
+                    </SubInformation>
+                  </ResultInformation>
+                </ResultListPositioner>
+              </>
+            ))}
+
+          <Pagination
+            totalContent={rightDatas.data.datas.length}
+            limitPage={limitPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </>
       );
-    return (
-      <>
-        <CategoryListItemTitleBlock title="원문" number={rightDatas.count} />
-
-        {rightDatas.datas.slice(offset, offset + limitPage).map((item) => (
+    case 'muncheTitle':
+      if (!rightDatas.data.count)
+        return (
           <>
-            <ResultListPositioner>
-              <Id> {id++}. </Id>
-
-              <ResultInformation>
-                <Title>{item.seojiTitle}</Title>
-
-                <SubInformation>
-                  <SubInformationText>{item.authorName}</SubInformationText>
-                  <SubInformationText>{item.gwonchaTitle} </SubInformationText>
-                  <SubInformationText>{item.muncheTitle} </SubInformationText>
-                  <SubInformationText>{item.publishYear} </SubInformationText>
-                  {/* <SubInformationText>{item.page}</SubInformationText> */}
-                </SubInformation>
-                <OriginalText>{item.contentPartition}</OriginalText>
-              </ResultInformation>
-            </ResultListPositioner>
+            <CategoryListItemTitleBlock
+              title="문체"
+              number={rightDatas.data.count}
+            />
+            <NoExistDataBlock />
           </>
-        ))}
+        );
+      return (
+        <>
+          <CategoryListItemTitleBlock
+            title="문체"
+            number={rightDatas.data.count}
+          />
 
-        <Pagination
-          totalContent={rightDatas.datas.length}
-          limitPage={limitPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-      </>
-    );
+          {rightDatas.data.datas
+            .slice(offset, offset + limitPage)
+            .map((item) => (
+              <>
+                <ResultListPositioner>
+                  <Id> {id++}. </Id>
+
+                  <ResultInformation>
+                    <Title>{item.seojiTitle}</Title>
+
+                    <SubInformation>
+                      <SubInformationText>{item.authorName}</SubInformationText>
+                      <SubInformationText>
+                        {item.gwonchaTitle}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.muncheTitle}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.publishYear}{' '}
+                      </SubInformationText>
+                    </SubInformation>
+                  </ResultInformation>
+                </ResultListPositioner>
+              </>
+            ))}
+
+          <Pagination
+            totalContent={rightDatas.data.datas.length}
+            limitPage={limitPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      );
+    case 'content':
+      if (!rightDatas.data.count)
+        return (
+          <>
+            <CategoryListItemTitleBlock
+              title="원문"
+              number={rightDatas.data.count}
+            />
+            <NoExistDataBlock />
+          </>
+        );
+      return (
+        <>
+          <CategoryListItemTitleBlock
+            title="원문"
+            number={rightDatas.data.count}
+          />
+
+          {rightDatas.data.datas
+            .slice(offset, offset + limitPage)
+            .map((item) => (
+              <>
+                <ResultListPositioner>
+                  <Id> {id++}. </Id>
+
+                  <ResultInformation>
+                    <Title>{item.seojiTitle}</Title>
+
+                    <SubInformation>
+                      <SubInformationText>{item.authorName}</SubInformationText>
+                      <SubInformationText>
+                        {item.gwonchaTitle}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.muncheTitle}{' '}
+                      </SubInformationText>
+                      <SubInformationText>
+                        {item.publishYear}{' '}
+                      </SubInformationText>
+                      {/* <SubInformationText>{item.page}</SubInformationText> */}
+                    </SubInformation>
+                    <OriginalText>{item.contentPartition}</OriginalText>
+                  </ResultInformation>
+                </ResultListPositioner>
+              </>
+            ))}
+
+          <Pagination
+            totalContent={rightDatas.data.datas.length}
+            limitPage={limitPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      );
+    case 'dataId':
+      if (!rightDatas.data.count)
+        return (
+          <>
+            <CategoryListItemTitleBlock
+              title="자료ID"
+              number={rightDatas.data.count}
+            />
+            <NoExistDataBlock />
+          </>
+        );
+      return (
+        <>
+          <CategoryListItemTitleBlock
+            title="자료ID"
+            number={rightDatas.data.count}
+          />
+
+          {rightDatas.data.datas
+            .slice(offset, offset + limitPage)
+            .map((item) => (
+              <>
+                <ResultListPositioner>
+                  <Id> {id++}. </Id>
+
+                  <ResultInformation>
+                    <Title>{item.seojiTitle}</Title>
+
+                    <SubInformation>
+                      <SubInformationText>{item.authorName}</SubInformationText>
+                      {item.gwonchaTitle !== null && (
+                        <SubInformationText>
+                          {item.gwonchaTitle}
+                        </SubInformationText>
+                      )}
+                      {item.muncheTitle !== null && (
+                        <SubInformationText>
+                          {item.muncheTitle}
+                        </SubInformationText>
+                      )}
+                      <SubInformationText>
+                        {item.publishYear}{' '}
+                      </SubInformationText>
+                      {/* <SubInformationText>{item.page}</SubInformationText> */}
+                    </SubInformation>
+                    {item.contentPartition !== null && (
+                      <OriginalText>{item.contentPartition}</OriginalText>
+                    )}
+                  </ResultInformation>
+                </ResultListPositioner>
+              </>
+            ))}
+
+          <Pagination
+            totalContent={rightDatas.data.datas.length}
+            limitPage={limitPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
+        </>
+      );
+
+    default:
+      return;
   }
 }
 

@@ -9,6 +9,7 @@ async function getLeftSearchResult(filter, keyword) {
       keyword: keyword,
     },
   });
+
   //console.log('response 데이터: ', response);
   return response;
 }
