@@ -7,7 +7,7 @@ import NoExistDataBlock from './NoExistDataBlock';
 import useAsync from '../../../hooks/useAsync';
 import getRightSearchResult from '../../../api/search/getRightSearchResult';
 import { totalFilter } from '../SearchResultLayout';
-
+import parseGwoncha from '../../../utils/parseGwoncha';
 const ResultListPositioner = styled.div`
   width: 98%;
   display: grid;
@@ -571,7 +571,7 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
-                        {item.gwonchaTitle}
+                        {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                       <SubInformationText>
                         {item.publishYear}{' '}
