@@ -8,6 +8,9 @@ import useAsync from '../../../hooks/useAsync';
 import getRightSearchResult from '../../../api/search/getRightSearchResult';
 import { totalFilter } from '../SearchResultLayout';
 import parseGwoncha from '../../../utils/parseGwoncha';
+import parseMunche from '../../../utils/parseMunche';
+import parseTitle from '../../../utils/parseTitle';
+
 const ResultListPositioner = styled.div`
   width: 98%;
   display: grid;
@@ -63,6 +66,15 @@ const OriginalText = styled.div`
   color: gray;
 `;
 
+const FinalTitle = styled.span`
+  font-size: 17px;
+  margin: 0;
+`;
+const FinalWonju = styled.span`
+  font-size: 12px;
+  margin: 0;
+`;
+
 function ResultDataBlock() {
   let id = 1;
 
@@ -96,7 +108,7 @@ function ResultDataBlock() {
     setCurrentPage(1);
   }, [filter]);
 
-  console.log(totalDetailFilter.totalDetailFilter);
+  // console.log(totalDetailFilter.totalDetailFilter);
   // 로딩 페이지
   if (rightDatas.data === null) return <div>zz</div>;
   switch (filter) {
@@ -518,13 +530,7 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
-                        {item.gwonchaTitle}{' '}
-                      </SubInformationText>
-                      <SubInformationText>
-                        {item.muncheTitle}{' '}
-                      </SubInformationText>
-                      <SubInformationText>
-                        {item.publishYear}{' '}
+                        {item.publishYear}
                       </SubInformationText>
                     </SubInformation>
                   </ResultInformation>
@@ -574,7 +580,7 @@ function ResultDataBlock() {
                         {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                       <SubInformationText>
-                        {item.publishYear}{' '}
+                        {item.publishYear}
                       </SubInformationText>
                     </SubInformation>
                   </ResultInformation>
@@ -621,13 +627,13 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
-                        {item.gwonchaTitle}
+                        {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                       <SubInformationText>
-                        {item.muncheTitle}
+                        {parseMunche(item.muncheTitle)}
                       </SubInformationText>
                       <SubInformationText>
-                        {item.publishYear}{' '}
+                        {item.publishYear}
                       </SubInformationText>
                     </SubInformation>
                   </ResultInformation>
@@ -674,15 +680,20 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
-                        {item.gwonchaTitle}
+                        {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                       <SubInformationText>
-                        {item.muncheTitle}{' '}
+                        {parseMunche(item.muncheTitle)}
                       </SubInformationText>
                       <SubInformationText>
-                        {item.publishYear}{' '}
+                        {item.publishYear}
                       </SubInformationText>
-                      {/* <SubInformationText>{item.page}</SubInformationText> */}
+                      {parseTitle(item.finalTitle).map((el) => (
+                        <FinalTitle>
+                          &nbsp; {el.title}&nbsp;
+                          <FinalWonju>{el.wonju}</FinalWonju>
+                        </FinalTitle>
+                      ))}
                     </SubInformation>
                     <OriginalText>{item.contentPartition}</OriginalText>
                   </ResultInformation>
@@ -730,22 +741,26 @@ function ResultDataBlock() {
                       <SubInformationText>{item.authorName}</SubInformationText>
                       {item.gwonchaTitle !== null && (
                         <SubInformationText>
-                          {item.gwonchaTitle}
+                          {parseGwoncha(item.gwonchaTitle)}
                         </SubInformationText>
                       )}
                       {item.muncheTitle !== null && (
                         <SubInformationText>
-                          {item.muncheTitle}
+                          {parseMunche(item.muncheTitle)}
                         </SubInformationText>
                       )}
                       <SubInformationText>
-                        {item.publishYear}{' '}
+                        {item.publishYear}
                       </SubInformationText>
-                      {/* <SubInformationText>{item.page}</SubInformationText> */}
+
+                      {item.finalTitle !== null &&
+                        parseTitle(item.finalTitle).map((el) => (
+                          <FinalTitle>
+                            &nbsp; {el.title}&nbsp;
+                            <FinalWonju>{el.wonju}</FinalWonju>
+                          </FinalTitle>
+                        ))}
                     </SubInformation>
-                    {item.contentPartition !== null && (
-                      <OriginalText>{item.contentPartition}</OriginalText>
-                    )}
                   </ResultInformation>
                 </ResultListPositioner>
               </>
