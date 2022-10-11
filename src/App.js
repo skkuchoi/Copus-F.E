@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import { FontStyle } from './FontStyle';
 import Home from './pages/home/Home';
-
+import LoadingDisplay from './components/Loading/loadingDisplay';
 import About from './pages/About/About';
 
 import Login from './pages/account/Login/Login';
@@ -45,6 +45,9 @@ function App() {
 
           {/* about page */}
           <Route path="/about" exact={true} element={<About />} />
+
+          {/* loading page */}
+          <Route path="/loading" exact={true} element={<LoadingDisplay />} />
 
           {/* account Page */}
           <Route path="/login" exact={true} element={<Login />} />

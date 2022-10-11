@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Card from './Card';
 import '../../shared/linkStyle.css';
-
+import LoadingDisplay from '../../Loading/loadingDisplay';
 const IndexPositioner = styled.div`
   display: flex;
   flex-direction: row;

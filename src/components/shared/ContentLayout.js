@@ -21,6 +21,11 @@ const MainContentBlock = styled.div`
   grid-template-columns: 1fr 4fr;
   height: 70vh;
   margin: 1px 20px;
+
+  @media screen and (max-width: 800px) {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 `;
 
 export const currentFocusTitleContext = createContext();
