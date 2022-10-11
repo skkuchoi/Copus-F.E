@@ -8,6 +8,7 @@ import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
 
 import { authorContext } from '../../../shared/ContentLayout';
 import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
+import parseAuthor from '../../../../utils/parseAuthor';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -40,28 +41,25 @@ const BugaButton = styled.div`
 function beomryePopUp() {
   let options =
     'toolbar=no,scrollbars=yes,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
-
   window.open('/beomrye', '_blank', options);
 }
 
 function chapterPopUp() {
   let options =
     'toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
-
   window.open('/chapter', '_blank', options);
 }
 
 function haejaePopUp() {
   let options =
     'toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
-
   window.open('/haejae', '_blank', options);
 }
 
 function BookContentListBlock() {
   let id = 1;
 
-  const consonant = useContext(selectedConsonant);
+  let consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
   const clickAuthorContext = useContext(authorContext);
 
@@ -73,10 +71,12 @@ function BookContentListBlock() {
   else if (filter === 'author' && consonant)
     seojiKeyword = 'authorNameConsonant';
   else seojiKeyword = 'authorName';
-
+  console.log(clickAuthorContext.clickAuthor);
+  if (clickAuthorContext.authorValue)
+    consonant = parseAuthor(clickAuthorContext.authorValue);
   const [seojiJsonDatas] = useAsync(
     () => getRightSeoji(filter, seojiKeyword, consonant),
-    [consonant, clickAuthorContext.clickAuthor],
+    [consonant, clickAuthorContext.authorValue],
   );
 
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
@@ -99,23 +99,17 @@ function BookContentListBlock() {
 
           <Buga>
             {item.buga.beomrye != null && (
-              //<Link className="link-line">
               <BugaButton onClick={beomryePopUp}>
                 {item.buga.beomrye}
               </BugaButton>
-              //</Link>
             )}
             {item.buga.chapter != null && (
-              //<Link to="/" className="link-line">
               <BugaButton onClick={chapterPopUp}>
                 {item.buga.chapter}
               </BugaButton>
-              //</Link>
             )}
             {item.buga.haejae != null && (
-              //<Link to="/" className="link-line">
               <BugaButton onClick={haejaePopUp}>{item.buga.haejae}</BugaButton>
-              //</Link>
             )}
           </Buga>
         </BookTableBlock>

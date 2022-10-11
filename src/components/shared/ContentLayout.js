@@ -37,7 +37,7 @@ function ContentLayout({ filter }) {
   const [currentFocusTitle, setCurrentFocusTitle] = useState('');
   // 저자
   const [clickAuthor, setClickAuthor] = useState('');
-
+  const [authorValue, setAuthorValue] = useState('');
   // 권차
   const [clickSeoji, setClickSeoji] = useState('');
 
@@ -61,6 +61,8 @@ function ContentLayout({ filter }) {
           value={{
             clickAuthor: clickAuthor,
             setClickAuthor: setClickAuthor,
+            authorValue: authorValue,
+            setAuthorValue: setAuthorValue,
           }}>
           <seojiContext.Provider
             value={{

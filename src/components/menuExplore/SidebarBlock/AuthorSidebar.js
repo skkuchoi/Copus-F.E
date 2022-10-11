@@ -17,7 +17,11 @@ import {
   seojiContext,
   gwonchaContext,
   muncheContext,
+  finalContext,
 } from '../../shared/ContentLayout';
+import parseGwoncha from '../../../utils/parseGwoncha';
+import parseMunche from '../../../utils/parseMunche';
+import parseTitle from '../../../utils/parseTitle';
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
@@ -63,6 +67,16 @@ const ListLi = styled.li`
   }
 `;
 
+const FinalTitle = styled.span`
+  font-size: 15px;
+  margin: 0;
+`;
+
+const FinalWonju = styled.span`
+  font-size: 12px;
+  margin: 0;
+`;
+
 function AuthorSidebar() {
   const container = useRef();
 
@@ -79,6 +93,7 @@ function AuthorSidebar() {
   const clickSeojiContext = useContext(seojiContext);
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
+  const clickFinalContext = useContext(finalContext);
 
   const [authorListDatas, setAuthorListDatas] = useState([]);
 
@@ -228,7 +243,7 @@ function AuthorSidebar() {
   useEffect(() => {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
-
+  //console.log(depthContext.depth);
   if (
     authorListDatas === null ||
     authorListDatas === undefined ||
@@ -251,6 +266,7 @@ function AuthorSidebar() {
             <ListLi
               onClick={(target) => {
                 clickAuthorContext.setClickAuthor(author.childId);
+                clickAuthorContext.setAuthorValue(author.childTitle);
                 depthContext.setDepth(0);
               }}>
               {author.childTitle}
@@ -284,7 +300,7 @@ function AuthorSidebar() {
                                 );
                                 depthContext.setDepth(2);
                               }}>
-                              {gwoncha.childTitle}
+                              {parseGwoncha(gwoncha.childTitle)}
                             </ListLi>
                           </ListItemPositioner>
 
@@ -301,7 +317,7 @@ function AuthorSidebar() {
                                         );
                                         depthContext.setDepth(3);
                                       }}>
-                                      {munche.childTitle}
+                                      {parseMunche(munche.childTitle)}
                                     </ListLi>
                                   </ListItemPositioner>
 
@@ -315,8 +331,20 @@ function AuthorSidebar() {
                                           <ListLi
                                             onClick={(target) => {
                                               depthContext.setDepth(4);
+                                              clickFinalContext.setClickFinal(
+                                                final.childId,
+                                              );
                                             }}>
-                                            {final.childTitle}
+                                            {parseTitle(final.childTitle).map(
+                                              (el) => (
+                                                <FinalTitle>
+                                                  &nbsp; {el.title}&nbsp;
+                                                  <FinalWonju>
+                                                    {el.wonju}
+                                                  </FinalWonju>
+                                                </FinalTitle>
+                                              ),
+                                            )}
                                           </ListLi>
                                         </ListItemPositioner>
                                       ),
