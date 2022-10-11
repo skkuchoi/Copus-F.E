@@ -6,6 +6,9 @@ import getRightFinalContent from '../../../../api/explore/rightblock/getRightFin
 
 import { finalContext } from '../../../shared/ContentLayout';
 
+import parseContent from '../../../../utils/parseContent';
+import parseTitle from '../../../../utils/parseTitle';
+
 const ContentPositioner = styled.div`
   padding: 12px 0px;
   display: flex;
@@ -38,6 +41,14 @@ const Title = styled.div`
   margin-bottom: 10px;
 `;
 
+const FinalTitle = styled.span`
+  margin: 0;
+`;
+const FinalWonju = styled.span`
+  font-size: 17px;
+  margin: 0;
+`;
+
 const SubTitle = styled.div`
   display: flex;
   flex-direction: row;
@@ -47,12 +58,6 @@ const SubTitle = styled.div`
   padding: 5px 10px;
   margin-bottom: 15px;
   background-color: rgba(197, 232, 207, 0.5);
-`;
-
-const Wonju = styled.div`
-  margin-left: 7px;
-  padding-top: 4px;
-  font-size: 15px;
 `;
 
 const Page = styled.div`
@@ -106,16 +111,8 @@ export default function Content() {
   );
 
   console.log('final content: ', finalDataJsonDatas);
-
-  const testTitle =
-    '河東寮羲允<원주>載文</원주>過余書室。拈韻志喜。<원주>二首</원주>';
-
-  const title = '上蘆沙先生';
-  const wonju = '癸丑';
-  const page = 'b137_261a';
   const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
-  const content =
-    '湖天寒欲雪。陪坐獨春風。承訓方知悔。繙書枉用工。正心除外騖。觀理貴中通。曾傳尋門路。庶幾次第功。';
+
   if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)
     return <div>zz</div>;
   return (
@@ -126,12 +123,20 @@ export default function Content() {
         <RouteText>{finalDataJsonDatas.data.muncheTitle}</RouteText>
       </ContentRoute>
       <ContentPositioner>
-        <Title>{title}</Title>
+        <Title>
+          {parseTitle(finalDataJsonDatas.data.finalData.title).map((el) => (
+            <FinalTitle>
+              &nbsp; {el.title}&nbsp;<FinalWonju>{el.wonju}</FinalWonju>
+            </FinalTitle>
+          ))}
+        </Title>
 
         <SubTitle>
-          {title}
-          <Wonju>{wonju}</Wonju>
-          <Page>{page}</Page>
+          {parseTitle(finalDataJsonDatas.data.finalData.title).map((el) => (
+            <FinalTitle>
+              &nbsp; {el.title}&nbsp;<FinalWonju>{el.wonju}</FinalWonju>
+            </FinalTitle>
+          ))}
         </SubTitle>
 
         <CopyBlock>
@@ -140,7 +145,9 @@ export default function Content() {
           <CopyButton>URL 복사</CopyButton>
         </CopyBlock>
 
-        <ContentText>{content}</ContentText>
+        <ContentText>
+          {parseContent(finalDataJsonDatas.data.finalData.content)}
+        </ContentText>
         <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
       </ContentPositioner>
     </>

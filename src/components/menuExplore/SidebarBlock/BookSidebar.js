@@ -15,6 +15,7 @@ import {
   seojiContext,
   gwonchaContext,
   muncheContext,
+  finalContext,
 } from '../../shared/ContentLayout';
 import parseGwoncha from '../../../utils/parseGwoncha';
 import parseMunche from '../../../utils/parseMunche';
@@ -93,6 +94,7 @@ function BookSidebar() {
   const clickSeojiContext = useContext(seojiContext);
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
+  const clickFinalContext = useContext(finalContext);
 
   const [seojiListDatas, setSeojiListDatas] = useState([]);
 
@@ -209,7 +211,7 @@ function BookSidebar() {
   useEffect(() => {
     console.log('currentFocusTitle : ', currentFocusTitle.currentFocusTitle);
   }, [currentFocusTitle.currentFocusTitle]);
-  
+
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||
@@ -302,6 +304,9 @@ function BookSidebar() {
                                       depthContext.setDepth(4);
                                       currentFocusTitle.setCurrentFocusTitle(
                                         final.childTitle,
+                                      );
+                                      clickFinalContext.setClickFinal(
+                                        final.childId,
                                       );
                                     }}
                                     className={
