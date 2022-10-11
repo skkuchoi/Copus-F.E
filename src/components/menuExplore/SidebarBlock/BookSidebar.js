@@ -120,7 +120,7 @@ function BookSidebar() {
       seojiJsonDatas.data.datas.map((seoji) => {
         tempArray.push({
           childId: seoji.childId,
-          childTitle: seoji.childTItle,
+          childTitle: seoji.childTitle,
         });
       });
       setSeojiListDatas(tempArray);
@@ -141,7 +141,7 @@ function BookSidebar() {
         if (!includeGwonchaData[gwoncha.childId]) {
           setGwonchaListDatas((prev) => [
             ...prev,
-            { childId: gwoncha.childId, childTitle: gwoncha.childTItle },
+            { childId: gwoncha.childId, childTitle: gwoncha.childTitle },
           ]);
           setIncludeGwonchaData((prev) => ({
             ...prev,
@@ -166,7 +166,7 @@ function BookSidebar() {
         if (!includeMuncheData[munche.childId]) {
           setMuncheListDatas((prev) => [
             ...prev,
-            { childId: munche.childId, childTitle: munche.childTItle },
+            { childId: munche.childId, childTitle: munche.childTitle },
           ]);
           setIncludeMuncheData((prev) => ({
             ...prev,
@@ -191,7 +191,7 @@ function BookSidebar() {
         if (!includeFinalData[final.childId]) {
           setFinalListDatas((prev) => [
             ...prev,
-            { childId: final.childId, childTitle: final.childTItle },
+            { childId: final.childId, childTitle: final.childTitle },
           ]);
           setIncludeFinalData((prev) => ({
             ...prev,
