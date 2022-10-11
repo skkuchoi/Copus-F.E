@@ -97,6 +97,11 @@ function App() {
             element={<SearchResult />}
           />
 
+          <Route
+            path="/search-result/data-id/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
           {/* New Explore;;ㅋㅋ */}
 
           <Route
