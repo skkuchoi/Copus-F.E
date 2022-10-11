@@ -129,20 +129,20 @@ function SortBlock({ children }) {
   );
 
   const consonants = [
-    { consonant: '가', id: 'A' },
-    { consonant: '나', id: 'B' },
-    { consonant: '다', id: 'C' },
-    { consonant: '라', id: 'D' },
-    { consonant: '마', id: 'E' },
-    { consonant: '바', id: 'F' },
-    { consonant: '사', id: 'G' },
-    { consonant: '아', id: 'H' },
-    { consonant: '자', id: 'I' },
-    { consonant: '차', id: 'J' },
-    { consonant: '카', id: 'K' },
-    { consonant: '타', id: 'L' },
-    { consonant: '파', id: 'M' },
-    { consonant: '하', id: 'N' },
+    { consonant: '가', id: '가' },
+    { consonant: '나', id: '나' },
+    { consonant: '다', id: '다' },
+    { consonant: '라', id: '라' },
+    { consonant: '마', id: '마' },
+    { consonant: '바', id: '바' },
+    { consonant: '사', id: '사' },
+    { consonant: '아', id: '아' },
+    { consonant: '자', id: '자' },
+    { consonant: '차', id: '차' },
+    { consonant: '카', id: '카' },
+    { consonant: '타', id: '타' },
+    { consonant: '파', id: '파' },
+    { consonant: '하', id: '하' },
   ];
 
   useEffect(() => {

@@ -97,6 +97,8 @@ function BookSidebar() {
     () => getLeftSeoji(filter, 0, consonant),
     [consonant],
   );
+
+   
   // 서지 api 요청 데이터인 json이 바뀔 때마다 OK
   useEffect(() => {
     if (seojiJsonDatas.data !== null) {
