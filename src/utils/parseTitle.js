@@ -79,7 +79,5 @@ export default function parseTitle(finalTitle) {
     wonju: '',
   });
 
-  console.log(titleArray);
-
   return titleArray;
 }

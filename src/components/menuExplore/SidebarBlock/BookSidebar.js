@@ -16,6 +16,9 @@ import {
   gwonchaContext,
   muncheContext,
 } from '../../shared/ContentLayout';
+import parseGwoncha from '../../../utils/parseGwoncha';
+import parseMunche from '../../../utils/parseMunche';
+import parseTitle from '../../../utils/parseTitle';
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
@@ -64,6 +67,16 @@ const ListLi = styled.li`
   }
 `;
 
+const FinalTitle = styled.span`
+  font-size: 15px;
+  margin: 0;
+`;
+
+const FinalWonju = styled.span`
+  font-size: 12px;
+  margin: 0;
+`;
+
 function BookSidebar() {
   const container = useRef();
 
@@ -98,7 +111,6 @@ function BookSidebar() {
     [consonant],
   );
 
-   
   // 서지 api 요청 데이터인 json이 바뀔 때마다 OK
   useEffect(() => {
     if (seojiJsonDatas.data !== null) {
@@ -106,7 +118,7 @@ function BookSidebar() {
       seojiJsonDatas.data.datas.map((seoji) => {
         tempArray.push({
           childId: seoji.childId,
-          childTitle: seoji.childTitle,
+          childTitle: seoji.childTItle,
         });
       });
       setSeojiListDatas(tempArray);
@@ -127,7 +139,7 @@ function BookSidebar() {
         if (!includeGwonchaData[gwoncha.childId]) {
           setGwonchaListDatas((prev) => [
             ...prev,
-            { childId: gwoncha.childId, childTitle: gwoncha.childTitle },
+            { childId: gwoncha.childId, childTitle: gwoncha.childTItle },
           ]);
           setIncludeGwonchaData((prev) => ({
             ...prev,
@@ -152,7 +164,7 @@ function BookSidebar() {
         if (!includeMuncheData[munche.childId]) {
           setMuncheListDatas((prev) => [
             ...prev,
-            { childId: munche.childId, childTitle: munche.childTitle },
+            { childId: munche.childId, childTitle: munche.childTItle },
           ]);
           setIncludeMuncheData((prev) => ({
             ...prev,
@@ -177,7 +189,7 @@ function BookSidebar() {
         if (!includeFinalData[final.childId]) {
           setFinalListDatas((prev) => [
             ...prev,
-            { childId: final.childId, childTitle: final.childTitle },
+            { childId: final.childId, childTitle: final.childTItle },
           ]);
           setIncludeFinalData((prev) => ({
             ...prev,
@@ -197,7 +209,7 @@ function BookSidebar() {
   useEffect(() => {
     console.log('currentFocusTitle : ', currentFocusTitle.currentFocusTitle);
   }, [currentFocusTitle.currentFocusTitle]);
-
+  
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||
@@ -250,7 +262,7 @@ function BookSidebar() {
                           ? 'focus'
                           : ''
                       }>
-                      {gwoncha.childTitle}
+                      {parseGwoncha(gwoncha.childTitle)}
                     </ListLi>
                   </ListItemPositioner>
 
@@ -276,7 +288,7 @@ function BookSidebar() {
                                   ? 'focus'
                                   : ''
                               }>
-                              {munche.childTitle}
+                              {parseMunche(munche.childTitle)}
                             </ListLi>
                           </ListItemPositioner>
 
@@ -298,7 +310,12 @@ function BookSidebar() {
                                         ? 'focus'
                                         : ''
                                     }>
-                                    {final.childTitle}
+                                    {parseTitle(final.childTitle).map((el) => (
+                                      <FinalTitle>
+                                        &nbsp; {el.title}&nbsp;
+                                        <FinalWonju>{el.wonju}</FinalWonju>
+                                      </FinalTitle>
+                                    ))}
                                   </ListLi>
                                 </ListItemPositioner>
                               ),
