@@ -153,7 +153,7 @@ function AuthorSidebar() {
     }
   }, [seojiJsonDatas]);
 
-  console.log(seojiListDatas);
+  //console.log(seojiListDatas);
   // 권차
   //const [clickSeoji, setClickSeoji] = useState('');
 
@@ -177,7 +177,6 @@ function AuthorSidebar() {
             [gwoncha.childId]: gwoncha.childId,
           }));
           depthContext.setDepth(1);
-          console.log('context: ', depthContext.depth);
         }
       });
     }
