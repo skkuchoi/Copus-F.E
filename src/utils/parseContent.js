@@ -1,57 +1,3 @@
-function MappingPara(Splited, IsTitle) {
-  let paraArray = [];
-
-  // indent 시작.
-  const indent_before = Splited.substring(0, Splited.indexOf('"') + 1);
-  let curSplited = Splited.replace(indent_before, '');
-  const indent = curSplited.substring(0, curSplited.indexOf('"')); // indent값 추출
-  curSplited = curSplited.replace(
-    curSplited.substring(0, curSplited.indexOf(' ')),
-    '',
-  ); // indent관련 내용 삭제.
-  // indent 끝
-
-  // align 시작.
-  const align_before = curSplited.substring(0, curSplited.indexOf('"') + 1);
-  curSplited = curSplited.replace(align_before, '');
-  const align = curSplited.substring(0, curSplited.indexOf('"'));
-  curSplited = curSplited.replace(
-    curSplited.substring(0, curSplited.indexOf('>') + 1),
-    '',
-  );
-  // align 끝.
-
-  // paraArray's content 시작
-  const paraContent = curSplited.substring(0, curSplited.indexOf('</단락'));
-
-  // paraArray's content 끝
-
-  // paraArray에 담기 시작
-  if (IsTitle === 1) {
-    paraArray.push({
-      indent: indent,
-      align: align,
-      content: paraContent,
-    });
-    // console.log(paraArray);
-  } else if (IsTitle === 0) {
-    paraArray.push({
-      indent: indent,
-      align: align,
-      title: paraContent,
-    });
-  }
-
-  // paraArray에 담기 끝
-  if (curSplited.includes('</단락>')) {
-    curSplited = curSplited.replace('</단락>', '');
-  } else if (curSplited.includes('</단락제목>')) {
-    curSplited = curSplited.replace('</단락제목>', '');
-  }
-  console.log(curSplited);
-  return curSplited;
-}
-
 export default function parseContent(content) {
   // 부모태그인 내용 삭제
   if (content.includes('내용')) {
@@ -77,6 +23,105 @@ export default function parseContent(content) {
   while (content.includes('line')) {
     content = content.replace('<line/>', '');
   }
+  // 단락 및 단락 제목 매핑 시작!!!!!!
+  let paraArray = [];
+  let titleArray = [];
+
+  function MappingPara(Splited, IsTitle) {
+    // indent 시작.
+    const indent_before = Splited.substring(0, Splited.indexOf('"') + 1);
+    let curSplited = Splited.replace(indent_before, '');
+    const indent = curSplited.substring(0, curSplited.indexOf('"')); // indent값 추출
+    curSplited = curSplited.replace(
+      curSplited.substring(0, curSplited.indexOf(' ')),
+      '',
+    ); // indent관련 내용 삭제.
+    // indent 끝
+
+    // align 시작.
+    const align_before = curSplited.substring(0, curSplited.indexOf('"') + 1);
+    curSplited = curSplited.replace(align_before, '');
+    const align = curSplited.substring(0, curSplited.indexOf('"'));
+    curSplited = curSplited.replace(
+      curSplited.substring(0, curSplited.indexOf('>') + 1),
+      '',
+    );
+    // align 끝.
+
+    // paraArray's content 시작
+    let paraContent = curSplited.substring(0, curSplited.indexOf('</단락'));
+
+    // paraContent에서 원주 추출
+    let curParaContentNWonju = [];
+    while (paraContent.includes('<원주>')) {
+      const wonjuStart = paraContent.indexOf('<원주>');
+      const wonjuEnd = paraContent.indexOf('</원주>');
+      if (paraContent.substr(wonjuEnd + 5)[0] === '。') {
+        console.log('。');
+        titleArray.push({
+          title: paraContent.substr(0, wonjuStart),
+          wonju: paraContent
+            .substr(wonjuStart + 4, wonjuEnd - (wonjuStart + 4))
+            .concat(paraContent.substr(wonjuEnd + 5)[0]),
+        });
+        paraContent = paraContent.substring(wonjuEnd + 6);
+      } else if (paraContent.substr(wonjuEnd + 5)[0] === '，') {
+        titleArray.push({
+          title: paraContent
+            .substr(0, wonjuStart)
+            .concat(paraContent.substr(wonjuEnd + 5)[0]),
+          wonju: paraContent.substr(
+            wonjuStart + 4,
+            wonjuEnd - (wonjuStart + 4),
+          ),
+        });
+        paraContent = paraContent.substring(wonjuEnd + 6);
+      } else {
+        titleArray.push({
+          title: paraContent.substr(0, wonjuStart),
+          wonju: paraContent.substr(
+            wonjuStart + 4,
+            wonjuEnd - (wonjuStart + 4),
+          ),
+        });
+        paraContent = paraContent.substring(wonjuEnd + 5);
+      }
+      curParaContentNWonju.push({
+        content: titleArray[titleArray.length - 1].title,
+        wonju: titleArray[titleArray.length - 1].wonju,
+      });
+    }
+    // paracontent에서 원주 추출 끝
+    // paraArray's content 끝
+
+    // paraArray에 담기 시작
+    if (IsTitle === 1) {
+      paraArray.push({
+        indent: indent,
+        align: align,
+        contents: curParaContentNWonju,
+      });
+      //console.log(paraArray);
+    } else if (IsTitle === 0) {
+      paraArray.push({
+        indent: indent,
+        align: align,
+        title: curParaContentNWonju,
+      });
+    }
+
+    // paraArray에 담기 끝
+    if (curSplited.includes('</단락>')) {
+      curSplited = curSplited.replace('</단락>', '');
+    } else if (curSplited.includes('</단락제목>')) {
+      curSplited = curSplited.replace('</단락제목>', '');
+    }
+    while (curSplited.includes('<원주>')) {
+      curSplited = curSplited.replace('<원주>', '');
+      curSplited = curSplited.replace('</원주>', '');
+    }
+    return curSplited;
+  }
 
   const parseSplited = content.split('<단락');
   let tempcontent = '';
@@ -92,7 +137,10 @@ export default function parseContent(content) {
       }
     }
   }
+  console.log('tempcontent값: ' + tempcontent);
+  console.log('paraArray: ', paraArray);
   content = tempcontent;
-  console.log(content);
-  return content;
+
+  // 단락 & 단락제목 끝!!!!!!!
+  return;
 }

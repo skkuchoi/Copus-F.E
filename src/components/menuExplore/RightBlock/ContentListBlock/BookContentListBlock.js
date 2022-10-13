@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
 
@@ -38,22 +38,22 @@ const BugaButton = styled.div`
   }
 `;
 
-function beomryePopUp() {
-  let options =
+function beomryePopUp(lv1Id) {
+  const options =
     'toolbar=no,scrollbars=yes,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
-  window.open('/beomrye', '_blank', options);
+  window.open(`/beomrye/${lv1Id}`, '_blank', options);
 }
 
-function chapterPopUp() {
-  let options =
+function chapterPopUp(lv1Id) {
+  const options =
     'toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
-  window.open('/chapter', '_blank', options);
+  window.open(`/chapter/${lv1Id}`, '_blank', options);
 }
 
-function haejaePopUp() {
-  let options =
+function haejaePopUp(lv1Id) {
+  const options =
     'toolbar=no,scrollbars=no,resizable=yes,status=no,menubar=no,width=900, height=900, top=0,left=0';
-  window.open('/haejae', '_blank', options);
+  window.open(`/haejae/${lv1Id}`, '_blank', options);
 }
 
 function BookContentListBlock() {
@@ -98,19 +98,17 @@ function BookContentListBlock() {
           <TableItem>{item.publishYear}</TableItem>
 
           <Buga>
-            {item.buga.beomrye != null && (
-              <BugaButton onClick={beomryePopUp}>
-                {item.buga.beomrye}
-              </BugaButton>
-            )}
-            {item.buga.chapter != null && (
-              <BugaButton onClick={chapterPopUp}>
-                {item.buga.chapter}
-              </BugaButton>
-            )}
-            {item.buga.haejae != null && (
-              <BugaButton onClick={haejaePopUp}>{item.buga.haejae}</BugaButton>
-            )}
+            <BugaButton onClick={() => beomryePopUp(item.seojiId)}>
+              범례
+            </BugaButton>
+
+            <BugaButton onClick={() => chapterPopUp(item.seojiId)}>
+              목차
+            </BugaButton>
+
+            <BugaButton onClick={() => haejaePopUp(item.seojiId)}>
+              해제
+            </BugaButton>
           </Buga>
         </BookTableBlock>
       ))}

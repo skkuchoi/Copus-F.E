@@ -10,7 +10,7 @@ function getRightSeoji(filter, seojiKeyword, consonant) {
       keyword: consonant,
     },
   });
-  // console.log('response', response);
+  //console.log('response', response);
   return response;
 }
 

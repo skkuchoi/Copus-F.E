@@ -101,9 +101,9 @@ function App() {
           <Route path="/server-error" element={<NotWorking />} />
           <Route path="*" element={<NotFound />} />
 
-          <Route path="/beomrye" exact={true} element={<Beomrye />} />
-          <Route path="/chapter" exact={true} element={<Chapter />} />
-          <Route path="/haejae" exact={true} element={<Haejae />} />
+          <Route path="/beomrye/:lv1Id" exact={true} element={<Beomrye />} />
+          <Route path="/chapter/:lv1Id" exact={true} element={<Chapter />} />
+          <Route path="/haejae/:lv1Id" exact={true} element={<Haejae />} />
         </Routes>
       </FontStyle>
     </Container>

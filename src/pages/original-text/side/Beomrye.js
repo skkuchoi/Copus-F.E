@@ -1,7 +1,10 @@
 import React from 'react';
 import SideTopBarBlock from '../../../components/basic/TopBarBlock/SideTopBarBlock';
 import styled from 'styled-components';
-
+import { useLocation } from 'react-router-dom';
+import useAsync from '../../../hooks/useAsync';
+import getBeomrye from '../../../api/explore/bugaInformation/getBeomrye';
+ 
 const Container = styled.div`
   margin-left: 20px;
   margin-right: 20px;
@@ -31,6 +34,10 @@ const ContentFont = styled.div`
   margin-top: 40px;
 `;
 function Beomrye() {
+  const { pathname } = useLocation();
+  const lv1Id = pathname.split('/')[2].toString();
+
+  const [beomryeJsonDatas] = useAsync(() => getBeomrye(lv1Id), []);
   return (
     <>
       <SideTopBarBlock />
