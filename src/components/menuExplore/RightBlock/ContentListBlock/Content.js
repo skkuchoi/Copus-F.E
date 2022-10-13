@@ -110,7 +110,7 @@ export default function Content() {
     [clickFinalContext],
   );
 
-  console.log('final content: ', finalDataJsonDatas);
+  //console.log('final content: ', finalDataJsonDatas);
   const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
 
   if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)

@@ -10,6 +10,16 @@ export default function parseContent(content) {
     content = content.replace(' ', '');
   }
 
+  // \r 모두 삭제
+  while (content.includes('\r')) {
+    content = content.replace('\r', '');
+  }
+
+  // \n 모두 삭제
+  while (content.includes('\n')) {
+    content = content.replace('\n', '');
+  }
+
   // 페이지 태그는 1개 이상일수도 있다.
   while (content.includes('페이지')) {
     let before = content.substring(0, content.indexOf('<페'));
@@ -29,13 +39,15 @@ export default function parseContent(content) {
 
   function MappingPara(Splited, IsTitle) {
     // indent 시작.
+    console.log('splited: ', Splited);
     const indent_before = Splited.substring(0, Splited.indexOf('"') + 1);
     let curSplited = Splited.replace(indent_before, '');
     const indent = curSplited.substring(0, curSplited.indexOf('"')); // indent값 추출
     curSplited = curSplited.replace(
-      curSplited.substring(0, curSplited.indexOf(' ')),
+      curSplited.substring(0, curSplited.indexOf('align')),
       '',
     ); // indent관련 내용 삭제.
+    //console.log('curSplited align: ' + curSplited);
     // indent 끝
 
     // align 시작.
