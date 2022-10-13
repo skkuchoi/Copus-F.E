@@ -38,27 +38,26 @@ export default function parseContent(content) {
   let titleArray = [];
 
   function MappingPara(Splited, IsTitle) {
-    // indent 시작.
-    console.log('splited: ', Splited);
-    const indent_before = Splited.substring(0, Splited.indexOf('"') + 1);
-    let curSplited = Splited.replace(indent_before, '');
-    const indent = curSplited.substring(0, curSplited.indexOf('"')); // indent값 추출
-    curSplited = curSplited.replace(
-      curSplited.substring(0, curSplited.indexOf('align')),
-      '',
-    ); // indent관련 내용 삭제.
-    //console.log('curSplited align: ' + curSplited);
-    // indent 끝
-
     // align 시작.
-    const align_before = curSplited.substring(0, curSplited.indexOf('"') + 1);
-    curSplited = curSplited.replace(align_before, '');
-    const align = curSplited.substring(0, curSplited.indexOf('"'));
+    const align_before = Splited.substring(0, Splited.indexOf('"') + 1);
+    let curSplited = Splited.replace(align_before, '');
+    const align = curSplited.substring(0, curSplited.indexOf('"')); // indent값 추출
+    curSplited = curSplited.replace(
+      curSplited.substring(0, curSplited.indexOf('indent')),
+      '',
+    ); // align 내용 삭제.
+    //console.log('curSplited align: ' + curSplited);
+    // align 끝
+
+    // indent 시작.
+    const indent_before = curSplited.substring(0, curSplited.indexOf('"') + 1);
+    curSplited = curSplited.replace(indent_before, '');
+    const indent = curSplited.substring(0, curSplited.indexOf('"'));
     curSplited = curSplited.replace(
       curSplited.substring(0, curSplited.indexOf('>') + 1),
       '',
     );
-    // align 끝.
+    // indent 끝.
 
     // paraArray's content 시작
     let paraContent = curSplited.substring(0, curSplited.indexOf('</단락'));
@@ -99,7 +98,7 @@ export default function parseContent(content) {
         paraContent = paraContent.substring(wonjuEnd + 5);
       }
       curParaContentNWonju.push({
-        content: titleArray[titleArray.length - 1].title,
+        title: titleArray[titleArray.length - 1].title,
         wonju: titleArray[titleArray.length - 1].wonju,
       });
     }
@@ -118,7 +117,7 @@ export default function parseContent(content) {
       paraArray.push({
         indent: indent,
         align: align,
-        title: curParaContentNWonju,
+        titles: curParaContentNWonju,
       });
     }
 
@@ -154,5 +153,5 @@ export default function parseContent(content) {
   content = tempcontent;
 
   // 단락 & 단락제목 끝!!!!!!!
-  return;
+  return paraArray;
 }

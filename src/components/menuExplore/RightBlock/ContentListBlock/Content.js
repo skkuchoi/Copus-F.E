@@ -90,6 +90,28 @@ const CopyButton = styled.button`
   cursor: pointer;
 `;
 
+const ParagraphTitlePositioner = styled.div`
+  margin-left: 10px;
+`;
+
+const ParagraphTitle = styled.span`
+  font-weight: bold;
+  font-size: 20px;
+`;
+
+const ParagraphContentPositioner = styled.div`
+  margin-left: 10px;
+`;
+
+const ParagraphContent = styled.span`
+  margin-left: ${(props) => (props.marginLeft === '3' ? ' 20px' : '0px')};
+  font-size: 17px;
+`;
+
+const ParagraphWonju = styled.span`
+  font-size: 12px;
+`;
+
 const ContentText = styled.div`
   margin-left: 10px;
   font-size: 20px;
@@ -146,7 +168,35 @@ export default function Content() {
         </CopyBlock>
 
         <ContentText>
-          {parseContent(finalDataJsonDatas.data.finalData.content)}
+          {parseContent(finalDataJsonDatas.data.finalData.content).map(
+            (item) => (
+              <>
+                {item.contents && (
+                  <ParagraphContentPositioner>
+                    {item.contents.map((content) => (
+                      <ParagraphContent
+                        marginLeft={item.indent}
+                        key={content.content}>
+                        {content.content}
+                        <ParagraphWonju> {content.wonju} </ParagraphWonju>
+                      </ParagraphContent>
+                    ))}
+                  </ParagraphContentPositioner>
+                )}
+
+                {item.titles && (
+                  <ParagraphTitlePositioner>
+                    {item.titles.map((title) => (
+                      <ParagraphTitle key={title.title}>
+                        {title.title}
+                        <ParagraphWonju> {title.wonju} </ParagraphWonju>
+                      </ParagraphTitle>
+                    ))}
+                  </ParagraphTitlePositioner>
+                )}
+              </>
+            ),
+          )}
         </ContentText>
         <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
       </ContentPositioner>
