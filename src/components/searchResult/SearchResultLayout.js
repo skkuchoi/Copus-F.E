@@ -21,6 +21,7 @@ const ContentPositioner = styled.div`
 `;
 
 export const totalFilter = createContext();
+export const leftClickedFilter = createContext();
 
 function SearchResultLayout() {
   const { keyword } = useParams();

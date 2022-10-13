@@ -10,6 +10,7 @@ import { totalFilter } from '../SearchResultLayout';
 import parseGwoncha from '../../../utils/parseGwoncha';
 import parseMunche from '../../../utils/parseMunche';
 import parseTitle from '../../../utils/parseTitle';
+import parseContent from '../../../utils/parseContent';
 
 const ResultListPositioner = styled.div`
   width: 98%;
@@ -96,8 +97,13 @@ function ResultDataBlock() {
   const filter = filterUri[pathname.split('/')[2]];
 
   const [rightDatas] = useAsync(
-    () => getRightSearchResult(filter, keyword),
-    [filter],
+    () =>
+      getRightSearchResult(
+        filter,
+        totalDetailFilter.totalDetailFilter,
+        keyword,
+      ),
+    [filter, totalDetailFilter.totalDetailFilter],
   );
 
   //Pagination
@@ -106,9 +112,10 @@ function ResultDataBlock() {
   const offset = (currentPage - 1) * limitPage;
   useEffect(() => {
     setCurrentPage(1);
-  }, [filter]);
+  }, [filter, totalDetailFilter]);
 
   // console.log(totalDetailFilter.totalDetailFilter);
+  //console.log(rightDatas);
   // 로딩 페이지
   if (rightDatas.data === null) return <div>zz</div>;
   switch (filter) {
@@ -118,97 +125,59 @@ function ResultDataBlock() {
           return (
             <>
               <CategoryListItemTitleBlock
-                title="서명"
+                title="총 리스트"
                 number={rightDatas.data.count}
               />
-              {rightDatas.data.datas
-                .slice(offset, offset + limitPage)
-                .map((item) => (
-                  <>
-                    <ResultListPositioner>
-                      <Id> {id++}. </Id>
-                      <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
-                        <SubInformation>
-                          <SubInformationText>
-                            {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.publishYear}
-                          </SubInformationText>
-                        </SubInformation>
-                      </ResultInformation>
-                    </ResultListPositioner>
-                  </>
-                ))}
 
-              <br />
+              {rightDatas.data.count ? (
+                rightDatas.data.datas
+                  .slice(offset, offset + limitPage)
+                  .map((item) => (
+                    <>
+                      <ResultListPositioner>
+                        <Id> {id++}. </Id>
+                        <ResultInformation>
+                          <Title>{item.seojiTitle}</Title>
+                          <SubInformation>
+                            <SubInformationText>
+                              {item.authorName}
+                            </SubInformationText>
+                            <SubInformationText>
+                              {item.publishYear}
+                            </SubInformationText>
 
-              <CategoryListItemTitleBlock
-                title="저/편/필자"
-                number={rightDatas.data.count}
-              />
-              {rightDatas.data.datas
-                .slice(offset, offset + limitPage)
-                .map((item) => (
-                  <>
-                    <ResultListPositioner>
-                      <Id> {id++}. </Id>
-                      <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
-                        <SubInformation>
-                          <SubInformationText>
-                            {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.gwonchaTitle}{' '}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.muncheTitle}{' '}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.publishYear}{' '}
-                          </SubInformationText>
-                        </SubInformation>
-                      </ResultInformation>
-                    </ResultListPositioner>
-                  </>
-                ))}
+                            {item.gwonchaTitle !== null && (
+                              <SubInformationText>
+                                {parseGwoncha(item.gwonchaTitle)}
+                              </SubInformationText>
+                            )}
 
-              <br />
+                            {item.muncheTitle !== null && (
+                              <SubInformationText>
+                                {parseMunche(item.muncheTitle)}
+                              </SubInformationText>
+                            )}
 
-              <CategoryListItemTitleBlock
-                title="원문"
-                number={rightDatas.data.count}
-              />
-              {rightDatas.data.datas
-                .slice(offset, offset + limitPage)
-                .map((item) => (
-                  <>
-                    <ResultListPositioner>
-                      <Id> {id++}. </Id>
-                      <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
-                        <SubInformation>
-                          <SubInformationText>
-                            {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.gwonchaTitle}{' '}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.muncheTitle}{' '}
-                          </SubInformationText>
-                          <SubInformationText>
-                            {item.publishYear}{' '}
-                          </SubInformationText>
-                          {/* <SubInformationText>{item.page}</SubInformationText> */}
-                        </SubInformation>
-                        <OriginalText>{item.contentPartition}</OriginalText>
-                      </ResultInformation>
-                    </ResultListPositioner>
-                  </>
-                ))}
+                            {item.finalTitle !== null &&
+                              parseTitle(item.finalTitle).map((el) => (
+                                <FinalTitle>
+                                  &nbsp; {el.title}&nbsp;
+                                  <FinalWonju>{el.wonju}</FinalWonju>
+                                </FinalTitle>
+                              ))}
+                          </SubInformation>
+                          {item.contentPartition !== null && (
+                            <OriginalText>
+                              {parseContent(item.contentPartition)}
+                            </OriginalText>
+                          )}
+                        </ResultInformation>
+                      </ResultListPositioner>
+                    </>
+                  ))
+              ) : (
+                <NoExistDataBlock />
+              )}
 
               <Pagination
                 totalContent={rightDatas.data.datas.length}
@@ -238,7 +207,7 @@ function ResultDataBlock() {
                             {item.authorName}
                           </SubInformationText>
                           <SubInformationText>
-                            {item.publishYear}{' '}
+                            {item.publishYear}
                           </SubInformationText>
                         </SubInformation>
                       </ResultInformation>
@@ -249,7 +218,7 @@ function ResultDataBlock() {
               <br />
 
               <Pagination
-                totalContent={rightDatas.data.datas.length}
+                totalContent={rightDatas.data.count}
                 limitPage={limitPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -260,7 +229,7 @@ function ResultDataBlock() {
           return (
             <>
               <CategoryListItemTitleBlock
-                title="서명"
+                title="저/편/필자"
                 number={rightDatas.data.count}
               />
               {rightDatas.data.datas
@@ -276,7 +245,7 @@ function ResultDataBlock() {
                             {item.authorName}
                           </SubInformationText>
                           <SubInformationText>
-                            {item.publishYear}{' '}
+                            {item.publishYear}
                           </SubInformationText>
                         </SubInformation>
                       </ResultInformation>
@@ -287,7 +256,7 @@ function ResultDataBlock() {
               <br />
 
               <Pagination
-                totalContent={rightDatas.data.datas.length}
+                totalContent={rightDatas.data.count}
                 limitPage={limitPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -298,7 +267,7 @@ function ResultDataBlock() {
           return (
             <>
               <CategoryListItemTitleBlock
-                title="서명"
+                title="권차"
                 number={rightDatas.data.count}
               />
               {rightDatas.data.datas
@@ -314,7 +283,10 @@ function ResultDataBlock() {
                             {item.authorName}
                           </SubInformationText>
                           <SubInformationText>
-                            {item.publishYear}{' '}
+                            {item.publishYear}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {parseGwoncha(item.gwonchaTitle)}
                           </SubInformationText>
                         </SubInformation>
                       </ResultInformation>
@@ -325,7 +297,7 @@ function ResultDataBlock() {
               <br />
 
               <Pagination
-                totalContent={rightDatas.data.datas.length}
+                totalContent={rightDatas.data.count}
                 limitPage={limitPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -336,7 +308,7 @@ function ResultDataBlock() {
           return (
             <>
               <CategoryListItemTitleBlock
-                title="서명"
+                title="문체"
                 number={rightDatas.data.count}
               />
               {rightDatas.data.datas
@@ -352,7 +324,13 @@ function ResultDataBlock() {
                             {item.authorName}
                           </SubInformationText>
                           <SubInformationText>
-                            {item.publishYear}{' '}
+                            {item.publishYear}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {parseGwoncha(item.gwonchaTitle)}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {parseMunche(item.muncheTitle)}
                           </SubInformationText>
                         </SubInformation>
                       </ResultInformation>
@@ -363,7 +341,7 @@ function ResultDataBlock() {
               <br />
 
               <Pagination
-                totalContent={rightDatas.data.datas.length}
+                totalContent={rightDatas.data.count}
                 limitPage={limitPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -374,7 +352,7 @@ function ResultDataBlock() {
           return (
             <>
               <CategoryListItemTitleBlock
-                title="서명"
+                title="원문"
                 number={rightDatas.data.count}
               />
               {rightDatas.data.datas
@@ -390,9 +368,24 @@ function ResultDataBlock() {
                             {item.authorName}
                           </SubInformationText>
                           <SubInformationText>
-                            {item.publishYear}{' '}
+                            {item.publishYear}
                           </SubInformationText>
+                          <SubInformationText>
+                            {parseGwoncha(item.gwonchaTitle)}
+                          </SubInformationText>
+                          <SubInformationText>
+                            {parseMunche(item.muncheTitle)}
+                          </SubInformationText>
+                          {parseTitle(item.finalTitle).map((el) => (
+                            <FinalTitle>
+                              &nbsp; {el.title}&nbsp;
+                              <FinalWonju>{el.wonju}</FinalWonju>
+                            </FinalTitle>
+                          ))}
                         </SubInformation>
+                        <OriginalText>
+                          {parseContent(item.contentPartition)}
+                        </OriginalText>
                       </ResultInformation>
                     </ResultListPositioner>
                   </>
@@ -401,7 +394,7 @@ function ResultDataBlock() {
               <br />
 
               <Pagination
-                totalContent={rightDatas.data.datas.length}
+                totalContent={rightDatas.data.count}
                 limitPage={limitPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -412,7 +405,7 @@ function ResultDataBlock() {
           return (
             <>
               <CategoryListItemTitleBlock
-                title="서명"
+                title="자료ID"
                 number={rightDatas.data.count}
               />
               {rightDatas.data.datas
@@ -428,8 +421,27 @@ function ResultDataBlock() {
                             {item.authorName}
                           </SubInformationText>
                           <SubInformationText>
-                            {item.publishYear}{' '}
+                            {item.publishYear}
                           </SubInformationText>
+
+                          {item.gwonchaTitle && (
+                            <SubInformationText>
+                              {parseGwoncha(item.gwonchaTitle)}
+                            </SubInformationText>
+                          )}
+                          {item.muncheTitle && (
+                            <SubInformationText>
+                              {parseMunche(item.muncheTitle)}
+                            </SubInformationText>
+                          )}
+
+                          {item.finalTitle &&
+                            parseTitle(item.finalTitle).map((el) => (
+                              <FinalTitle>
+                                &nbsp; {el.title}&nbsp;
+                                <FinalWonju>{el.wonju}</FinalWonju>
+                              </FinalTitle>
+                            ))}
                         </SubInformation>
                       </ResultInformation>
                     </ResultListPositioner>
@@ -439,7 +451,7 @@ function ResultDataBlock() {
               <br />
 
               <Pagination
-                totalContent={rightDatas.data.datas.length}
+                totalContent={rightDatas.data.count}
                 limitPage={limitPage}
                 currentPage={currentPage}
                 setCurrentPage={setCurrentPage}
@@ -577,10 +589,10 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
-                        {parseGwoncha(item.gwonchaTitle)}
+                        {item.publishYear}
                       </SubInformationText>
                       <SubInformationText>
-                        {item.publishYear}
+                        {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                     </SubInformation>
                   </ResultInformation>
@@ -627,13 +639,13 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
+                        {item.publishYear}
+                      </SubInformationText>
+                      <SubInformationText>
                         {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                       <SubInformationText>
                         {parseMunche(item.muncheTitle)}
-                      </SubInformationText>
-                      <SubInformationText>
-                        {item.publishYear}
                       </SubInformationText>
                     </SubInformation>
                   </ResultInformation>
@@ -680,13 +692,13 @@ function ResultDataBlock() {
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
                       <SubInformationText>
+                        {item.publishYear}
+                      </SubInformationText>
+                      <SubInformationText>
                         {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                       <SubInformationText>
                         {parseMunche(item.muncheTitle)}
-                      </SubInformationText>
-                      <SubInformationText>
-                        {item.publishYear}
                       </SubInformationText>
                       {parseTitle(item.finalTitle).map((el) => (
                         <FinalTitle>
@@ -695,7 +707,9 @@ function ResultDataBlock() {
                         </FinalTitle>
                       ))}
                     </SubInformation>
-                    <OriginalText>{item.contentPartition}</OriginalText>
+                    <OriginalText>
+                      {parseContent(item.contentPartition)}
+                    </OriginalText>
                   </ResultInformation>
                 </ResultListPositioner>
               </>
@@ -739,21 +753,22 @@ function ResultDataBlock() {
 
                     <SubInformation>
                       <SubInformationText>{item.authorName}</SubInformationText>
-                      {item.gwonchaTitle !== null && (
-                        <SubInformationText>
-                          {parseGwoncha(item.gwonchaTitle)}
-                        </SubInformationText>
-                      )}
-                      {item.muncheTitle !== null && (
-                        <SubInformationText>
-                          {parseMunche(item.muncheTitle)}
-                        </SubInformationText>
-                      )}
                       <SubInformationText>
                         {item.publishYear}
                       </SubInformationText>
 
-                      {item.finalTitle !== null &&
+                      {item.gwonchaTitle && (
+                        <SubInformationText>
+                          {parseGwoncha(item.gwonchaTitle)}
+                        </SubInformationText>
+                      )}
+                      {item.muncheTitle && (
+                        <SubInformationText>
+                          {parseMunche(item.muncheTitle)}
+                        </SubInformationText>
+                      )}
+
+                      {item.finalTitle &&
                         parseTitle(item.finalTitle).map((el) => (
                           <FinalTitle>
                             &nbsp; {el.title}&nbsp;

@@ -1,9 +1,10 @@
-import React, { useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import styled from 'styled-components';
 import { IoMdBook } from 'react-icons/io';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
 import { totalFilter } from '../SearchResultLayout';
+import classnames from 'classnames';
 
 const CategoryListPositioner = styled.div`
   display: flex;
@@ -28,22 +29,22 @@ const CategoryListItemPositioner = styled.div`
     background-color: #f0be86;
   }
 
-  .not-focus {
-    color: gray;
-    &:hover {
-      cursor: not-allowed;
-    }
-  }
-
   .total-not-focus {
     color: black;
     &:hover {
       background-color: #eeeeee;
     }
   }
+  .not-focus {
+    color: gray;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
 `;
 
-const CategoryListItemName = styled.p`
+const CategoryListItemName = styled.div`
   font-size: 16px;
   margin: 0;
 `;
@@ -65,6 +66,7 @@ function CategoryListBlock({
   // these link is for case 'total', not setting yet
   const link4Total = `/search-result/total/${keyword}`;
 
+  console.log('filter:', filter);
   const totalDetailFilter = useContext(totalFilter);
   if (filter === 'total')
     return (
@@ -92,13 +94,16 @@ function CategoryListBlock({
             className="link-line"
             state={{ display: 'bookTitle' }}>
             <CategoryListItemName
-              className={
-                totalDetailFilter.totalDetailFilter === 'bookTitle'
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'bookTitle' &&
+                  bookTitleCount !== 0
                   ? 'focus'
-                  : 'total-not-focus'
-              }
+                  : 'total-not-focus',
+                bookTitleCount === 0 ? 'not-focus' : '',
+              )}
               onClick={() => {
-                totalDetailFilter.setTotalDetailFilter('bookTitle');
+                if (bookTitleCount)
+                  totalDetailFilter.setTotalDetailFilter('bookTitle');
               }}>
               서명({bookTitleCount})
             </CategoryListItemName>
@@ -112,13 +117,16 @@ function CategoryListBlock({
             className="link-line"
             state={{ display: 'authorName' }}>
             <CategoryListItemName
-              className={
+              aria-disabled="true"
+              className={classnames(
                 totalDetailFilter.totalDetailFilter === 'authorName'
                   ? 'focus'
-                  : 'total-not-focus'
-              }
+                  : 'total-not-focus',
+                authorNameCount === 0 ? 'not-focus' : '',
+              )}
               onClick={() => {
-                totalDetailFilter.setTotalDetailFilter('authorName');
+                if (authorNameCount)
+                  totalDetailFilter.setTotalDetailFilter('authorName');
               }}>
               저/편/필자({authorNameCount})
             </CategoryListItemName>
@@ -132,13 +140,15 @@ function CategoryListBlock({
             className="link-line"
             state={{ display: 'gwonchaTitle' }}>
             <CategoryListItemName
-              className={
+              className={classnames(
                 totalDetailFilter.totalDetailFilter === 'gwonchaTitle'
                   ? 'focus'
-                  : 'total-not-focus'
-              }
+                  : 'total-not-focus',
+                gwonchaTitleCount === 0 ? 'not-focus' : '',
+              )}
               onClick={() => {
-                totalDetailFilter.setTotalDetailFilter('gwonchaTitle');
+                if (gwonchaTitleCount)
+                  totalDetailFilter.setTotalDetailFilter('gwonchaTitle');
               }}>
               권차({gwonchaTitleCount})
             </CategoryListItemName>
@@ -152,13 +162,15 @@ function CategoryListBlock({
             className="link-line"
             state={{ display: 'muncheTitle' }}>
             <CategoryListItemName
-              className={
+              className={classnames(
                 totalDetailFilter.totalDetailFilter === 'muncheTitle'
                   ? 'focus'
-                  : 'total-not-focus'
-              }
+                  : 'total-not-focus',
+                muncheTitleCount === 0 ? 'not-focus' : '',
+              )}
               onClick={() => {
-                totalDetailFilter.setTotalDetailFilter('muncheTitle');
+                if (muncheTitleCount)
+                  totalDetailFilter.setTotalDetailFilter('muncheTitle');
               }}>
               문체({muncheTitleCount})
             </CategoryListItemName>
@@ -172,13 +184,15 @@ function CategoryListBlock({
             className="link-line"
             state={{ display: 'content' }}>
             <CategoryListItemName
-              className={
+              className={classnames(
                 totalDetailFilter.totalDetailFilter === 'content'
                   ? 'focus'
-                  : 'total-not-focus'
-              }
+                  : 'total-not-focus',
+                contentCount === 0 ? 'not-focus' : '',
+              )}
               onClick={() => {
-                totalDetailFilter.setTotalDetailFilter('content');
+                if (contentCount)
+                  totalDetailFilter.setTotalDetailFilter('content');
               }}>
               원문({contentCount})
             </CategoryListItemName>
@@ -192,13 +206,15 @@ function CategoryListBlock({
             className="link-line"
             state={{ display: 'dataId' }}>
             <CategoryListItemName
-              className={
+              className={classnames(
                 totalDetailFilter.totalDetailFilter === 'dataId'
                   ? 'focus'
-                  : 'total-not-focus'
-              }
+                  : 'total-not-focus',
+                dataIdCount === 0 ? 'not-focus' : '',
+              )}
               onClick={() => {
-                totalDetailFilter.setTotalDetailFilter('dataId');
+                if (dataIdCount)
+                  totalDetailFilter.setTotalDetailFilter('dataId');
               }}>
               자료ID({dataIdCount})
             </CategoryListItemName>

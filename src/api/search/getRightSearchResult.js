@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-async function getRightSearchResult(filter, keyword) {
+async function getRightSearchResult(filter, totalDetailFilter, keyword) {
+  const settingFilter = filter !== 'total' ? filter : totalDetailFilter;
+  console.log('settingFilter:', settingFilter);
   const response = axios({
     url: '/article/preview',
     method: 'get',
     params: {
-      filter: filter,
+      filter: settingFilter,
       keyword: keyword,
     },
   });
