@@ -105,7 +105,10 @@ function SearchBlock({ border = 'none' }) {
     전체: 'total/',
     서명: 'book-title/',
     저자: 'author-name/',
+    권차: 'gwoncha-title/',
+    문체: 'munche-title/',
     원문: 'content/',
+    자료ID: 'data-id/',
   };
   const onSubmit = (e) => {
     if (keyword !== '' && keyword.trim() !== '') {
@@ -134,7 +137,10 @@ function SearchBlock({ border = 'none' }) {
               <CategoryElement onClick={onClickMenu}>
                 저/편/필자
               </CategoryElement>
+              <CategoryElement onClick={onClickMenu}>권차</CategoryElement>
+              <CategoryElement onClick={onClickMenu}>문체</CategoryElement>
               <CategoryElement onClick={onClickMenu}>원문</CategoryElement>
+              <CategoryElement onClick={onClickMenu}>자료ID</CategoryElement>
             </>
           )}
         </OutsideClickHandler>

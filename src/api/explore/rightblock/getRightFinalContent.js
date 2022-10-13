@@ -5,7 +5,6 @@ function getRightFinalContent(finalId) {
     url: `/article/final/${finalId.clickFinal}`,
     method: 'get',
   });
-
   return response;
 }
 

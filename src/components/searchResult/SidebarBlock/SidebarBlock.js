@@ -44,7 +44,10 @@ function SidebarBlock({ leftDatas }) {
         totalCount={leftDatas.totalCount}
         bookTitleCount={leftDatas.bookTitleCount}
         authorNameCount={leftDatas.authorNameCount}
+        gwonchaTitleCount={leftDatas.gwonchaTitleCount}
+        muncheTitleCount={leftDatas.muncheTitleCount}
         contentCount={leftDatas.contentCount}
+        dataIdCount={leftDatas.dataIdCount}
       />
     </SidebarPositioner>
   );

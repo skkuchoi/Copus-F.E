@@ -59,7 +59,7 @@ function haejaePopUp(lv1Id) {
 function BookContentListBlock() {
   let id = 1;
 
-  let consonant = useContext(selectedConsonant);
+  const consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
   const clickAuthorContext = useContext(authorContext);
 

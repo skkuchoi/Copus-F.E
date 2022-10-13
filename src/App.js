@@ -80,11 +80,27 @@ function App() {
           />
 
           <Route
-            path="/search-result/content/:keyword"
+            path="/search-result/gwoncha-title/:keyword"
             exact={true}
             element={<SearchResult />}
           />
 
+          <Route
+            path="/search-result/munche-title/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
+
+          <Route
+            path="/search-result/content/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
+          <Route
+            path="/search-result/data-id/:keyword"
+            exact={true}
+            element={<SearchResult />}
+          />
           {/* New Explore;;ㅋㅋ */}
 
           <Route

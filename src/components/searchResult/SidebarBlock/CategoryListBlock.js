@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import styled from 'styled-components';
 import { IoMdBook } from 'react-icons/io';
 import { Link, useLocation, useParams } from 'react-router-dom';
 import '../../shared/linkStyle.css';
+import { totalFilter } from '../SearchResultLayout';
+import classnames from 'classnames';
 
 const CategoryListPositioner = styled.div`
   display: flex;
@@ -27,167 +29,255 @@ const CategoryListItemPositioner = styled.div`
     background-color: #f0be86;
   }
 
+  .total-not-focus {
+    color: black;
+    &:hover {
+      background-color: #eeeeee;
+    }
+  }
   .not-focus {
     color: gray;
+
     &:hover {
       cursor: not-allowed;
     }
   }
-
-  .total-not-focus {
-    color: black;
-  }
 `;
 
-const CategoryListItemName = styled.p`
+const CategoryListItemName = styled.div`
   font-size: 16px;
   margin: 0;
 `;
 
-function CategoryListBlock({ totalCount, bookTitleCount, authorNameCount, contentCount }) {
+function CategoryListBlock({
+  totalCount,
+  bookTitleCount,
+  authorNameCount,
+  gwonchaTitleCount,
+  muncheTitleCount,
+  contentCount,
+  dataIdCount,
+}) {
   const { keyword } = useParams();
 
   const { pathname } = useLocation();
-  const searchFilter = pathname.split('/')[2].toString();
+  const filter = pathname.split('/')[2].toString();
 
+  // these link is for case 'total', not setting yet
   const link4Total = `/search-result/total/${keyword}`;
-  const link4BookTitle = `/search-result/book-title/${keyword}`;
-  const link4AuthorName = `/search-result/author-name/${keyword}`;
-  const link4Content = `/search-result/content/${keyword}`;
 
-  switch (searchFilter) {
-    case 'total':
-      return (
-        <CategoryListPositioner>
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link to={link4Total} className="link-line">
-              <CategoryListItemName className="focus">
-                전체({totalCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link
-              to={link4Total}
-              className="link-line"
-              state={{ display: 'bookTitle' }}>
-              <CategoryListItemName className="total-not-focus">
-                서명({bookTitleCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link
-              to={link4Total}
-              className="link-line"
-              state={{ display: 'authorName' }}>
-              <CategoryListItemName className="total-not-focus">
-                저/편/필자({authorNameCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link
-              to={link4Total}
-              className="link-line"
-              state={{ display: 'content' }}>
-              <CategoryListItemName className="total-not-focus">
-                원문({contentCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-        </CategoryListPositioner>
-      );
-    case 'book-title':
-      return (
-        <CategoryListPositioner>
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link to={link4BookTitle} className="link-line">
-              <CategoryListItemName className="focus">
-                서명({bookTitleCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <CategoryListItemName className="not-focus">
-              저/편/필자({authorNameCount})
+  console.log('filter:', filter);
+  const totalDetailFilter = useContext(totalFilter);
+  if (filter === 'total')
+    return (
+      <CategoryListPositioner>
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link to={link4Total} className="link-line">
+            <CategoryListItemName
+              className={
+                totalDetailFilter.totalDetailFilter === 'total'
+                  ? 'focus'
+                  : 'total-not-focus'
+              }
+              onClick={() => {
+                totalDetailFilter.setTotalDetailFilter('total');
+              }}>
+              전체({totalCount})
             </CategoryListItemName>
-          </CategoryListItemPositioner>
-
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <CategoryListItemName className="not-focus">
-              원문({contentCount})
-            </CategoryListItemName>
-          </CategoryListItemPositioner>
-        </CategoryListPositioner>
-      );
-    case 'author-name':
-      return (
-        <CategoryListPositioner>
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <CategoryListItemName className="not-focus">
+          </Link>
+        </CategoryListItemPositioner>
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'bookTitle' }}>
+            <CategoryListItemName
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'bookTitle' &&
+                  bookTitleCount !== 0
+                  ? 'focus'
+                  : 'total-not-focus',
+                bookTitleCount === 0 ? 'not-focus' : '',
+              )}
+              onClick={() => {
+                if (bookTitleCount)
+                  totalDetailFilter.setTotalDetailFilter('bookTitle');
+              }}>
               서명({bookTitleCount})
             </CategoryListItemName>
-          </CategoryListItemPositioner>
+          </Link>
+        </CategoryListItemPositioner>
 
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link to={link4AuthorName} className="link-line">
-              <CategoryListItemName className="focus">
-                저/편/필자({authorNameCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <CategoryListItemName className="not-focus">
-              원문({contentCount})
-            </CategoryListItemName>
-          </CategoryListItemPositioner>
-        </CategoryListPositioner>
-      );
-    case 'content':
-      return (
-        <CategoryListPositioner>
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <CategoryListItemName className="not-focus">
-              서명({bookTitleCount})
-            </CategoryListItemName>
-          </CategoryListItemPositioner>
-
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <CategoryListItemName className="not-focus">
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'authorName' }}>
+            <CategoryListItemName
+              aria-disabled="true"
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'authorName'
+                  ? 'focus'
+                  : 'total-not-focus',
+                authorNameCount === 0 ? 'not-focus' : '',
+              )}
+              onClick={() => {
+                if (authorNameCount)
+                  totalDetailFilter.setTotalDetailFilter('authorName');
+              }}>
               저/편/필자({authorNameCount})
             </CategoryListItemName>
-          </CategoryListItemPositioner>
+          </Link>
+        </CategoryListItemPositioner>
 
-          <CategoryListItemPositioner>
-            <IoMdBook className="document-icon" />
-            <Link to={link4Content} className="link-line">
-              <CategoryListItemName className="focus">
-                원문({contentCount})
-              </CategoryListItemName>
-            </Link>
-          </CategoryListItemPositioner>
-        </CategoryListPositioner>
-      );
-    default:
-      break;
-  }
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'gwonchaTitle' }}>
+            <CategoryListItemName
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'gwonchaTitle'
+                  ? 'focus'
+                  : 'total-not-focus',
+                gwonchaTitleCount === 0 ? 'not-focus' : '',
+              )}
+              onClick={() => {
+                if (gwonchaTitleCount)
+                  totalDetailFilter.setTotalDetailFilter('gwonchaTitle');
+              }}>
+              권차({gwonchaTitleCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
+
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'muncheTitle' }}>
+            <CategoryListItemName
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'muncheTitle'
+                  ? 'focus'
+                  : 'total-not-focus',
+                muncheTitleCount === 0 ? 'not-focus' : '',
+              )}
+              onClick={() => {
+                if (muncheTitleCount)
+                  totalDetailFilter.setTotalDetailFilter('muncheTitle');
+              }}>
+              문체({muncheTitleCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
+
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'content' }}>
+            <CategoryListItemName
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'content'
+                  ? 'focus'
+                  : 'total-not-focus',
+                contentCount === 0 ? 'not-focus' : '',
+              )}
+              onClick={() => {
+                if (contentCount)
+                  totalDetailFilter.setTotalDetailFilter('content');
+              }}>
+              원문({contentCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
+
+        <CategoryListItemPositioner>
+          <IoMdBook className="document-icon" />
+          <Link
+            to={link4Total}
+            className="link-line"
+            state={{ display: 'dataId' }}>
+            <CategoryListItemName
+              className={classnames(
+                totalDetailFilter.totalDetailFilter === 'dataId'
+                  ? 'focus'
+                  : 'total-not-focus',
+                dataIdCount === 0 ? 'not-focus' : '',
+              )}
+              onClick={() => {
+                if (dataIdCount)
+                  totalDetailFilter.setTotalDetailFilter('dataId');
+              }}>
+              자료ID({dataIdCount})
+            </CategoryListItemName>
+          </Link>
+        </CategoryListItemPositioner>
+      </CategoryListPositioner>
+    );
+
+  return (
+    <CategoryListPositioner>
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+        <CategoryListItemName
+          className={filter === 'book-title' ? 'focus' : 'not-focus'}>
+          서명({bookTitleCount})
+        </CategoryListItemName>
+      </CategoryListItemPositioner>
+
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+        <CategoryListItemName
+          className={filter === 'author-name' ? 'focus' : 'not-focus'}>
+          저/편/필자({authorNameCount})
+        </CategoryListItemName>
+      </CategoryListItemPositioner>
+
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+
+        <CategoryListItemName
+          className={filter === 'gwoncha-title' ? 'focus' : 'not-focus'}>
+          권차({gwonchaTitleCount})
+        </CategoryListItemName>
+      </CategoryListItemPositioner>
+
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+
+        <CategoryListItemName
+          className={filter === 'munche-title' ? 'focus' : 'not-focus'}>
+          문체({muncheTitleCount})
+        </CategoryListItemName>
+      </CategoryListItemPositioner>
+
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+
+        <CategoryListItemName
+          className={filter === 'content' ? 'focus' : 'not-focus'}>
+          원문({contentCount})
+        </CategoryListItemName>
+      </CategoryListItemPositioner>
+
+      <CategoryListItemPositioner>
+        <IoMdBook className="document-icon" />
+
+        <CategoryListItemName
+          className={filter === 'data-id' ? 'focus' : 'not-focus'}>
+          자료ID({dataIdCount})
+        </CategoryListItemName>
+      </CategoryListItemPositioner>
+    </CategoryListPositioner>
+  );
 }
 
 export default CategoryListBlock;
