@@ -14,6 +14,10 @@ const BoxPositioner = styled.div`
   justify-content: left;
   padding-left: 20px;
   margin-top: 12px;
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const TitlePositioner = styled.div`

@@ -39,6 +39,10 @@ const Container = styled.div`
   .final-padding {
     margin-left: 65px;
   }
+
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const ListItemPositioner = styled.div`
