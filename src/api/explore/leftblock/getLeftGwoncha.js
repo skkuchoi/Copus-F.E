@@ -5,7 +5,7 @@ function getLeftGwoncha(filter, depth, currentId) {
     url: `/category/${filter}/${depth}/${currentId}`,
     method: 'get',
   });
-  // console.log('response', response);
+
   return response;
 }
 

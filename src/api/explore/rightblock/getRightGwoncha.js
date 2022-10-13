@@ -5,7 +5,7 @@ function getRightGwoncha(seojiId) {
     url: `/article/gwoncha/${seojiId.clickSeoji}`,
     method: 'get',
   });
-  // console.log('response', response);
+
   return response;
 }
 

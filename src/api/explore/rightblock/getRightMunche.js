@@ -5,9 +5,8 @@ function getRightMunche(gwonchaId) {
     url: `/article/gwoncha/${gwonchaId.clickGwoncha}`,
     method: 'get',
   });
-  // console.log('response', response);
+
   return response;
-  
 }
 
 export default getRightMunche;
