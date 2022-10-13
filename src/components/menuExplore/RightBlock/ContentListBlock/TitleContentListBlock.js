@@ -1,0 +1,85 @@
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import OtherListTableBlock from '../OtherListTableBlock';
+
+import useAsync from '../../../../hooks/useAsync';
+import getRightFinal from '../../../../api/explore/rightblock/getRightFinal';
+
+import { muncheContext } from '../../../shared/ContentLayout';
+
+import parseGwoncha from '../../../../utils/parseGwoncha';
+import parseMunche from '../../../../utils/parseMunche';
+import parseTitle from '../../../../utils/parseTitle';
+
+const TableItem = styled.p`
+  font-size: 15px;
+  margin: 0;
+`;
+
+const FinalTitle = styled.span`
+  font-size: 15px;
+  margin: 0;
+`;
+const FinalWonju = styled.span`
+  font-size: 12px;
+  margin: 0;
+`;
+
+function TitleContentListBlock() {
+  let numbering = 1;
+
+  const clickMuncheContext = useContext(muncheContext);
+  const [finalJsonDatas] = useAsync(
+    () => getRightFinal(clickMuncheContext),
+    [clickMuncheContext],
+  );
+
+  console.log('final data', finalJsonDatas);
+  if (
+    finalJsonDatas.data === null ||
+    finalJsonDatas.data === undefined ||
+    finalJsonDatas.data.datas === null ||
+    finalJsonDatas.data.datas === undefined
+  )
+    return <div>로딩</div>;
+  return (
+    <>
+      <OtherListTableBlock
+        icon="gwoncha"
+        key={finalJsonDatas.data.gwonchaId}
+        clickId={finalJsonDatas.data.gwonchaId}
+        currentTitle={parseGwoncha(finalJsonDatas.data.gwonchaTitle)}>
+        <TableItem>{parseGwoncha(finalJsonDatas.data.gwonchaTitle)}</TableItem>
+      </OtherListTableBlock>
+
+      <OtherListTableBlock
+        marginLeft="39px"
+        icon="munche"
+        key={finalJsonDatas.data.muncheId}
+        clickId={finalJsonDatas.data.muncheId}
+        currentTitle={parseMunche(finalJsonDatas.data.muncheTitle)}>
+        <TableItem>{parseMunche(finalJsonDatas.data.muncheTitle)}</TableItem>
+      </OtherListTableBlock>
+
+      {finalJsonDatas.data.datas.map((item) => (
+        <OtherListTableBlock
+          marginLeft="65px"
+          icon="final"
+          numbering={numbering++}
+          key={item.finalId}
+          clickId={item.finalId}
+          currentTitle={item.finalTitle}>
+          <TableItem>
+            {parseTitle(item.finalTitle).map((el) => (
+              <FinalTitle>
+                &nbsp; {el.title}&nbsp;<FinalWonju>{el.wonju}</FinalWonju>
+              </FinalTitle>
+            ))}
+          </TableItem>
+        </OtherListTableBlock>
+      ))}
+    </>
+  );
+}
+
+export default TitleContentListBlock;

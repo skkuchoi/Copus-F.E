@@ -14,10 +14,10 @@ const IndexPositioner = styled.div`
 
 const IndexContainer = styled.div`
   width: 780px;
-  display:flex;
+  display: flex;
   flex-direction: row;
-  align-items:center;
-  justify-content:left;
+  align-items: center;
+  justify-content: left;
 `;
 const IndexBox = styled.div`
   width: 35px;
@@ -53,7 +53,7 @@ function HomeCard() {
       </IndexPositioner>
 
       <CardPositioner>
-        <Link to="/original-text/연행록" className="link-line">
+        <Link to="/menu-explore/book/all" className="link-line">
           <Card
             icon="1"
             title="코퍼스(Copus)"

@@ -16,21 +16,11 @@ import NotWorking from './pages/NotWorking/NotWorking';
 
 import SearchResult from './pages/searchResult/SearchResult';
 
-import OriginalTextLiterature from './pages/original-text/OriginalTextLiterature';
-import OriginalTextBy from './pages/original-text/OriginalTextBy';
+import MenuExplore from './pages/menuExplore/MenuExplore';
 
-import BookOriginalTextDetail from './pages/original-text/bybook/detail/OriginalTextDetail';
-import BookOriginalTextCategory from './pages/original-text/bybook/category/OriginalTextCategory';
-import BookOriginalTextGwoncha from './pages/original-text/bybook/gwoncha/OriginalTextGwoncha';
-import BookOriginalTextMunche from './pages/original-text/bybook/munche/OriginalTextMunche';
-import BookOriginalTextTitle from './pages/original-text/bybook/title/OriginalTextTitle';
-
-import AuthorOriginalTextDetail from './pages/original-text/byauthor/detail/OriginalTextDetail';
-import AuthorOriginalTextCategory from './pages/original-text/byauthor/category/OriginalTextCategory';
-import AuthorOriginalTextGwoncha from './pages/original-text/byauthor/gwoncha/OriginalTextGwoncha';
-import AuthorOriginalTextMunche from './pages/original-text/byauthor/munche/OriginalTextMunche';
-import AuthorOriginalTextTitle from './pages/original-text/byauthor/title/OriginalTextTitle';
- 
+import Beomrye from './pages/original-text/side/Beomrye';
+import Chapter from './pages/original-text/side/Chapter';
+import Haejae from './pages/original-text/side/Haejae';
 
 const Container = styled.div`
   position: absolute;
@@ -71,96 +61,49 @@ function App() {
           />
 
           {/* search-result */}
-
           <Route
-            path="/search-result/:searchCategory/:keyword"
+            path="/search-result/total/:keyword"
             exact={true}
             element={<SearchResult />}
           />
 
-          {/* Original - Text */}
           <Route
-            path="/original-text/:literature"
+            path="/search-result/book-title/:keyword"
             exact={true}
-            element={<OriginalTextLiterature />}
-          />
-
-          {/* OriginalText / bybook */}
-          <Route
-            path="/original-text/:literature/bybook"
-            exact={true}
-            element={<OriginalTextBy />}
+            element={<SearchResult />}
           />
 
           <Route
-            path="/original-text/:literature/bybook/:consonant"
+            path="/search-result/author-name/:keyword"
             exact={true}
-            element={<BookOriginalTextCategory />}
+            element={<SearchResult />}
           />
 
           <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname"
+            path="/search-result/content/:keyword"
             exact={true}
-            element={<BookOriginalTextGwoncha />}
+            element={<SearchResult />}
           />
 
-          <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname/:gwoncha"
-            exact={true}
-            element={<BookOriginalTextMunche />}
-          />
+          {/* New Explore;;ㅋㅋ */}
 
           <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname/:gwoncha/:munche"
+            path="/menu-explore/book/:consonant"
             exact={true}
-            element={<BookOriginalTextTitle />}
+            element={<MenuExplore filter="book" />}
           />
-
           <Route
-            path="/original-text/:literature/bybook/:consonant/:bookname/:gwoncha/:munche/:title"
+            path="/menu-explore/author/:consonant"
             exact={true}
-            element={<BookOriginalTextDetail />}
-          />
-
-          {/* OriginalText / byauthor */}
-          <Route
-            path="/original-text/:literature/byauthor"
-            exact={true}
-            element={<OriginalTextBy />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant"
-            exact={true}
-            element={<AuthorOriginalTextCategory />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname"
-            exact={true}
-            element={<AuthorOriginalTextGwoncha />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname/:gwoncha"
-            exact={true}
-            element={<AuthorOriginalTextMunche />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname/:gwoncha/:munche"
-            exact={true}
-            element={<AuthorOriginalTextTitle />}
-          />
-
-          <Route
-            path="/original-text/:literature/byauthor/:consonant/:authorname/:bookname/:gwoncha/:munche/:title"
-            exact={true}
-            element={<AuthorOriginalTextDetail />}
+            element={<MenuExplore filter="author" />}
           />
 
           <Route path="/server-error" element={<NotWorking />} />
           <Route path="*" element={<NotFound />} />
+
+          <Route path="/beomrye/:lv1Id" exact={true} element={<Beomrye />} />
+          <Route path="/chapter/:lv1Id" exact={true} element={<Chapter />} />
+          <Route path="/haejae/:lv1Id" exact={true} element={<Haejae />} />
         </Routes>
       </FontStyle>
     </Container>

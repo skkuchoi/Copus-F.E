@@ -17,25 +17,16 @@ const ContentPositioner = styled.div`
   flex-direction: column;
 `;
 
-function SearchResultLayout({ bookResultNum, authorResultNum, textResultNum }) {
-  const totalResultNum = bookResultNum + authorResultNum + textResultNum;
+function SearchResultLayout({ leftDatas, rightDatas }) {
   return (
     <>
-      <DisplaySelectedListBlock totalResultNum={totalResultNum} />
+      <DisplaySelectedListBlock totalCount={leftDatas.totalCount} />
 
       <MainContentBlock>
-        <SidebarBlock
-          bookResultNum={bookResultNum}
-          authorResultNum={authorResultNum}
-          textResultNum={textResultNum}
-        />
+        <SidebarBlock leftDatas={leftDatas} />
 
         <ContentPositioner>
-          <ResultDataBlock
-            bookResultNum={bookResultNum}
-            authorResultNum={authorResultNum}
-            textResultNum={textResultNum}
-          />
+          <ResultDataBlock rightDatas={rightDatas} />
         </ContentPositioner>
       </MainContentBlock>
     </>
