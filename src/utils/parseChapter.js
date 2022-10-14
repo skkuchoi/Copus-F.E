@@ -75,6 +75,6 @@ export default function parseChapter(chapterzz) {
       chapter.gwoncha[gwonchaCount] = gwoncha;
     }
   }
-  
+  console.log(chapter);
   return chapter;
 }

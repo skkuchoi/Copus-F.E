@@ -55,7 +55,16 @@ function Chapter() {
                       {muncheItem.munche_content} {muncheItem.munche_page}
                     </ChapterTitle>
                     {muncheItem.final.map((finalItem) => (
-                      <ChapterText>{finalItem.final_content}</ChapterText>
+                      <ChapterText>
+                        {finalItem.final_content.map((contentItem) => (
+                          <>
+                            {contentItem.split('*')[0]}
+                            <ChapterWonju>
+                              &nbsp; {contentItem.split('*')[1]} &nbsp; 
+                            </ChapterWonju>
+                          </>
+                        ))}
+                      </ChapterText>
                     ))}
                   </>
                 ))}
