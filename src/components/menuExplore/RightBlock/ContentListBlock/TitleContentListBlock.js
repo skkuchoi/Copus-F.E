@@ -10,6 +10,7 @@ import { muncheContext } from '../../../shared/ContentLayout';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
 import parseTitle from '../../../../utils/parseTitle';
+import Loading from '../../../shared/Loading';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -41,7 +42,7 @@ function TitleContentListBlock() {
     finalJsonDatas.data.datas === null ||
     finalJsonDatas.data.datas === undefined
   )
-    return <div>로딩</div>;
+    return <Loading />;
   return (
     <>
       <OtherListTableBlock

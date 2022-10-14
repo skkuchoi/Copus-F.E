@@ -8,6 +8,7 @@ import { finalContext } from '../../../shared/ContentLayout';
 
 import parseContent from '../../../../utils/parseContent';
 import parseTitle from '../../../../utils/parseTitle';
+import Loading from '../../../shared/Loading';
 
 const ContentPositioner = styled.div`
   padding: 12px 0px;
@@ -136,7 +137,7 @@ export default function Content() {
   const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
 
   if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)
-    return <div>zz</div>;
+    return <Loading />;
   return (
     <>
       <ContentRoute>

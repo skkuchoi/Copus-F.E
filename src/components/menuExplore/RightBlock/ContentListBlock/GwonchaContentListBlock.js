@@ -9,6 +9,7 @@ import getRightGwoncha from '../../../../api/explore/rightblock/getRightGwoncha'
 import { seojiContext } from '../../../shared/ContentLayout';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
+import Loading from '../../../shared/Loading';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -23,7 +24,7 @@ function GwonchaContentListBlock() {
   );
 
   if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
-    return <div>로딩</div>;
+    return <Loading />;
   return (
     <>
       {gwonchaJsonDatas.data.datas.map((gwoncha) => (

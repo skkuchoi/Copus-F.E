@@ -9,6 +9,7 @@ import getRightMunche from '../../../../api/explore/rightblock/getRightMunche';
 import { gwonchaContext } from '../../../shared/ContentLayout';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
+import Loading from '../../../shared/Loading';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -24,7 +25,7 @@ function MuncheContentListBlock() {
   );
 
   if (muncheJsonDatas.data === null || muncheJsonDatas.data === undefined)
-    return <div>로딩</div>;
+    return <Loading />;
   return (
     <>
       {muncheJsonDatas.data.datas.map((item) => (

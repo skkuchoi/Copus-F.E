@@ -22,6 +22,7 @@ import {
 import parseGwoncha from '../../../utils/parseGwoncha';
 import parseMunche from '../../../utils/parseMunche';
 import parseTitle from '../../../utils/parseTitle';
+import Loading from '../../shared/Loading';
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
@@ -255,7 +256,7 @@ function AuthorSidebar() {
     finalListDatas === null ||
     finalListDatas === undefined
   )
-    return <div>zz</div>;
+    return <Loading />;
   return (
     <Container ref={container}>
       {authorListDatas.map((author) => (

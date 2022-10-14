@@ -9,6 +9,7 @@ import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
 import { authorContext } from '../../../shared/ContentLayout';
 import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import parseAuthor from '../../../../utils/parseAuthor';
+import Loading from '../../../shared/Loading';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -80,7 +81,7 @@ function BookContentListBlock() {
   );
 
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
-    return <div>로딩</div>;
+    return <Loading />;
   return (
     <>
       {seojiJsonDatas.data.datas.map((item) => (
