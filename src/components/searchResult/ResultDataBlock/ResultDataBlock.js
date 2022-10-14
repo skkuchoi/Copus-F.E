@@ -10,7 +10,8 @@ import { totalFilter } from '../SearchResultLayout';
 import parseGwoncha from '../../../utils/parseGwoncha';
 import parseMunche from '../../../utils/parseMunche';
 import parseTitle from '../../../utils/parseTitle';
-import parseContent from '../../../utils/parseContent';
+import parseSearchContent from '../../../utils/parseSearchContent';
+import Loading from '../../shared/Loading';
 
 const ResultListPositioner = styled.div`
   width: 98%;
@@ -112,12 +113,12 @@ function ResultDataBlock() {
   const offset = (currentPage - 1) * limitPage;
   useEffect(() => {
     setCurrentPage(1);
-  }, [filter, totalDetailFilter]);
+  }, [filter, totalDetailFilter.totalDetailFilter]);
 
   // console.log(totalDetailFilter.totalDetailFilter);
   //console.log(rightDatas);
   // 로딩 페이지
-  if (rightDatas.data === null) return <div>zz</div>;
+  if (rightDatas.data === null) return <Loading />;
   switch (filter) {
     case 'total':
       switch (totalDetailFilter.totalDetailFilter) {
@@ -168,7 +169,7 @@ function ResultDataBlock() {
                           </SubInformation>
                           {item.contentPartition !== null && (
                             <OriginalText>
-                              {parseContent(item.contentPartition)}
+                              {parseSearchContent(item.contentPartition)}
                             </OriginalText>
                           )}
                         </ResultInformation>
@@ -384,7 +385,7 @@ function ResultDataBlock() {
                           ))}
                         </SubInformation>
                         <OriginalText>
-                          {parseContent(item.contentPartition)}
+                          {parseSearchContent(item.contentPartition)}
                         </OriginalText>
                       </ResultInformation>
                     </ResultListPositioner>
@@ -708,7 +709,7 @@ function ResultDataBlock() {
                       ))}
                     </SubInformation>
                     <OriginalText>
-                      {parseContent(item.contentPartition)}
+                      {parseSearchContent(item.contentPartition)}
                     </OriginalText>
                   </ResultInformation>
                 </ResultListPositioner>

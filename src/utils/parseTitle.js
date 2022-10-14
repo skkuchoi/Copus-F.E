@@ -1,4 +1,5 @@
 export default function parseTitle(finalTitle) {
+  let titleArray = [];
   if (finalTitle !== null) {
     // 페이지 태그는 1개만 OK
     if (finalTitle.includes('페이지')) {
@@ -44,7 +45,6 @@ export default function parseTitle(finalTitle) {
       finalTitle = finalTitle.replace('</주석>', '');
     }
 
-    let titleArray = [];
     while (finalTitle.includes('원주')) {
       const wonjuStart = finalTitle.indexOf('<원주>');
       const wonjuEnd = finalTitle.indexOf('</원주>');
@@ -84,4 +84,5 @@ export default function parseTitle(finalTitle) {
 
     return titleArray;
   }
+  return titleArray;
 }

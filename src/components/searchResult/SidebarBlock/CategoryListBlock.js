@@ -68,6 +68,7 @@ function CategoryListBlock({
 
   console.log('filter:', filter);
   const totalDetailFilter = useContext(totalFilter);
+  console.log('totalDetailFilter', totalDetailFilter.totalDetailFilter);
   if (filter === 'total')
     return (
       <CategoryListPositioner>
