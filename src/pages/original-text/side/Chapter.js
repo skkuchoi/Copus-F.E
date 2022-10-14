@@ -17,8 +17,15 @@ const Title = styled.h1`
 
 const ChapterPositioner = styled.div``;
 
+const ChapterTitle = styled.p`
+  background-color: #f3f3f3;
+`;
+
 const ChapterText = styled.p``;
 
+const ChapterWonju = styled.span`
+  font-size: 12px;
+`;
 function Chapter() {
   const { pathname } = useLocation();
   const lv1Id = pathname.split('/')[2].toString();
@@ -35,7 +42,27 @@ function Chapter() {
         <Title>{chapterJsonDatas.data.seojiTitle}</Title>
       </TitlePositioner>
       <ChapterPositioner>
-        <ChapterText>{parseChapter(chapterJsonDatas.data.chapter)}</ChapterText>
+        <ChapterText>
+          {parseChapter(chapterJsonDatas.data.chapter).gwoncha.map(
+            (gwoncha) => (
+              <>
+                <ChapterTitle>
+                  {gwoncha.gwoncha_content} {gwoncha.gwoncha_page}
+                </ChapterTitle>
+                {gwoncha.munche.map((muncheItem) => (
+                  <>
+                    <ChapterTitle>
+                      {muncheItem.munche_content} {muncheItem.munche_page}
+                    </ChapterTitle>
+                    {muncheItem.final.map((finalItem) => (
+                      <ChapterText>{finalItem.final_content}</ChapterText>
+                    ))}
+                  </>
+                ))}
+              </>
+            ),
+          )}
+        </ChapterText>
       </ChapterPositioner>
     </>
   );
