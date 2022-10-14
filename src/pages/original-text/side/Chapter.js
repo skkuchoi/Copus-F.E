@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import getChapter from '../../../api/explore/bugaInformation/getChapter';
 import SideTopBarBlock from '../../../components/basic/TopBarBlock/TopBarBlock';
 import useAsync from '../../../hooks/useAsync';
+import parseChapter from '../../../utils/parseChapter';
 
 const TitlePositioner = styled.div`
   background-color: yellow;
@@ -24,16 +25,17 @@ function Chapter() {
 
   const [chapterJsonDatas] = useAsync(() => getChapter(lv1Id), []);
   //console.log(chapterJsonDatas);
-  //if (chapterJsonDatas.data === null) return <div>로딩</div>;
+  if (chapterJsonDatas.data === null || chapterJsonDatas.data === undefined)
+    return <div>로딩</div>;
   return (
     <>
       <SideTopBarBlock />
 
       <TitlePositioner>
-        <Title>챕터(월고집)</Title>
+        <Title>{chapterJsonDatas.data.seojiTitle}</Title>
       </TitlePositioner>
       <ChapterPositioner>
-        <ChapterText>챕터</ChapterText>
+        <ChapterText>{parseChapter(chapterJsonDatas.data.chapter)}</ChapterText>
       </ChapterPositioner>
     </>
   );
