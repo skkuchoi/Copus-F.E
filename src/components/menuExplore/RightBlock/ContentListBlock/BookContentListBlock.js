@@ -63,12 +63,23 @@ function BookContentListBlock() {
   const filter = useContext(selectedFilter);
   const clickAuthorContext = useContext(authorContext);
 
+  //const [postsPerPage, setPostsPerPage] = useState(10);
   const [limitPage, setLimitPage] = useState(10);
+
   const [currentPage, setCurrentPage] = useState(1);
+
   const offset = (currentPage - 1) * limitPage;
   useEffect(() => {
     setCurrentPage(1);
   }, []);
+
+  //const indexOfLast = currentPage * limitPage;
+  //const indexOfFirst = indexOfLast - limitPage;
+  //const currentPosts = (posts) => {
+  //  let currentPosts = 0;
+  //  currentPosts = posts.slice(indexOfFirst, indexOfLast);
+  //  return currentPosts;
+  //};
 
   // seojiKeyword 세팅
   let seojiKeyword;
