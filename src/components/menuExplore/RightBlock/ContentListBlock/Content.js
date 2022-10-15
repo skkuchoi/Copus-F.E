@@ -9,6 +9,8 @@ import { finalContext } from '../../../shared/ContentLayout';
 import parseContent from '../../../../utils/parseContent';
 import parseTitle from '../../../../utils/parseTitle';
 import Loading from '../../../shared/Loading';
+import parseGwoncha from '../../../../utils/parseGwoncha';
+import parseMunche from '../../../../utils/parseMunche';
 
 const ContentPositioner = styled.div`
   padding: 12px 0px;
@@ -40,6 +42,7 @@ const Title = styled.div`
   padding-bottom: 5px;
   border-bottom: 1px solid black;
   margin-bottom: 10px;
+  background-color: rgba(197, 232, 207, 0.5);
 `;
 
 const FinalTitle = styled.span`
@@ -89,6 +92,10 @@ const CopyButton = styled.button`
   margin: 0px 3px;
   font-size: 9px;
   cursor: pointer;
+  &:hover {
+    background-color: lightgray;
+    color: black;
+  }
 `;
 
 const ParagraphTitlePositioner = styled.div`
@@ -135,6 +142,14 @@ export default function Content() {
 
   //console.log('final content: ', finalDataJsonDatas);
   const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
+  const handleCopyButton = () => {
+    if (finalDataJsonDatas.data !== null)
+      window.navigator.clipboard
+        .writeText(finalDataJsonDatas.data.finalData.dci)
+        .then(() => {
+          alert('복사 완료');
+        });
+  };
 
   if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)
     return <Loading />;
@@ -142,8 +157,12 @@ export default function Content() {
     <>
       <ContentRoute>
         <RouteText>{finalDataJsonDatas.data.seojiTitle}</RouteText>
-        <RouteText>{finalDataJsonDatas.data.gwonchaTitle}</RouteText>
-        <RouteText>{finalDataJsonDatas.data.muncheTitle}</RouteText>
+        <RouteText>
+          {parseGwoncha(finalDataJsonDatas.data.gwonchaTitle)}
+        </RouteText>
+        <RouteText>
+          {parseMunche(finalDataJsonDatas.data.muncheTitle)}
+        </RouteText>
       </ContentRoute>
       <ContentPositioner>
         <Title>
@@ -154,18 +173,9 @@ export default function Content() {
           ))}
         </Title>
 
-        <SubTitle>
-          {parseTitle(finalDataJsonDatas.data.finalData.title).map((el) => (
-            <FinalTitle>
-              &nbsp; {el.title}&nbsp;<FinalWonju>{el.wonju}</FinalWonju>
-            </FinalTitle>
-          ))}
-        </SubTitle>
-
         <CopyBlock>
           <DciInformation>[DCI]{dci}</DciInformation>
-          <CopyButton>DCI 복사</CopyButton>
-          <CopyButton>URL 복사</CopyButton>
+          <CopyButton onClick={handleCopyButton}>DCI 복사</CopyButton>
         </CopyBlock>
 
         <ContentText>

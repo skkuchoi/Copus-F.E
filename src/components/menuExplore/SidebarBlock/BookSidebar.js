@@ -26,6 +26,7 @@ const Container = styled.div`
   border: 1px solid #d9d9d9;
   border-right: none;
   height: 80vh;
+
   overflow-y: scroll;
   overflow-x: scroll;
 
@@ -51,7 +52,7 @@ const ListItemPositioner = styled.div`
   flex-direction: row;
   align-items: left;
   padding: 5px 10px;
-  width: 500px;
+  width: 1400px;
   .list-icon {
     color: gray;
     margin-right: 3px;
@@ -61,6 +62,9 @@ const ListItemPositioner = styled.div`
   }
   .focus {
     background-color: #f0be86;
+    &:hover {
+      background-color: #f0be86;
+    }
   }
 `;
 
