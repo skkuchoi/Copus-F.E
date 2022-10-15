@@ -34,7 +34,7 @@ function MuncheContentListBlock() {
             icon="gwoncha"
             key={item.gwonchaId}
             clickId={item.gwonchaId}
-            currentTitle={parseGwoncha(item.gwonchaTitle)}>
+            currentTitle={item.gwonchaId}>
             <TableItem>{parseGwoncha(item.gwonchaTitle)}</TableItem>
           </OtherListTableBlock>
 
@@ -45,7 +45,7 @@ function MuncheContentListBlock() {
               numbering={numbering++}
               key={item.muncheId}
               clickId={item.muncheId}
-              currentTitle={parseMunche(item.muncheTitle)}>
+              currentTitle={item.muncheId}>
               <TableItem>{parseMunche(item.muncheTitle)}</TableItem>
             </OtherListTableBlock>
           ))}

@@ -216,6 +216,7 @@ function BookSidebar() {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
 
+  useEffect(()=>{},[]);
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||

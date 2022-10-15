@@ -11,6 +11,7 @@ import parseTitle from '../../../../utils/parseTitle';
 import Loading from '../../../shared/Loading';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
+import NotWorking from '../../../../pages/NotWorking/NotWorking';
 
 const ContentPositioner = styled.div`
   padding: 12px 0px;
@@ -140,7 +141,7 @@ export default function Content() {
     [clickFinalContext],
   );
 
-  //console.log('final content: ', finalDataJsonDatas);
+  console.log('final content: ', finalDataJsonDatas);
   const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
   const handleCopyButton = () => {
     if (finalDataJsonDatas.data !== null)
@@ -153,6 +154,7 @@ export default function Content() {
 
   if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)
     return <Loading />;
+  else if (finalDataJsonDatas.error) return <NotWorking />;
   return (
     <>
       <ContentRoute>

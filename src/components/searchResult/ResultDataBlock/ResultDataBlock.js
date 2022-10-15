@@ -146,6 +146,7 @@ function ResultDataBlock() {
   const [limitPage, setLimitPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const offset = (currentPage - 1) * limitPage;
+
   useEffect(() => {
     setCurrentPage(1);
   }, [filter, totalDetailFilter.totalDetailFilter]);
@@ -258,7 +259,6 @@ function ResultDataBlock() {
               ) : (
                 <NoExistDataBlock />
               )}
-
               <Pagination
                 totalContent={rightDatas.data.datas.length}
                 limitPage={limitPage}

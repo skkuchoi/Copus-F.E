@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
@@ -20,6 +20,8 @@ import Loading from '../../../shared/Loading';
 import calculateIdLevel from '../../../../utils/calculateIdLevel';
 import { leftBlockDepth } from '../../../../pages/menuExplore/MenuExplore';
 import NoExistDataBlock from '../../../searchResult/ResultDataBlock/NoExistDataBlock';
+
+import Pagination from '../../../searchResult/ResultDataBlock/Pagination';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -118,6 +120,13 @@ function BookContentListBlock() {
     }
   }
 
+  const [limitPage, setLimitPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const offset = (currentPage - 1) * limitPage;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, []);
+
   let id = 1;
 
   // seojiKeyword 세팅
@@ -136,41 +145,50 @@ function BookContentListBlock() {
     () => getRightSeoji(filter, seojiKeyword, consonant),
     [consonant, clickAuthorContext.authorValue],
   );
-
+  console.log(seojiJsonDatas);
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <Loading />;
   else if (seojiJsonDatas.data.count === 0) return <NoExistDataBlock />;
   return (
     <>
-      {seojiJsonDatas.data.datas.map((item) => (
-        <BookTableBlock
-          bgColor="#edeaea"
-          key={item.seojiId}
-          clickId={item.seojiId}
-          authorName={filter === 'author' ? item.authorName : ''}
-          currentTitle={item.seojiTitle}>
-          <TableItem>{id++}</TableItem>
-          <TableItem>{item.seojiTitle}</TableItem>
-          <TableItem>{item.authorName}</TableItem>
+      {seojiJsonDatas.data.datas
+        .slice(offset, offset + limitPage)
+        .map((item) => (
+          <BookTableBlock
+            bgColor="#edeaea"
+            key={item.seojiId}
+            clickId={item.seojiId}
+            authorName={filter === 'author' ? item.authorName : ''}
+            currentTitle={item.seojiId}>
+            <TableItem>{id++}</TableItem>
+            <TableItem>{item.seojiTitle}</TableItem>
+            <TableItem>{item.authorName}</TableItem>
 
-          <TableItem>{item.zipsu}</TableItem>
-          <TableItem>{item.publishYear}</TableItem>
+            <TableItem>{item.zipsu}</TableItem>
+            <TableItem>{item.publishYear}</TableItem>
 
-          <Buga>
-            <BugaButton onClick={() => beomryePopUp(item.seojiId)}>
-              범례
-            </BugaButton>
+            <Buga>
+              <BugaButton onClick={() => beomryePopUp(item.seojiId)}>
+                범례
+              </BugaButton>
 
-            <BugaButton onClick={() => chapterPopUp(item.seojiId)}>
-              목차
-            </BugaButton>
+              <BugaButton onClick={() => chapterPopUp(item.seojiId)}>
+                목차
+              </BugaButton>
 
-            <BugaButton onClick={() => haejaePopUp(item.seojiId)}>
-              해제
-            </BugaButton>
-          </Buga>
-        </BookTableBlock>
-      ))}
+              <BugaButton onClick={() => haejaePopUp(item.seojiId)}>
+                해제
+              </BugaButton>
+            </Buga>
+          </BookTableBlock>
+        ))}
+
+      <Pagination
+        totalContent={seojiJsonDatas.data.datas.length}
+        limitPage={limitPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 }

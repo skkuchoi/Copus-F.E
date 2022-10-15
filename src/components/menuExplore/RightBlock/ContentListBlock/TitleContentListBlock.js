@@ -49,7 +49,7 @@ function TitleContentListBlock() {
         icon="gwoncha"
         key={finalJsonDatas.data.gwonchaId}
         clickId={finalJsonDatas.data.gwonchaId}
-        currentTitle={parseGwoncha(finalJsonDatas.data.gwonchaTitle)}>
+        currentTitle={finalJsonDatas.data.gwonchaId}>
         <TableItem>{parseGwoncha(finalJsonDatas.data.gwonchaTitle)}</TableItem>
       </OtherListTableBlock>
 
@@ -58,7 +58,7 @@ function TitleContentListBlock() {
         icon="munche"
         key={finalJsonDatas.data.muncheId}
         clickId={finalJsonDatas.data.muncheId}
-        currentTitle={parseMunche(finalJsonDatas.data.muncheTitle)}>
+        currentTitle={finalJsonDatas.data.muncheId}>
         <TableItem>{parseMunche(finalJsonDatas.data.muncheTitle)}</TableItem>
       </OtherListTableBlock>
 
@@ -69,7 +69,7 @@ function TitleContentListBlock() {
           numbering={numbering++}
           key={item.finalId}
           clickId={item.finalId}
-          currentTitle={item.finalTitle}>
+          currentTitle={item.finalId}>
           <TableItem>
             {parseTitle(item.finalTitle).map((el) => (
               <FinalTitle>

@@ -23,6 +23,8 @@ function GwonchaContentListBlock() {
     [clickSeojiContext.clickSeoji],
   );
 
+  console.log(gwonchaJsonDatas);
+
   if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
     return <Loading />;
   return (
@@ -33,7 +35,7 @@ function GwonchaContentListBlock() {
             icon="gwoncha"
             key={gwoncha.gwonchaId}
             clickId={gwoncha.gwonchaId}
-            currentTitle={parseGwoncha(gwoncha.gwonchaTitle)}>
+            currentTitle={gwoncha.gwonchaId}>
             <TableItem>{parseGwoncha(gwoncha.gwonchaTitle)}</TableItem>
           </OtherListTableBlock>
 
@@ -44,7 +46,7 @@ function GwonchaContentListBlock() {
               key={item.muncheId}
               clickId={item.muncheId}
               parentId={gwoncha.gwonchaId}
-              currentTitle={parseMunche(item.muncheTitle)}>
+              currentTitle={item.muncheId}>
               <TableItem>{parseMunche(item.muncheTitle)}</TableItem>
             </OtherListTableBlock>
           ))}

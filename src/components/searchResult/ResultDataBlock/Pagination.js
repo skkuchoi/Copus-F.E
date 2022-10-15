@@ -17,7 +17,7 @@ const PageNumberOptionBlock = styled.nav`
     }
 
     &[disabled] {
-      visibility: hidden;
+      //visibility: hidden;
     }
   }
 `;
@@ -47,7 +47,7 @@ const NumberButton = styled.button`
 function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
   // Math.ceil: 그것보다 큰 수를 반환 (?)
   const totalPageNumber = Math.ceil(totalContent / limitPage);
-  
+
   return (
     <>
       <PageNumberOptionBlock>
@@ -73,7 +73,8 @@ function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
           size="40"
           className="arrow-icon"
           onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPageNumber}></MdArrowRight>
+          disabled={currentPage === totalPageNumber}
+        />
       </PageNumberOptionBlock>
     </>
   );

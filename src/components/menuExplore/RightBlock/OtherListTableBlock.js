@@ -62,10 +62,6 @@ function OtherListTableBlock({
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
 
-  const { state } = useLocation();
-  if( state !== null ) 
-  console.log('state:', state);
-  
   return (
     <Positioner
       marginLeft={marginLeft}
