@@ -19,6 +19,7 @@ import parseAuthor from '../../../../utils/parseAuthor';
 import Loading from '../../../shared/Loading';
 import calculateIdLevel from '../../../../utils/calculateIdLevel';
 import { leftBlockDepth } from '../../../../pages/menuExplore/MenuExplore';
+import NoExistDataBlock from '../../../searchResult/ResultDataBlock/NoExistDataBlock';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -138,6 +139,7 @@ function BookContentListBlock() {
 
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <Loading />;
+  else if (seojiJsonDatas.data.count === 0) return <NoExistDataBlock />;
   return (
     <>
       {seojiJsonDatas.data.datas.map((item) => (

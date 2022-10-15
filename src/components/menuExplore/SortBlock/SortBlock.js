@@ -171,7 +171,7 @@ function SortBlock({ children }) {
             <CircleCheckButton
               onClick={() => {
                 setFilter('book');
-                navigate(link4Consonant + 'book/all');
+                window.location.replace(link4Consonant + 'book/all');
               }}>
               {filter === 'book' && <MdDone />}
             </CircleCheckButton>
@@ -180,7 +180,7 @@ function SortBlock({ children }) {
             <CircleCheckButton
               onClick={() => {
                 setFilter('author');
-                navigate(link4Consonant + 'author/all');
+                window.location.replace(link4Consonant + 'author/all');
               }}>
               {filter === 'author' && <MdDone />}
             </CircleCheckButton>
