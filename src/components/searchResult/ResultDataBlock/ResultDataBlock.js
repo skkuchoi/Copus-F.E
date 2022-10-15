@@ -2,7 +2,7 @@ import Pagination from './Pagination';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CategoryListItemTitleBlock from './CategoryListItemTitleBlock';
-import { useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import NoExistDataBlock from './NoExistDataBlock';
 import useAsync from '../../../hooks/useAsync';
 import getRightSearchResult from '../../../api/search/getRightSearchResult';
@@ -12,6 +12,12 @@ import parseMunche from '../../../utils/parseMunche';
 import parseTitle from '../../../utils/parseTitle';
 import parseSearchContent from '../../../utils/parseSearchContent';
 import Loading from '../../shared/Loading';
+import {
+  seojiContext,
+  gwonchaContext,
+  muncheContext,
+  finalContext,
+} from '../../shared/ContentLayout';
 
 const ResultListPositioner = styled.div`
   width: 98%;
@@ -39,6 +45,10 @@ const Title = styled.div`
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 5px;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const SubInformation = styled.div`
@@ -59,22 +69,41 @@ const SubInformationText = styled.span`
     margin-left: 10px;
     opacity: 0.5;
   }
+
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
+const SubInformationTextNoHover = styled.span`
+  margin-right: 15px;
+  ::after {
+    content: '|';
+    margin-left: 10px;
+    opacity: 0.5;
+  }
+`;
 const OriginalText = styled.div`
   font-size: 17px;
   margin-top: 5px;
   padding-left: 20px;
   color: gray;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 
 const FinalTitle = styled.span`
   font-size: 17px;
   margin: 0;
+  &:hover {
+    text-decoration: underline;
+  }
 `;
 const FinalWonju = styled.span`
   font-size: 12px;
   margin: 0;
+  
 `;
 
 function ResultDataBlock() {
@@ -82,6 +111,13 @@ function ResultDataBlock() {
 
   // useContext
   const totalDetailFilter = useContext(totalFilter);
+  const clickSeojiContext = useContext(seojiContext);
+  const clickGwonchaContext = useContext(gwonchaContext);
+  const clickMuncheContext = useContext(muncheContext);
+  const clickFinalContext = useContext(finalContext);
+
+  // Navigate
+  const navigate = useNavigate();
 
   //SearchFilter Settings
   const { pathname } = useLocation();
@@ -115,8 +151,6 @@ function ResultDataBlock() {
     setCurrentPage(1);
   }, [filter, totalDetailFilter.totalDetailFilter]);
 
-  // console.log(totalDetailFilter.totalDetailFilter);
-  //console.log(rightDatas);
   // 로딩 페이지
   if (rightDatas.data === null) return <Loading />;
   switch (filter) {
@@ -138,37 +172,97 @@ function ResultDataBlock() {
                       <ResultListPositioner>
                         <Id> {id++}. </Id>
                         <ResultInformation>
-                          <Title>{item.seojiTitle}</Title>
+                          <Title
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  id: item.seojiId,
+                                  title: item.seojiTitle,
+                                },
+                              });
+                            }}>
+                            {item.seojiTitle}
+                          </Title>
                           <SubInformation>
-                            <SubInformationText>
+                            <SubInformationTextNoHover>
                               {item.authorName}
-                            </SubInformationText>
-                            <SubInformationText>
+                            </SubInformationTextNoHover>
+                            <SubInformationTextNoHover>
                               {item.publishYear}
-                            </SubInformationText>
+                            </SubInformationTextNoHover>
 
                             {item.gwonchaTitle !== null && (
-                              <SubInformationText>
+                              <SubInformationText
+                                onClick={() => {
+                                  navigate('/menu-explore/book/all', {
+                                    state: {
+                                      lv1Id: item.seojiId,
+                                      lv1Title: item.seojiTitle,
+                                      currentId: item.gwonchaId,
+                                      lv2Title: item.gwonchaTitle,
+                                    },
+                                  });
+                                }}>
                                 {parseGwoncha(item.gwonchaTitle)}
                               </SubInformationText>
                             )}
 
                             {item.muncheTitle !== null && (
-                              <SubInformationText>
+                              <SubInformationText
+                                onClick={() => {
+                                  navigate('/menu-explore/book/all', {
+                                    state: {
+                                      lv1Id: item.seojiId,
+                                      lv1Title: item.seojiTitle,
+                                      lv2Id: item.gwonchaId,
+                                      lv2Title: item.gwonchaTitle,
+                                      currentId: item.muncheId,
+                                      lv3Title: item.muncheTitle,
+                                    },
+                                  });
+                                }}>
                                 {parseMunche(item.muncheTitle)}
                               </SubInformationText>
                             )}
 
                             {item.finalTitle !== null &&
                               parseTitle(item.finalTitle).map((el) => (
-                                <FinalTitle>
+                                <FinalTitle
+                                  onClick={() => {
+                                    navigate('/menu-explore/book/all', {
+                                      state: {
+                                        lv1Id: item.seojiId,
+                                        lv1Title: item.seojiTitle,
+                                        lv2Id: item.gwonchaId,
+                                        lv2Title: item.gwonchaTitle,
+                                        lv3Id: item.muncheId,
+                                        lv3Title: item.muncheTitle,
+                                        currentId: item.finalId,
+                                        lv4Title: item.finalTitle,
+                                      },
+                                    });
+                                  }}>
                                   &nbsp; {el.title}&nbsp;
                                   <FinalWonju>{el.wonju}</FinalWonju>
                                 </FinalTitle>
                               ))}
                           </SubInformation>
                           {item.contentPartition !== null && (
-                            <OriginalText>
+                            <OriginalText
+                              onClick={() => {
+                                navigate('/menu-explore/book/all', {
+                                  state: {
+                                    lv1Id: item.seojiId,
+                                    lv1Title: item.seojiTitle,
+                                    lv2Id: item.gwonchaId,
+                                    lv2Title: item.gwonchaTitle,
+                                    lv3Id: item.muncheId,
+                                    lv3Title: item.muncheTitle,
+                                    currentId: item.finalId,
+                                    lv4Title: item.finalTitle,
+                                  },
+                                });
+                              }}>
                               {parseSearchContent(item.contentPartition)}
                             </OriginalText>
                           )}
@@ -202,14 +296,24 @@ function ResultDataBlock() {
                     <ResultListPositioner>
                       <Id> {id++}. </Id>
                       <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
+                        <Title
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                currentId: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                              },
+                            });
+                          }}>
+                          {item.seojiTitle}
+                        </Title>
                         <SubInformation>
-                          <SubInformationText>
+                          <SubInformationTextNoHover>
                             {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationTextNoHover>
                             {item.publishYear}
-                          </SubInformationText>
+                          </SubInformationTextNoHover>
                         </SubInformation>
                       </ResultInformation>
                     </ResultListPositioner>
@@ -240,14 +344,24 @@ function ResultDataBlock() {
                     <ResultListPositioner>
                       <Id> {id++}. </Id>
                       <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
+                        <Title
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                currentId: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                              },
+                            });
+                          }}>
+                          {item.seojiTitle}
+                        </Title>
                         <SubInformation>
-                          <SubInformationText>
+                          <SubInformationTextNoHover>
                             {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationTextNoHover>
                             {item.publishYear}
-                          </SubInformationText>
+                          </SubInformationTextNoHover>
                         </SubInformation>
                       </ResultInformation>
                     </ResultListPositioner>
@@ -278,15 +392,35 @@ function ResultDataBlock() {
                     <ResultListPositioner>
                       <Id> {id++}. </Id>
                       <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
+                        <Title
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                currentId: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                              },
+                            });
+                          }}>
+                          {item.seojiTitle}
+                        </Title>
                         <SubInformation>
-                          <SubInformationText>
+                          <SubInformationTextNoHover>
                             {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationTextNoHover>
                             {item.publishYear}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationText
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv1Title: item.seojiTitle,
+                                  currentId: item.gwonchaId,
+                                  lv2Title: item.gwonchaTitle,
+                                },
+                              });
+                            }}>
                             {parseGwoncha(item.gwonchaTitle)}
                           </SubInformationText>
                         </SubInformation>
@@ -319,18 +453,50 @@ function ResultDataBlock() {
                     <ResultListPositioner>
                       <Id> {id++}. </Id>
                       <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
+                        <Title
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                currentId: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                              },
+                            });
+                          }}>
+                          {item.seojiTitle}
+                        </Title>
                         <SubInformation>
-                          <SubInformationText>
+                          <SubInformationTextNoHover>
                             {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationTextNoHover>
                             {item.publishYear}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationText
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv1Title: item.seojiTitle,
+                                  currentId: item.gwonchaId,
+                                  lv2Title: item.gwonchaTitle,
+                                },
+                              });
+                            }}>
                             {parseGwoncha(item.gwonchaTitle)}
                           </SubInformationText>
-                          <SubInformationText>
+                          <SubInformationText
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv1Title: item.seojiTitle,
+                                  lv2Id: item.gwonchaId,
+                                  lv2Title: item.gwonchaTitle,
+                                  currentId: item.muncheId,
+                                  lv3Title: item.muncheTitle,
+                                },
+                              });
+                            }}>
                             {parseMunche(item.muncheTitle)}
                           </SubInformationText>
                         </SubInformation>
@@ -363,28 +529,88 @@ function ResultDataBlock() {
                     <ResultListPositioner>
                       <Id> {id++}. </Id>
                       <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
+                        <Title
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                currentId: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                              },
+                            });
+                          }}>
+                          {item.seojiTitle}
+                        </Title>
                         <SubInformation>
-                          <SubInformationText>
+                          <SubInformationTextNoHover>
                             {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationTextNoHover>
                             {item.publishYear}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationText
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv1Title: item.seojiTitle,
+                                  currentId: item.gwonchaId,
+                                  lv2Title: item.gwonchaTitle,
+                                },
+                              });
+                            }}>
                             {parseGwoncha(item.gwonchaTitle)}
                           </SubInformationText>
-                          <SubInformationText>
+                          <SubInformationText
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv1Title: item.seojiTitle,
+                                  lv2Id: item.gwonchaId,
+                                  lv2Title: item.gwonchaTitle,
+                                  currentId: item.muncheId,
+                                  lv3Title: item.muncheTitle,
+                                },
+                              });
+                            }}>
                             {parseMunche(item.muncheTitle)}
                           </SubInformationText>
                           {parseTitle(item.finalTitle).map((el) => (
-                            <FinalTitle>
+                            <FinalTitle
+                              onClick={() => {
+                                navigate('/menu-explore/book/all', {
+                                  state: {
+                                    lv1Id: item.seojiId,
+                                    lv1Title: item.seojiTitle,
+                                    lv2Id: item.gwonchaId,
+                                    lv2Title: item.gwonchaTitle,
+                                    lv3Id: item.muncheId,
+                                    lv3Title: item.muncheTitle,
+                                    currentId: item.finalId,
+                                    lv4Title: item.finalTitle,
+                                  },
+                                });
+                              }}>
                               &nbsp; {el.title}&nbsp;
                               <FinalWonju>{el.wonju}</FinalWonju>
                             </FinalTitle>
                           ))}
                         </SubInformation>
-                        <OriginalText>
+                        <OriginalText
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                lv1Id: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                                lv2Id: item.gwonchaId,
+                                lv2Title: item.gwonchaTitle,
+                                lv3Id: item.muncheId,
+                                lv3Title: item.muncheTitle,
+                                currentId: item.finalId,
+                                lv4Title: item.finalTitle,
+                              },
+                            });
+                          }}>
                           {parseSearchContent(item.contentPartition)}
                         </OriginalText>
                       </ResultInformation>
@@ -416,29 +642,75 @@ function ResultDataBlock() {
                     <ResultListPositioner>
                       <Id> {id++}. </Id>
                       <ResultInformation>
-                        <Title>{item.seojiTitle}</Title>
+                        <Title
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                currentId: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                              },
+                            });
+                          }}>
+                          {item.seojiTitle}
+                        </Title>
                         <SubInformation>
-                          <SubInformationText>
+                          <SubInformationTextNoHover>
                             {item.authorName}
-                          </SubInformationText>
-                          <SubInformationText>
+                          </SubInformationTextNoHover>
+                          <SubInformationTextNoHover>
                             {item.publishYear}
-                          </SubInformationText>
+                          </SubInformationTextNoHover>
 
                           {item.gwonchaTitle && (
-                            <SubInformationText>
+                            <SubInformationText
+                              onClick={() => {
+                                navigate('/menu-explore/book/all', {
+                                  state: {
+                                    lv1Id: item.seojiId,
+                                    lv1Title: item.seojiTitle,
+                                    currentId: item.gwonchaId,
+                                    lv2Title: item.gwonchaTitle,
+                                  },
+                                });
+                              }}>
                               {parseGwoncha(item.gwonchaTitle)}
                             </SubInformationText>
                           )}
                           {item.muncheTitle && (
-                            <SubInformationText>
+                            <SubInformationText
+                              onClick={() => {
+                                navigate('/menu-explore/book/all', {
+                                  state: {
+                                    lv1Id: item.seojiId,
+                                    lv1Title: item.seojiTitle,
+                                    lv2Id: item.gwonchaId,
+                                    lv2Title: item.gwonchaTitle,
+                                    currentId: item.muncheId,
+                                    lv3Title: item.muncheTitle,
+                                  },
+                                });
+                              }}>
                               {parseMunche(item.muncheTitle)}
                             </SubInformationText>
                           )}
 
                           {item.finalTitle &&
                             parseTitle(item.finalTitle).map((el) => (
-                              <FinalTitle>
+                              <FinalTitle
+                                onClick={() => {
+                                  navigate('/menu-explore/book/all', {
+                                    state: {
+                                      lv1Id: item.seojiId,
+                                      lv1Title: item.seojiTitle,
+                                      lv2Id: item.gwonchaId,
+                                      lv2Title: item.gwonchaTitle,
+                                      lv3Id: item.muncheId,
+                                      lv3Title: item.muncheTitle,
+                                      currentId: item.finalId,
+                                      lv4Title: item.finalTitle,
+                                    },
+                                  });
+                                }}>
                                 &nbsp; {el.title}&nbsp;
                                 <FinalWonju>{el.wonju}</FinalWonju>
                               </FinalTitle>
@@ -491,13 +763,25 @@ function ResultDataBlock() {
                   <Id> {id++}. </Id>
 
                   <ResultInformation>
-                    <Title>{item.seojiTitle}</Title>
+                    <Title
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            id: item.seojiId,
+                            title: item.seojiTitle,
+                          },
+                        });
+                      }}>
+                      {item.seojiTitle}
+                    </Title>
 
                     <SubInformation>
-                      <SubInformationText>{item.authorName}</SubInformationText>
-                      <SubInformationText>
+                      <SubInformationTextNoHover>
+                        {item.authorName}
+                      </SubInformationTextNoHover>
+                      <SubInformationTextNoHover>
                         {item.publishYear}
-                      </SubInformationText>
+                      </SubInformationTextNoHover>
                     </SubInformation>
                   </ResultInformation>
                 </ResultListPositioner>
@@ -538,13 +822,25 @@ function ResultDataBlock() {
                   <Id> {id++}. </Id>
 
                   <ResultInformation>
-                    <Title>{item.seojiTitle}</Title>
+                    <Title
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            id: item.seojiId,
+                            title: item.seojiTitle,
+                          },
+                        });
+                      }}>
+                      {item.seojiTitle}
+                    </Title>
 
                     <SubInformation>
-                      <SubInformationText>{item.authorName}</SubInformationText>
-                      <SubInformationText>
+                      <SubInformationTextNoHover>
+                        {item.authorName}
+                      </SubInformationTextNoHover>
+                      <SubInformationTextNoHover>
                         {item.publishYear}
-                      </SubInformationText>
+                      </SubInformationTextNoHover>
                     </SubInformation>
                   </ResultInformation>
                 </ResultListPositioner>
@@ -585,14 +881,36 @@ function ResultDataBlock() {
                   <Id> {id++}. </Id>
 
                   <ResultInformation>
-                    <Title>{item.seojiTitle}</Title>
+                    <Title
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            id: item.seojiId,
+                            title: item.seojiTitle,
+                          },
+                        });
+                      }}>
+                      {item.seojiTitle}
+                    </Title>
 
                     <SubInformation>
-                      <SubInformationText>{item.authorName}</SubInformationText>
-                      <SubInformationText>
+                      <SubInformationTextNoHover>
+                        {item.authorName}
+                      </SubInformationTextNoHover>
+                      <SubInformationTextNoHover>
                         {item.publishYear}
-                      </SubInformationText>
-                      <SubInformationText>
+                      </SubInformationTextNoHover>
+                      <SubInformationText
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv1Title: item.seojiTitle,
+                              currentId: item.gwonchaId,
+                              lv2Title: item.gwonchaTitle,
+                            },
+                          });
+                        }}>
                         {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
                     </SubInformation>
@@ -635,17 +953,51 @@ function ResultDataBlock() {
                   <Id> {id++}. </Id>
 
                   <ResultInformation>
-                    <Title>{item.seojiTitle}</Title>
+                    <Title
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            id: item.seojiId,
+                            title: item.seojiTitle,
+                          },
+                        });
+                      }}>
+                      {item.seojiTitle}
+                    </Title>
 
                     <SubInformation>
-                      <SubInformationText>{item.authorName}</SubInformationText>
-                      <SubInformationText>
+                      <SubInformationTextNoHover>
+                        {item.authorName}
+                      </SubInformationTextNoHover>
+                      <SubInformationTextNoHover>
                         {item.publishYear}
-                      </SubInformationText>
-                      <SubInformationText>
+                      </SubInformationTextNoHover>
+                      <SubInformationText
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv1Title: item.seojiTitle,
+                              currentId: item.gwonchaId,
+                              lv2Title: item.gwonchaTitle,
+                            },
+                          });
+                        }}>
                         {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
-                      <SubInformationText>
+                      <SubInformationText
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv1Title: item.seojiTitle,
+                              lv2Id: item.gwonchaId,
+                              lv2Title: item.gwonchaTitle,
+                              currentId: item.muncheId,
+                              lv3Title: item.muncheTitle,
+                            },
+                          });
+                        }}>
                         {parseMunche(item.muncheTitle)}
                       </SubInformationText>
                     </SubInformation>
@@ -688,27 +1040,89 @@ function ResultDataBlock() {
                   <Id> {id++}. </Id>
 
                   <ResultInformation>
-                    <Title>{item.seojiTitle}</Title>
+                    <Title
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            id: item.seojiId,
+                            title: item.seojiTitle,
+                          },
+                        });
+                      }}>
+                      {item.seojiTitle}
+                    </Title>
 
                     <SubInformation>
-                      <SubInformationText>{item.authorName}</SubInformationText>
-                      <SubInformationText>
+                      <SubInformationTextNoHover>
+                        {item.authorName}
+                      </SubInformationTextNoHover>
+                      <SubInformationTextNoHover>
                         {item.publishYear}
-                      </SubInformationText>
-                      <SubInformationText>
+                      </SubInformationTextNoHover>
+                      <SubInformationText
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv1Title: item.seojiTitle,
+                              currentId: item.gwonchaId,
+                              lv2Title: item.gwonchaTitle,
+                            },
+                          });
+                        }}>
                         {parseGwoncha(item.gwonchaTitle)}
                       </SubInformationText>
-                      <SubInformationText>
+                      <SubInformationText
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv1Title: item.seojiTitle,
+                              lv2Id: item.gwonchaId,
+                              lv2Title: item.gwonchaTitle,
+                              currentId: item.muncheId,
+                              lv3Title: item.muncheTitle,
+                            },
+                          });
+                        }}>
                         {parseMunche(item.muncheTitle)}
                       </SubInformationText>
                       {parseTitle(item.finalTitle).map((el) => (
-                        <FinalTitle>
+                        <FinalTitle
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                lv1Id: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                                lv2Id: item.gwonchaId,
+                                lv2Title: item.gwonchaTitle,
+                                lv3Id: item.muncheId,
+                                lv3Title: item.muncheTitle,
+                                currentId: item.finalId,
+                                lv4Title: item.finalTitle,
+                              },
+                            });
+                          }}>
                           &nbsp; {el.title}&nbsp;
                           <FinalWonju>{el.wonju}</FinalWonju>
                         </FinalTitle>
                       ))}
                     </SubInformation>
-                    <OriginalText>
+                    <OriginalText
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            lv1Id: item.seojiId,
+                            lv1Title: item.seojiTitle,
+                            lv2Id: item.gwonchaId,
+                            lv2Title: item.gwonchaTitle,
+                            lv3Id: item.muncheId,
+                            lv3Title: item.muncheTitle,
+                            currentId: item.finalId,
+                            lv4Title: item.finalTitle,
+                          },
+                        });
+                      }}>
                       {parseSearchContent(item.contentPartition)}
                     </OriginalText>
                   </ResultInformation>
@@ -750,28 +1164,76 @@ function ResultDataBlock() {
                   <Id> {id++}. </Id>
 
                   <ResultInformation>
-                    <Title>{item.seojiTitle}</Title>
+                    <Title
+                      onClick={() => {
+                        navigate('/menu-explore/book/all', {
+                          state: {
+                            id: item.seojiId,
+                            title: item.seojiTitle,
+                          },
+                        });
+                      }}>
+                      {item.seojiTitle}
+                    </Title>
 
                     <SubInformation>
-                      <SubInformationText>{item.authorName}</SubInformationText>
-                      <SubInformationText>
+                      <SubInformationTextNoHover>
+                        {item.authorName}
+                      </SubInformationTextNoHover>
+                      <SubInformationTextNoHover>
                         {item.publishYear}
-                      </SubInformationText>
+                      </SubInformationTextNoHover>
 
                       {item.gwonchaTitle && (
-                        <SubInformationText>
+                        <SubInformationText
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                lv1Id: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                                currentId: item.gwonchaId,
+                                lv2Title: item.gwonchaTitle,
+                              },
+                            });
+                          }}>
                           {parseGwoncha(item.gwonchaTitle)}
                         </SubInformationText>
                       )}
                       {item.muncheTitle && (
-                        <SubInformationText>
+                        <SubInformationText
+                          onClick={() => {
+                            navigate('/menu-explore/book/all', {
+                              state: {
+                                lv1Id: item.seojiId,
+                                lv1Title: item.seojiTitle,
+                                lv2Id: item.gwonchaId,
+                                lv2Title: item.gwonchaTitle,
+                                currentId: item.muncheId,
+                                lv3Title: item.muncheTitle,
+                              },
+                            });
+                          }}>
                           {parseMunche(item.muncheTitle)}
                         </SubInformationText>
                       )}
 
                       {item.finalTitle &&
                         parseTitle(item.finalTitle).map((el) => (
-                          <FinalTitle>
+                          <FinalTitle
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv1Title: item.seojiTitle,
+                                  lv2Id: item.gwonchaId,
+                                  lv2Title: item.gwonchaTitle,
+                                  lv3Id: item.muncheId,
+                                  lv3Title: item.muncheTitle,
+                                  currentId: item.finalId,
+                                  lv4Title: item.finalTitle,
+                                },
+                              });
+                            }}>
                             &nbsp; {el.title}&nbsp;
                             <FinalWonju>{el.wonju}</FinalWonju>
                           </FinalTitle>

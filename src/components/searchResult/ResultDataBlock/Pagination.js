@@ -47,7 +47,7 @@ const NumberButton = styled.button`
 function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
   // Math.ceil: 그것보다 큰 수를 반환 (?)
   const totalPageNumber = Math.ceil(totalContent / limitPage);
-
+  
   return (
     <>
       <PageNumberOptionBlock>

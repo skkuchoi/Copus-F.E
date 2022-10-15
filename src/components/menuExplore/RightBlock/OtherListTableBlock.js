@@ -9,6 +9,7 @@ import {
   muncheContext,
   finalContext,
 } from '../../shared/ContentLayout';
+import { useLocation } from 'react-router-dom';
 
 const Positioner = styled.div`
   text-align: left;
@@ -61,6 +62,10 @@ function OtherListTableBlock({
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
 
+  const { state } = useLocation();
+  if( state !== null ) 
+  console.log('state:', state);
+  
   return (
     <Positioner
       marginLeft={marginLeft}

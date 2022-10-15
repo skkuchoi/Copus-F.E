@@ -66,9 +66,9 @@ function CategoryListBlock({
   // these link is for case 'total', not setting yet
   const link4Total = `/search-result/total/${keyword}`;
 
-  console.log('filter:', filter);
+  //console.log('filter:', filter);
   const totalDetailFilter = useContext(totalFilter);
-  console.log('totalDetailFilter', totalDetailFilter.totalDetailFilter);
+  //console.log('totalDetailFilter', totalDetailFilter.totalDetailFilter);
   if (filter === 'total')
     return (
       <CategoryListPositioner>

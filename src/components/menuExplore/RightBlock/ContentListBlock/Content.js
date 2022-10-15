@@ -169,35 +169,38 @@ export default function Content() {
         </CopyBlock>
 
         <ContentText>
-          {parseContent(finalDataJsonDatas.data.finalData.content).map(
-            (item) => (
-              <>
-                {item.contents && (
-                  <ParagraphContentPositioner>
-                    {item.contents.map((content) => (
-                      <ParagraphContent
-                        marginLeft={item.indent}
-                        key={content.content}>
-                        {content.content}
+          {parseContent(
+            finalDataJsonDatas.data.finalData.content,
+            finalDataJsonDatas.data.finalData.annotation,
+          ).map((item) => (
+            <>
+              {item.contents && (
+                <ParagraphContentPositioner>
+                  {item.contents.map((content) => (
+                    <ParagraphContent
+                      marginLeft={item.indent}
+                      key={content.content}>
+                      {content.content}
+                      {content.wonju && (
                         <ParagraphWonju> {content.wonju} </ParagraphWonju>
-                      </ParagraphContent>
-                    ))}
-                  </ParagraphContentPositioner>
-                )}
+                      )}
+                    </ParagraphContent>
+                  ))}
+                </ParagraphContentPositioner>
+              )}
 
-                {item.titles && (
-                  <ParagraphTitlePositioner>
-                    {item.titles.map((title) => (
-                      <ParagraphTitle key={title.title}>
-                        {title.title}
-                        <ParagraphWonju> {title.wonju} </ParagraphWonju>
-                      </ParagraphTitle>
-                    ))}
-                  </ParagraphTitlePositioner>
-                )}
-              </>
-            ),
-          )}
+              {item.titles && (
+                <ParagraphTitlePositioner>
+                  {item.titles.map((title) => (
+                    <ParagraphTitle key={title.title}>
+                      {title.title}
+                      <ParagraphWonju> {title.wonju} </ParagraphWonju>
+                    </ParagraphTitle>
+                  ))}
+                </ParagraphTitlePositioner>
+              )}
+            </>
+          ))}
         </ContentText>
         <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
       </ContentPositioner>

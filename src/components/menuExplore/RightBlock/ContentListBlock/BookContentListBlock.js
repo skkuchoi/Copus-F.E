@@ -1,15 +1,24 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
 
 import useAsync from '../../../../hooks/useAsync';
 import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
 
-import { authorContext } from '../../../shared/ContentLayout';
+import {
+  authorContext,
+  currentFocusTitleContext,
+  gwonchaContext,
+  seojiContext,
+  muncheContext,
+  finalContext,
+} from '../../../shared/ContentLayout';
 import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import parseAuthor from '../../../../utils/parseAuthor';
 import Loading from '../../../shared/Loading';
+import calculateIdLevel from '../../../../utils/calculateIdLevel';
+import { leftBlockDepth } from '../../../../pages/menuExplore/MenuExplore';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -58,11 +67,58 @@ function haejaePopUp(lv1Id) {
 }
 
 function BookContentListBlock() {
-  let id = 1;
-
   const consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
+  const depthContext = useContext(leftBlockDepth);
+  const currentFocusTitle = useContext(currentFocusTitleContext);
+  const clickSeojiContext = useContext(seojiContext);
   const clickAuthorContext = useContext(authorContext);
+  const clickGwonchaContext = useContext(gwonchaContext);
+  const clickMuncheContext = useContext(muncheContext);
+  const clickFinalContext = useContext(finalContext);
+
+  const { state } = useLocation();
+  if (state !== null) {
+    console.log(state);
+    const count = calculateIdLevel(state.currentId);
+    if (count === 3) {
+      depthContext.setDepth(1);
+      clickSeojiContext.setClickSeoji(state.currentId);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+    } else if (count === 4) {
+      depthContext.setDepth(1);
+      clickSeojiContext.setClickSeoji(state.lv1Id);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      depthContext.setDepth(2);
+      clickGwonchaContext.setClickGwoncha(state.currentId);
+      currentFocusTitle.setCurrentFocusTitle(state.lv2Title);
+    } else if (count === 5) {
+      depthContext.setDepth(1);
+      clickSeojiContext.setClickSeoji(state.lv1Id);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      depthContext.setDepth(2);
+      clickGwonchaContext.setClickGwoncha(state.lv2Id);
+      currentFocusTitle.setCurrentFocusTitle(state.lv2Title);
+      depthContext.setDepth(3);
+      clickMuncheContext.setClickMunche(state.currentId);
+      currentFocusTitle.setCurrentFocusTitle(state.lv3Title);
+    } else if (count === 6) {
+      depthContext.setDepth(1);
+      clickSeojiContext.setClickSeoji(state.lv1Id);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      depthContext.setDepth(2);
+      clickGwonchaContext.setClickGwoncha(state.lv2Id);
+      currentFocusTitle.setCurrentFocusTitle(state.lv2Title);
+      depthContext.setDepth(3);
+      clickMuncheContext.setClickMunche(state.lv3Id);
+      currentFocusTitle.setCurrentFocusTitle(state.lv3Title);
+      depthContext.setDepth(4);
+      clickFinalContext.setClickFinal(state.currentId);
+      currentFocusTitle.setCurrentFocusTitle(state.lv4Title);
+    }
+  }
+
+  let id = 1;
 
   // seojiKeyword 세팅
   let seojiKeyword;
@@ -72,9 +128,10 @@ function BookContentListBlock() {
   else if (filter === 'author' && consonant)
     seojiKeyword = 'authorNameConsonant';
   else seojiKeyword = 'authorName';
-  console.log(clickAuthorContext.clickAuthor);
+  //console.log(clickAuthorContext.clickAuthor);
   if (clickAuthorContext.authorValue)
     consonant = parseAuthor(clickAuthorContext.authorValue);
+
   const [seojiJsonDatas] = useAsync(
     () => getRightSeoji(filter, seojiKeyword, consonant),
     [consonant, clickAuthorContext.authorValue],

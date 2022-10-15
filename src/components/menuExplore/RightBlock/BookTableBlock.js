@@ -28,6 +28,7 @@ function BookTableBlock({
   clickId = '',
   authorName = '',
   currentTitle = '',
+  from = '',
   children,
 }) {
   const depthContext = useContext(leftBlockDepth);
@@ -35,6 +36,13 @@ function BookTableBlock({
   const clickSeojiContext = useContext(seojiContext);
   const clickAuthorContext = useContext(authorContext);
   //console.log('전달받은 clickId: ', clickId);
+  if (from === 'search') {
+    depthContext.setDepth(1);
+    clickSeojiContext.setClickSeoji(clickId);
+    //console.log('seojiContext 변경됐어: ', clickSeojiContext.clickSeoji);
+    currentFocusTitle.setCurrentFocusTitle(currentTitle);
+    return;
+  }
   return (
     <ContentListTablePositioner
       border={border}

@@ -1,4 +1,4 @@
-export default function parseContent(content) {
+export default function parseContent(content, annotation) {
   // 부모태그인 내용 삭제
   if (content.includes('내용')) {
     content = content.replace('<내용>', '');
@@ -98,13 +98,19 @@ export default function parseContent(content) {
         paraContent = paraContent.substring(wonjuEnd + 5);
       }
       curParaContentNWonju.push({
-        title: titleArray[titleArray.length - 1].title,
+        content: titleArray[titleArray.length - 1].title,
         wonju: titleArray[titleArray.length - 1].wonju,
       });
     }
     // paracontent에서 원주 추출 끝
     // paraArray's content 끝
 
+    if (curParaContentNWonju.length === 0) {
+      curParaContentNWonju.push({
+        content: paraContent,
+        wonju: '',
+      });
+    }
     // paraArray에 담기 시작
     if (IsTitle === 1) {
       paraArray.push({
@@ -117,7 +123,7 @@ export default function parseContent(content) {
       paraArray.push({
         indent: indent,
         align: align,
-        titles: curParaContentNWonju,
+        itle: curParaContentNWonju,
       });
     }
 
@@ -154,50 +160,4 @@ export default function parseContent(content) {
 
   // 단락 & 단락제목 끝!!!!!!!
   return paraArray;
-
-  // 검색 parse content 따로 파일 빼자. 
-  // if (content !== null) {
-  //   // 부모태그인 내용 삭제
-  //   if (content.includes('내용')) {
-  //     content = content.replace('<내용>', '');
-  //     content = content.replace('</내용>', '');
-  //   }
-
-  //   // 공백 모두 삭제
-  //   while (content.includes(' ')) {
-  //     content = content.replace(' ', '');
-  //   }
-
-  //   // 페이지 태그는 1개 이상일수도 있다.
-  //   while (content.includes('페이지')) {
-  //     let before = content.substring(0, content.indexOf('<페'));
-  //     let after = content
-  //       .substring(content.indexOf('<페'))
-  //       .substring(content.substring(content.indexOf('<페')).indexOf('/>') + 2);
-  //     content = before.concat(after);
-  //   }
-
-  //   // line은 여러개
-  //   while (content.includes('line')) {
-  //     content = content.replace('<line/>', '');
-  //   }
-
-  //   // 원주
-  //   while (content.includes('<원주>')) {
-  //     content = content.replace('<원주>', ' ');
-  //   }
-  //   // 원주
-  //   while (content.includes('</원주>')) {
-  //     content = content.replace('</원주>', ' ');
-  //   }
-
-  //   //단락
-  //   if (content.includes('단락')) {
-  //     if (content.indexOf('</단락') >= 0)
-  //       content = content.substring(29, content.indexOf('</단락'));
-  //     else content = content.substring(29);
-  //   }
-
-  //   return content;
-  // }
 }
