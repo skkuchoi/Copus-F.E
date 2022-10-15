@@ -63,19 +63,15 @@ function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
         />
         {pageNumbers.map((number) => (
           <a href="#top">
-            <NumberButton
-              key={number}
-              onClick={() => setCurrentPage(number)}
-              aria-current={currentPage === i + 1 ? 'page' : null}>
-              {i + 1}
+            <NumberButton key={number} onClick={() => setCurrentPage(number)}>
+              {number}
             </NumberButton>
           </a>
         ))}
         <MdArrowRight
           size="40"
           className="arrow-icon"
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPageNumber}></MdArrowRight>
+          onClick={() => setCurrentPage(currentPage + 1)}></MdArrowRight>
       </PageNumberOptionBlock>
     </>
   );
