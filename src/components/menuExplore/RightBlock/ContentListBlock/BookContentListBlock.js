@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
-
 import useAsync from '../../../../hooks/useAsync';
 import getRightSeoji from '../../../../api/explore/rightblock/getRightSeoji';
 
 import { authorContext } from '../../../shared/ContentLayout';
 import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import parseAuthor from '../../../../utils/parseAuthor';
+import Pagination from '../../../searchResult/ResultDataBlock/Pagination';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -63,6 +63,13 @@ function BookContentListBlock() {
   const filter = useContext(selectedFilter);
   const clickAuthorContext = useContext(authorContext);
 
+  const [limitPage, setLimitPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
+  const offset = (currentPage - 1) * limitPage;
+  useEffect(() => {
+    setCurrentPage(1);
+  }, []);
+
   // seojiKeyword 세팅
   let seojiKeyword;
   if (clickAuthorContext.clickAuthor) seojiKeyword = 'authorName';
@@ -83,7 +90,7 @@ function BookContentListBlock() {
     return <div>로딩</div>;
   return (
     <>
-      {seojiJsonDatas.data.datas.map((item) => (
+      {seojiJsonDatas.slice(offset, offset + limitPage).map((item) => (
         <BookTableBlock
           bgColor="#edeaea"
           key={item.seojiId}
@@ -112,6 +119,13 @@ function BookContentListBlock() {
           </Buga>
         </BookTableBlock>
       ))}
+
+      <Pagination
+        totalContent={seojiJsonDatas.length}
+        limitPage={limitPage}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </>
   );
 }
