@@ -103,7 +103,6 @@ const FinalTitle = styled.span`
 const FinalWonju = styled.span`
   font-size: 12px;
   margin: 0;
-  
 `;
 
 function ResultDataBlock() {
@@ -176,8 +175,7 @@ function ResultDataBlock() {
                             onClick={() => {
                               navigate('/menu-explore/book/all', {
                                 state: {
-                                  id: item.seojiId,
-                                  title: item.seojiTitle,
+                                  currentId: item.seojiId,
                                 },
                               });
                             }}>
@@ -197,9 +195,7 @@ function ResultDataBlock() {
                                   navigate('/menu-explore/book/all', {
                                     state: {
                                       lv1Id: item.seojiId,
-                                      lv1Title: item.seojiTitle,
                                       currentId: item.gwonchaId,
-                                      lv2Title: item.gwonchaTitle,
                                     },
                                   });
                                 }}>
@@ -213,11 +209,8 @@ function ResultDataBlock() {
                                   navigate('/menu-explore/book/all', {
                                     state: {
                                       lv1Id: item.seojiId,
-                                      lv1Title: item.seojiTitle,
                                       lv2Id: item.gwonchaId,
-                                      lv2Title: item.gwonchaTitle,
                                       currentId: item.muncheId,
-                                      lv3Title: item.muncheTitle,
                                     },
                                   });
                                 }}>
@@ -232,13 +225,9 @@ function ResultDataBlock() {
                                     navigate('/menu-explore/book/all', {
                                       state: {
                                         lv1Id: item.seojiId,
-                                        lv1Title: item.seojiTitle,
                                         lv2Id: item.gwonchaId,
-                                        lv2Title: item.gwonchaTitle,
                                         lv3Id: item.muncheId,
-                                        lv3Title: item.muncheTitle,
                                         currentId: item.finalId,
-                                        lv4Title: item.finalTitle,
                                       },
                                     });
                                   }}>
@@ -253,13 +242,9 @@ function ResultDataBlock() {
                                 navigate('/menu-explore/book/all', {
                                   state: {
                                     lv1Id: item.seojiId,
-                                    lv1Title: item.seojiTitle,
                                     lv2Id: item.gwonchaId,
-                                    lv2Title: item.gwonchaTitle,
                                     lv3Id: item.muncheId,
-                                    lv3Title: item.muncheTitle,
                                     currentId: item.finalId,
-                                    lv4Title: item.finalTitle,
                                   },
                                 });
                               }}>
@@ -301,7 +286,6 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 currentId: item.seojiId,
-                                lv1Title: item.seojiTitle,
                               },
                             });
                           }}>
@@ -349,7 +333,6 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 currentId: item.seojiId,
-                                lv1Title: item.seojiTitle,
                               },
                             });
                           }}>
@@ -397,7 +380,6 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 currentId: item.seojiId,
-                                lv1Title: item.seojiTitle,
                               },
                             });
                           }}>
@@ -415,9 +397,7 @@ function ResultDataBlock() {
                               navigate('/menu-explore/book/all', {
                                 state: {
                                   lv1Id: item.seojiId,
-                                  lv1Title: item.seojiTitle,
                                   currentId: item.gwonchaId,
-                                  lv2Title: item.gwonchaTitle,
                                 },
                               });
                             }}>
@@ -458,7 +438,6 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 currentId: item.seojiId,
-                                lv1Title: item.seojiTitle,
                               },
                             });
                           }}>
@@ -476,9 +455,7 @@ function ResultDataBlock() {
                               navigate('/menu-explore/book/all', {
                                 state: {
                                   lv1Id: item.seojiId,
-                                  lv1Title: item.seojiTitle,
                                   currentId: item.gwonchaId,
-                                  lv2Title: item.gwonchaTitle,
                                 },
                               });
                             }}>
@@ -489,11 +466,8 @@ function ResultDataBlock() {
                               navigate('/menu-explore/book/all', {
                                 state: {
                                   lv1Id: item.seojiId,
-                                  lv1Title: item.seojiTitle,
                                   lv2Id: item.gwonchaId,
-                                  lv2Title: item.gwonchaTitle,
                                   currentId: item.muncheId,
-                                  lv3Title: item.muncheTitle,
                                 },
                               });
                             }}>
@@ -534,7 +508,6 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 currentId: item.seojiId,
-                                lv1Title: item.seojiTitle,
                               },
                             });
                           }}>
@@ -552,9 +525,7 @@ function ResultDataBlock() {
                               navigate('/menu-explore/book/all', {
                                 state: {
                                   lv1Id: item.seojiId,
-                                  lv1Title: item.seojiTitle,
                                   currentId: item.gwonchaId,
-                                  lv2Title: item.gwonchaTitle,
                                 },
                               });
                             }}>
@@ -565,11 +536,8 @@ function ResultDataBlock() {
                               navigate('/menu-explore/book/all', {
                                 state: {
                                   lv1Id: item.seojiId,
-                                  lv1Title: item.seojiTitle,
                                   lv2Id: item.gwonchaId,
-                                  lv2Title: item.gwonchaTitle,
                                   currentId: item.muncheId,
-                                  lv3Title: item.muncheTitle,
                                 },
                               });
                             }}>
@@ -581,13 +549,9 @@ function ResultDataBlock() {
                                 navigate('/menu-explore/book/all', {
                                   state: {
                                     lv1Id: item.seojiId,
-                                    lv1Title: item.seojiTitle,
                                     lv2Id: item.gwonchaId,
-                                    lv2Title: item.gwonchaTitle,
                                     lv3Id: item.muncheId,
-                                    lv3Title: item.muncheTitle,
                                     currentId: item.finalId,
-                                    lv4Title: item.finalTitle,
                                   },
                                 });
                               }}>
@@ -601,13 +565,9 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 lv1Id: item.seojiId,
-                                lv1Title: item.seojiTitle,
                                 lv2Id: item.gwonchaId,
-                                lv2Title: item.gwonchaTitle,
                                 lv3Id: item.muncheId,
-                                lv3Title: item.muncheTitle,
                                 currentId: item.finalId,
-                                lv4Title: item.finalTitle,
                               },
                             });
                           }}>
@@ -647,7 +607,6 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 currentId: item.seojiId,
-                                lv1Title: item.seojiTitle,
                               },
                             });
                           }}>
@@ -667,9 +626,7 @@ function ResultDataBlock() {
                                 navigate('/menu-explore/book/all', {
                                   state: {
                                     lv1Id: item.seojiId,
-                                    lv1Title: item.seojiTitle,
                                     currentId: item.gwonchaId,
-                                    lv2Title: item.gwonchaTitle,
                                   },
                                 });
                               }}>
@@ -682,11 +639,8 @@ function ResultDataBlock() {
                                 navigate('/menu-explore/book/all', {
                                   state: {
                                     lv1Id: item.seojiId,
-                                    lv1Title: item.seojiTitle,
                                     lv2Id: item.gwonchaId,
-                                    lv2Title: item.gwonchaTitle,
                                     currentId: item.muncheId,
-                                    lv3Title: item.muncheTitle,
                                   },
                                 });
                               }}>
@@ -701,13 +655,9 @@ function ResultDataBlock() {
                                   navigate('/menu-explore/book/all', {
                                     state: {
                                       lv1Id: item.seojiId,
-                                      lv1Title: item.seojiTitle,
                                       lv2Id: item.gwonchaId,
-                                      lv2Title: item.gwonchaTitle,
                                       lv3Id: item.muncheId,
-                                      lv3Title: item.muncheTitle,
                                       currentId: item.finalId,
-                                      lv4Title: item.finalTitle,
                                     },
                                   });
                                 }}>
@@ -767,8 +717,7 @@ function ResultDataBlock() {
                       onClick={() => {
                         navigate('/menu-explore/book/all', {
                           state: {
-                            id: item.seojiId,
-                            title: item.seojiTitle,
+                            currentId: item.seojiId,
                           },
                         });
                       }}>
@@ -826,8 +775,7 @@ function ResultDataBlock() {
                       onClick={() => {
                         navigate('/menu-explore/book/all', {
                           state: {
-                            id: item.seojiId,
-                            title: item.seojiTitle,
+                            currentId: item.seojiId,
                           },
                         });
                       }}>
@@ -885,8 +833,7 @@ function ResultDataBlock() {
                       onClick={() => {
                         navigate('/menu-explore/book/all', {
                           state: {
-                            id: item.seojiId,
-                            title: item.seojiTitle,
+                            currentId: item.seojiId,
                           },
                         });
                       }}>
@@ -905,9 +852,7 @@ function ResultDataBlock() {
                           navigate('/menu-explore/book/all', {
                             state: {
                               lv1Id: item.seojiId,
-                              lv1Title: item.seojiTitle,
                               currentId: item.gwonchaId,
-                              lv2Title: item.gwonchaTitle,
                             },
                           });
                         }}>
@@ -957,8 +902,7 @@ function ResultDataBlock() {
                       onClick={() => {
                         navigate('/menu-explore/book/all', {
                           state: {
-                            id: item.seojiId,
-                            title: item.seojiTitle,
+                            currentId: item.seojiId,
                           },
                         });
                       }}>
@@ -977,9 +921,7 @@ function ResultDataBlock() {
                           navigate('/menu-explore/book/all', {
                             state: {
                               lv1Id: item.seojiId,
-                              lv1Title: item.seojiTitle,
                               currentId: item.gwonchaId,
-                              lv2Title: item.gwonchaTitle,
                             },
                           });
                         }}>
@@ -990,11 +932,9 @@ function ResultDataBlock() {
                           navigate('/menu-explore/book/all', {
                             state: {
                               lv1Id: item.seojiId,
-                              lv1Title: item.seojiTitle,
+
                               lv2Id: item.gwonchaId,
-                              lv2Title: item.gwonchaTitle,
                               currentId: item.muncheId,
-                              lv3Title: item.muncheTitle,
                             },
                           });
                         }}>
@@ -1045,7 +985,6 @@ function ResultDataBlock() {
                         navigate('/menu-explore/book/all', {
                           state: {
                             id: item.seojiId,
-                            title: item.seojiTitle,
                           },
                         });
                       }}>
@@ -1064,9 +1003,7 @@ function ResultDataBlock() {
                           navigate('/menu-explore/book/all', {
                             state: {
                               lv1Id: item.seojiId,
-                              lv1Title: item.seojiTitle,
                               currentId: item.gwonchaId,
-                              lv2Title: item.gwonchaTitle,
                             },
                           });
                         }}>
@@ -1077,11 +1014,9 @@ function ResultDataBlock() {
                           navigate('/menu-explore/book/all', {
                             state: {
                               lv1Id: item.seojiId,
-                              lv1Title: item.seojiTitle,
+
                               lv2Id: item.gwonchaId,
-                              lv2Title: item.gwonchaTitle,
                               currentId: item.muncheId,
-                              lv3Title: item.muncheTitle,
                             },
                           });
                         }}>
@@ -1093,13 +1028,10 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 lv1Id: item.seojiId,
-                                lv1Title: item.seojiTitle,
                                 lv2Id: item.gwonchaId,
-                                lv2Title: item.gwonchaTitle,
                                 lv3Id: item.muncheId,
-                                lv3Title: item.muncheTitle,
+
                                 currentId: item.finalId,
-                                lv4Title: item.finalTitle,
                               },
                             });
                           }}>
@@ -1113,13 +1045,10 @@ function ResultDataBlock() {
                         navigate('/menu-explore/book/all', {
                           state: {
                             lv1Id: item.seojiId,
-                            lv1Title: item.seojiTitle,
                             lv2Id: item.gwonchaId,
-                            lv2Title: item.gwonchaTitle,
                             lv3Id: item.muncheId,
-                            lv3Title: item.muncheTitle,
+
                             currentId: item.finalId,
-                            lv4Title: item.finalTitle,
                           },
                         });
                       }}>
@@ -1169,7 +1098,6 @@ function ResultDataBlock() {
                         navigate('/menu-explore/book/all', {
                           state: {
                             id: item.seojiId,
-                            title: item.seojiTitle,
                           },
                         });
                       }}>
@@ -1190,9 +1118,7 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 lv1Id: item.seojiId,
-                                lv1Title: item.seojiTitle,
                                 currentId: item.gwonchaId,
-                                lv2Title: item.gwonchaTitle,
                               },
                             });
                           }}>
@@ -1205,11 +1131,9 @@ function ResultDataBlock() {
                             navigate('/menu-explore/book/all', {
                               state: {
                                 lv1Id: item.seojiId,
-                                lv1Title: item.seojiTitle,
+
                                 lv2Id: item.gwonchaId,
-                                lv2Title: item.gwonchaTitle,
                                 currentId: item.muncheId,
-                                lv3Title: item.muncheTitle,
                               },
                             });
                           }}>
@@ -1224,13 +1148,10 @@ function ResultDataBlock() {
                               navigate('/menu-explore/book/all', {
                                 state: {
                                   lv1Id: item.seojiId,
-                                  lv1Title: item.seojiTitle,
                                   lv2Id: item.gwonchaId,
-                                  lv2Title: item.gwonchaTitle,
                                   lv3Id: item.muncheId,
-                                  lv3Title: item.muncheTitle,
+
                                   currentId: item.finalId,
-                                  lv4Title: item.finalTitle,
                                 },
                               });
                             }}>

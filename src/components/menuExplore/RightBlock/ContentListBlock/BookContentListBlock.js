@@ -83,37 +83,37 @@ function BookContentListBlock() {
     if (count === 3) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.currentId);
-      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      currentFocusTitle.setCurrentFocusTitle(state.currentId);
     } else if (count === 4) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.lv1Id);
-      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Id);
       depthContext.setDepth(2);
       clickGwonchaContext.setClickGwoncha(state.currentId);
-      currentFocusTitle.setCurrentFocusTitle(state.lv2Title);
+      currentFocusTitle.setCurrentFocusTitle(state.currentId);
     } else if (count === 5) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.lv1Id);
-      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Id);
       depthContext.setDepth(2);
       clickGwonchaContext.setClickGwoncha(state.lv2Id);
-      currentFocusTitle.setCurrentFocusTitle(state.lv2Title);
+      currentFocusTitle.setCurrentFocusTitle(state.lv2Id);
       depthContext.setDepth(3);
       clickMuncheContext.setClickMunche(state.currentId);
-      currentFocusTitle.setCurrentFocusTitle(state.lv3Title);
+      currentFocusTitle.setCurrentFocusTitle(state.currentId);
     } else if (count === 6) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.lv1Id);
-      currentFocusTitle.setCurrentFocusTitle(state.lv1Title);
+      currentFocusTitle.setCurrentFocusTitle(state.lv1Id);
       depthContext.setDepth(2);
       clickGwonchaContext.setClickGwoncha(state.lv2Id);
-      currentFocusTitle.setCurrentFocusTitle(state.lv2Title);
+      currentFocusTitle.setCurrentFocusTitle(state.lv2Id);
       depthContext.setDepth(3);
       clickMuncheContext.setClickMunche(state.lv3Id);
-      currentFocusTitle.setCurrentFocusTitle(state.lv3Title);
+      currentFocusTitle.setCurrentFocusTitle(state.lv3Id);
       depthContext.setDepth(4);
       clickFinalContext.setClickFinal(state.currentId);
-      currentFocusTitle.setCurrentFocusTitle(state.lv4Title);
+      currentFocusTitle.setCurrentFocusTitle(state.currentId);
     }
   }
 
@@ -127,7 +127,7 @@ function BookContentListBlock() {
   else if (filter === 'author' && consonant)
     seojiKeyword = 'authorNameConsonant';
   else seojiKeyword = 'authorName';
-  
+
   if (clickAuthorContext.authorValue)
     consonant = parseAuthor(clickAuthorContext.authorValue);
 
