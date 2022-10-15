@@ -67,7 +67,7 @@ function haejaePopUp(lv1Id) {
 }
 
 function BookContentListBlock() {
-  const consonant = useContext(selectedConsonant);
+  let consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
   const depthContext = useContext(leftBlockDepth);
   const currentFocusTitle = useContext(currentFocusTitleContext);
@@ -79,7 +79,6 @@ function BookContentListBlock() {
 
   const { state } = useLocation();
   if (state !== null) {
-    console.log(state);
     const count = calculateIdLevel(state.currentId);
     if (count === 3) {
       depthContext.setDepth(1);
@@ -128,7 +127,7 @@ function BookContentListBlock() {
   else if (filter === 'author' && consonant)
     seojiKeyword = 'authorNameConsonant';
   else seojiKeyword = 'authorName';
-  //console.log(clickAuthorContext.clickAuthor);
+  
   if (clickAuthorContext.authorValue)
     consonant = parseAuthor(clickAuthorContext.authorValue);
 

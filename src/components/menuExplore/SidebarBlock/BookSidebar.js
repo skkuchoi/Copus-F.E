@@ -216,10 +216,6 @@ function BookSidebar() {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
 
-  useEffect(() => {
-    console.log('currentFocusTitle : ', currentFocusTitle.currentFocusTitle);
-  }, [currentFocusTitle.currentFocusTitle]);
-
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||
@@ -239,12 +235,12 @@ function BookSidebar() {
             <HiOutlineDocumentText className="list-icon" />
             <ListLi
               onClick={(target) => {
-                currentFocusTitle.setCurrentFocusTitle(seoji.childTitle);
+                currentFocusTitle.setCurrentFocusTitle(seoji.childId);
                 clickSeojiContext.setClickSeoji(seoji.childId);
                 depthContext.setDepth(1);
               }}
               className={
-                currentFocusTitle.currentFocusTitle === seoji.childTitle
+                currentFocusTitle.currentFocusTitle === seoji.childId
                   ? 'focus'
                   : ''
               }>
@@ -262,13 +258,10 @@ function BookSidebar() {
                       onClick={(target) => {
                         clickGwonchaContext.setClickGwoncha(gwoncha.childId);
                         depthContext.setDepth(2);
-                        currentFocusTitle.setCurrentFocusTitle(
-                          gwoncha.childTitle,
-                        );
+                        currentFocusTitle.setCurrentFocusTitle(gwoncha.childId);
                       }}
                       className={
-                        currentFocusTitle.currentFocusTitle ===
-                        gwoncha.childTitle
+                        currentFocusTitle.currentFocusTitle === gwoncha.childId
                           ? 'focus'
                           : ''
                       }>
@@ -289,12 +282,12 @@ function BookSidebar() {
                                 );
                                 depthContext.setDepth(3);
                                 currentFocusTitle.setCurrentFocusTitle(
-                                  munche.childTitle,
+                                  munche.childId,
                                 );
                               }}
                               className={
                                 currentFocusTitle.currentFocusTitle ===
-                                munche.childTitle
+                                munche.childId
                                   ? 'focus'
                                   : ''
                               }>
@@ -311,7 +304,7 @@ function BookSidebar() {
                                     onClick={(target) => {
                                       depthContext.setDepth(4);
                                       currentFocusTitle.setCurrentFocusTitle(
-                                        final.childTitle,
+                                        final.childId,
                                       );
                                       clickFinalContext.setClickFinal(
                                         final.childId,
@@ -319,7 +312,7 @@ function BookSidebar() {
                                     }}
                                     className={
                                       currentFocusTitle.currentFocusTitle ===
-                                      final.childTitle
+                                      final.childId
                                         ? 'focus'
                                         : ''
                                     }>

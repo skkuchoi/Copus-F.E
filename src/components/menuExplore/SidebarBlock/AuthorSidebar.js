@@ -13,6 +13,7 @@ import getLeftFinal from '../../../api/explore/leftblock/getLeftFinal';
 import { selectedConsonant, selectedFilter } from '../SortBlock/SortBlock';
 import { leftBlockDepth } from '../../../pages/menuExplore/MenuExplore';
 import {
+  currentFocusTitleContext,
   authorContext,
   seojiContext,
   gwonchaContext,
@@ -49,13 +50,19 @@ const ListItemPositioner = styled.div`
   flex-direction: row;
   align-items: left;
   padding: 5px 10px;
-  width: 500px;
+  width: 1400px;
   .list-icon {
     color: gray;
     margin-right: 3px;
     position: relative;
     top: 4px;
     padding-left: ${(props) => props.padding};
+  }
+  .focus {
+    background-color: #f0be86;
+    &:hover {
+      background-color: #f0be86;
+    }
   }
 `;
 
@@ -88,8 +95,9 @@ function AuthorSidebar() {
 
   const consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
-  const depthContext = useContext(leftBlockDepth);
 
+  const depthContext = useContext(leftBlockDepth);
+  const currentFocusTitle = useContext(currentFocusTitleContext);
   const clickAuthorContext = useContext(authorContext);
   const clickSeojiContext = useContext(seojiContext);
   const clickGwonchaContext = useContext(gwonchaContext);
@@ -265,10 +273,16 @@ function AuthorSidebar() {
             <HiOutlineDocumentText className="list-icon" />
             <ListLi
               onClick={(target) => {
+                currentFocusTitle.setCurrentFocusTitle(author.childId);
                 clickAuthorContext.setClickAuthor(author.childId);
                 clickAuthorContext.setAuthorValue(author.childTitle);
                 depthContext.setDepth(0);
-              }}>
+              }}
+              className={
+                currentFocusTitle.currentFocusTitle === author.childId
+                  ? 'focus'
+                  : ''
+              }>
               {author.childTitle}
             </ListLi>
           </ListItemPositioner>
@@ -280,9 +294,15 @@ function AuthorSidebar() {
                     <HiOutlineDocumentText className="list-icon" />
                     <ListLi
                       onClick={(target) => {
+                        currentFocusTitle.setCurrentFocusTitle(seoji.childId);
                         clickSeojiContext.setClickSeoji(seoji.childId);
                         depthContext.setDepth(1);
-                      }}>
+                      }}
+                      className={
+                        currentFocusTitle.currentFocusTitle === seoji.childId
+                          ? 'focus'
+                          : ''
+                      }>
                       {seoji.childTitle}
                     </ListLi>
                   </ListItemPositioner>
@@ -295,11 +315,20 @@ function AuthorSidebar() {
                             <HiOutlineDocumentText className="list-icon" />
                             <ListLi
                               onClick={(target) => {
+                                currentFocusTitle.setCurrentFocusTitle(
+                                  gwoncha.childId,
+                                );
                                 clickGwonchaContext.setClickGwoncha(
                                   gwoncha.childId,
                                 );
                                 depthContext.setDepth(2);
-                              }}>
+                              }}
+                              className={
+                                currentFocusTitle.currentFocusTitle ===
+                                gwoncha.childId
+                                  ? 'focus'
+                                  : ''
+                              }>
                               {parseGwoncha(gwoncha.childTitle)}
                             </ListLi>
                           </ListItemPositioner>
@@ -312,11 +341,20 @@ function AuthorSidebar() {
                                     <HiOutlineDocumentText className="list-icon" />
                                     <ListLi
                                       onClick={(target) => {
+                                        currentFocusTitle.setCurrentFocusTitle(
+                                          munche.childId,
+                                        );
                                         clickMuncheContext.setClickMunche(
                                           munche.childId,
                                         );
                                         depthContext.setDepth(3);
-                                      }}>
+                                      }}
+                                      className={
+                                        currentFocusTitle.currentFocusTitle ===
+                                        munche.childId
+                                          ? 'focus'
+                                          : ''
+                                      }>
                                       {parseMunche(munche.childTitle)}
                                     </ListLi>
                                   </ListItemPositioner>
@@ -330,11 +368,20 @@ function AuthorSidebar() {
                                           <HiOutlineDocumentText className="list-icon" />
                                           <ListLi
                                             onClick={(target) => {
+                                              currentFocusTitle.setCurrentFocusTitle(
+                                                final.childId,
+                                              );
                                               depthContext.setDepth(4);
                                               clickFinalContext.setClickFinal(
                                                 final.childId,
                                               );
-                                            }}>
+                                            }}
+                                            className={
+                                              currentFocusTitle.currentFocusTitle ===
+                                              final.childId
+                                                ? 'focus'
+                                                : ''
+                                            }>
                                             {parseTitle(final.childTitle).map(
                                               (el) => (
                                                 <FinalTitle>
