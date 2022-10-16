@@ -11,6 +11,7 @@ import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
 import parseTitle from '../../../../utils/parseTitle';
 import Loading from '../../../shared/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -34,8 +35,8 @@ function TitleContentListBlock() {
     () => getRightFinal(clickMuncheContext),
     [clickMuncheContext],
   );
-
-  console.log('final data', finalJsonDatas);
+  const navigate = useNavigate();
+  if (finalJsonDatas.error) navigate('/server-error');
   if (
     finalJsonDatas.data === null ||
     finalJsonDatas.data === undefined ||
@@ -43,6 +44,7 @@ function TitleContentListBlock() {
     finalJsonDatas.data.datas === undefined
   )
     return <Loading />;
+
   return (
     <>
       <OtherListTableBlock

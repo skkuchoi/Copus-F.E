@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CategoryListBlock from './CategoryListBlock';
 import { RiArrowDropDownLine } from 'react-icons/ri';
 import '../../shared/linkStyle.css';
+import { useNavigate } from 'react-router-dom';
 
 const SidebarPositioner = styled.div`
   display: flex;
@@ -33,10 +34,12 @@ const LiteratureTitle = styled.p`
 `;
 
 function SidebarBlock({ leftDatas }) {
+  const navigate = useNavigate();
+  if (leftDatas.error) navigate('/server-error');
   return (
     <SidebarPositioner>
       <LiteratureTitlePositioner>
-        <LiteratureTitle>연행록 ({leftDatas.totalCount})</LiteratureTitle>
+        <LiteratureTitle>한국문집총간 ({leftDatas.totalCount})</LiteratureTitle>
         <RiArrowDropDownLine className="arrow-icon" size="35" />
       </LiteratureTitlePositioner>
 

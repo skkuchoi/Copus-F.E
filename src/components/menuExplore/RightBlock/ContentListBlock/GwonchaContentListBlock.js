@@ -10,6 +10,7 @@ import { seojiContext } from '../../../shared/ContentLayout';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
 import Loading from '../../../shared/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -22,11 +23,11 @@ function GwonchaContentListBlock() {
     () => getRightGwoncha(clickSeojiContext),
     [clickSeojiContext.clickSeoji],
   );
-
-  console.log(gwonchaJsonDatas);
-
+  const navigate = useNavigate();
+  if (gwonchaJsonDatas.error) navigate('/server-error');
   if (gwonchaJsonDatas.data === null || gwonchaJsonDatas.data === undefined)
     return <Loading />;
+
   return (
     <>
       {gwonchaJsonDatas.data.datas.map((gwoncha) => (

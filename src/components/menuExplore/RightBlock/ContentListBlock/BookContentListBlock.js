@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
 
@@ -22,6 +22,7 @@ import { leftBlockDepth } from '../../../../pages/menuExplore/MenuExplore';
 import NoExistDataBlock from '../../../searchResult/ResultDataBlock/NoExistDataBlock';
 
 import Pagination from '../../../searchResult/ResultDataBlock/Pagination';
+import NotWorking from '../../../../pages/NotWorking/NotWorking';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -79,7 +80,7 @@ function BookContentListBlock() {
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
-
+  const navigate = useNavigate();
   const { state } = useLocation();
   if (state !== null) {
     const count = calculateIdLevel(state.currentId);
@@ -138,24 +139,6 @@ function BookContentListBlock() {
     seojiKeyword = 'authorNameConsonant';
   else seojiKeyword = 'authorName';
 
-  const consonants = {
-    all: 'all',
-    A: '가',
-    B: '나',
-    C: '다',
-    D: '라',
-    E: '마',
-    F: '바',
-    G: '사',
-    H: '아',
-    I: '자',
-    J: '차',
-    K: '카',
-    L: '타',
-    N: '파',
-    M: '하',
-  };
-
   if (clickAuthorContext.authorValue)
     consonant = parseAuthor(clickAuthorContext.authorValue);
 
@@ -164,9 +147,10 @@ function BookContentListBlock() {
     [consonant, clickAuthorContext.authorValue],
   );
   console.log(seojiJsonDatas);
+  if (seojiJsonDatas.error) navigate('/server-error');
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <Loading />;
-  else if (seojiJsonDatas.data.count === 0) return <NoExistDataBlock />;
+  if (seojiJsonDatas.data.count === 0) return <NoExistDataBlock />;
   return (
     <>
       {seojiJsonDatas.data.datas

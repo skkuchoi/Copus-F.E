@@ -21,6 +21,7 @@ import parseGwoncha from '../../../utils/parseGwoncha';
 import parseMunche from '../../../utils/parseMunche';
 import parseTitle from '../../../utils/parseTitle';
 import Loading from '../../shared/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   border: 1px solid #d9d9d9;
@@ -116,25 +117,8 @@ function BookSidebar() {
   const [includeFinalData, setIncludeFinalData] = useState({});
   const [finalListDatas, setFinalListDatas] = useState([]);
 
-  const consonants = {
-    all: 'all',
-    A: '가',
-    B: '나',
-    C: '다',
-    D: '라',
-    E: '마',
-    F: '바',
-    G: '사',
-    H: '아',
-    I: '자',
-    J: '차',
-    K: '카',
-    L: '타',
-    N: '파',
-    M: '하',
-  };
-  console.log(consonant);
-  //console.log(consonants[consonant]);
+  const navigate = useNavigate();
+
   // 서지 api 요청, consonant가 바뀔 때마다 OK
   const [seojiJsonDatas] = useAsync(
     () => getLeftSeoji(filter, 0, consonant),
@@ -235,7 +219,13 @@ function BookSidebar() {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
 
-  useEffect(() => {}, []);
+  if (
+    seojiListDatas.error ||
+    gwonchaListDatas.error ||
+    muncheListDatas.error ||
+    finalListDatas.error
+  )
+    navigate('/server-error');
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||

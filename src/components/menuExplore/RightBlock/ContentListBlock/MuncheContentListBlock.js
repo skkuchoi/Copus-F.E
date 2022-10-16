@@ -10,6 +10,7 @@ import { gwonchaContext } from '../../../shared/ContentLayout';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
 import Loading from '../../../shared/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -23,9 +24,11 @@ function MuncheContentListBlock() {
     () => getRightMunche(clickGwonchaContext),
     [clickGwonchaContext],
   );
-
+  const navigate = useNavigate();
+  if (muncheJsonDatas.error) navigate('/server-error');
   if (muncheJsonDatas.data === null || muncheJsonDatas.data === undefined)
     return <Loading />;
+
   return (
     <>
       {muncheJsonDatas.data.datas.map((item) => (

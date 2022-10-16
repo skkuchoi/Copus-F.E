@@ -11,7 +11,7 @@ import parseTitle from '../../../../utils/parseTitle';
 import Loading from '../../../shared/Loading';
 import parseGwoncha from '../../../../utils/parseGwoncha';
 import parseMunche from '../../../../utils/parseMunche';
-import NotWorking from '../../../../pages/NotWorking/NotWorking';
+import { useNavigate } from 'react-router-dom';
 
 const ContentPositioner = styled.div`
   padding: 12px 0px;
@@ -136,8 +136,7 @@ export default function Content() {
     [clickFinalContext],
   );
 
-  console.log('final content: ', finalDataJsonDatas);
-
+  const navigate = useNavigate();
   const handleCopyButton = () => {
     if (finalDataJsonDatas.data !== null)
       window.navigator.clipboard
@@ -146,10 +145,10 @@ export default function Content() {
           alert('복사 완료');
         });
   };
-
+  if (finalDataJsonDatas.error) navigate('/server-error');
   if (finalDataJsonDatas.data === null || finalDataJsonDatas.data === undefined)
     return <Loading />;
-  else if (finalDataJsonDatas.error) return <NotWorking />;
+
   return (
     <>
       <ContentRoute>

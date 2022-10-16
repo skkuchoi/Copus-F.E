@@ -110,10 +110,6 @@ function ResultDataBlock() {
 
   // useContext
   const totalDetailFilter = useContext(totalFilter);
-  const clickSeojiContext = useContext(seojiContext);
-  const clickGwonchaContext = useContext(gwonchaContext);
-  const clickMuncheContext = useContext(muncheContext);
-  const clickFinalContext = useContext(finalContext);
 
   // Navigate
   const navigate = useNavigate();
@@ -152,6 +148,7 @@ function ResultDataBlock() {
   }, [filter, totalDetailFilter.totalDetailFilter]);
 
   // 로딩 페이지
+  if (rightDatas.error) navigate('/server-error');
   if (rightDatas.data === null) return <Loading />;
   switch (filter) {
     case 'total':
