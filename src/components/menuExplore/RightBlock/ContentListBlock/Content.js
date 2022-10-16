@@ -54,23 +54,6 @@ const FinalWonju = styled.span`
   margin: 0;
 `;
 
-const SubTitle = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  align-items: center;
-  font-size: 20px;
-  padding: 5px 10px;
-  margin-bottom: 15px;
-  background-color: rgba(197, 232, 207, 0.5);
-`;
-
-const Page = styled.div`
-  margin-left: 15px;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
 const CopyBlock = styled.div`
   display: flex;
   flex-direction: row;
@@ -133,6 +116,18 @@ const Origin = styled.div`
   font-size: 12px;
 `;
 
+const AnnotationPositioner = styled.div`
+  padding: 0px 15px;
+`;
+
+const AnnotationTitle = styled.span`
+  font-size: 15px;
+  font-weight: bold;
+`;
+
+const AnnotationText = styled.p`
+  font-size: 15px;
+`;
 export default function Content() {
   const clickFinalContext = useContext(finalContext);
 
@@ -142,7 +137,7 @@ export default function Content() {
   );
 
   console.log('final content: ', finalDataJsonDatas);
-  const dci = 'ITKC_MO_1237A_0010_010_0010_2020_B137_XML';
+
   const handleCopyButton = () => {
     if (finalDataJsonDatas.data !== null)
       window.navigator.clipboard
@@ -176,7 +171,9 @@ export default function Content() {
         </Title>
 
         <CopyBlock>
-          <DciInformation>[DCI]{dci}</DciInformation>
+          <DciInformation>
+            [DCI]{finalDataJsonDatas.data.finalData.dci}
+          </DciInformation>
           <CopyButton onClick={handleCopyButton}>DCI 복사</CopyButton>
         </CopyBlock>
 
@@ -215,6 +212,14 @@ export default function Content() {
           ))}
         </ContentText>
         <Origin> ⓒ 한국고전번역원 | 영인표점 한국문집총간 | 2010</Origin>
+
+        <AnnotationPositioner>
+          <AnnotationText>
+            <AnnotationTitle>월: </AnnotationTitle>
+            저본에는 '決'로 되어 있다. 문집 말미의 정오표에 근거하여 '波'로
+            수정하였다.
+          </AnnotationText>
+        </AnnotationPositioner>
       </ContentPositioner>
     </>
   );

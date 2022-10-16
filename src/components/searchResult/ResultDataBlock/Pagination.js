@@ -17,7 +17,7 @@ const PageNumberOptionBlock = styled.nav`
     }
 
     &[disabled] {
-      //visibility: hidden;
+      visibility: hidden;
     }
   }
 `;
@@ -46,7 +46,11 @@ const NumberButton = styled.button`
 // 클릭 이벤트: 페이지 상태 변경, 화면 재 렌더링
 function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
   // Math.ceil: 그것보다 큰 수를 반환 (?)
-  const totalPageNumber = Math.ceil(totalContent / limitPage);
+  //const totalPageNumber = Math.ceil(totalContent / limitPage);
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(totalContent / limitPage); i++) {
+    pageNumbers.push(i);
+  }
 
   return (
     <>
@@ -57,24 +61,17 @@ function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
         />
-        {Array(totalPageNumber)
-          .fill()
-          .map((_, i) => (
-            <a href="#top">
-              <NumberButton
-                key={i + 1}
-                onClick={() => setCurrentPage(i + 1)}
-                aria-current={currentPage === i + 1 ? 'page' : null}>
-                {i + 1}
-              </NumberButton>
-            </a>
-          ))}
+        {pageNumbers.map((number) => (
+          <a href="#top">
+            <NumberButton key={number} onClick={() => setCurrentPage(number)}>
+              {number}
+            </NumberButton>
+          </a>
+        ))}
         <MdArrowRight
           size="40"
           className="arrow-icon"
-          onClick={() => setCurrentPage(currentPage + 1)}
-          disabled={currentPage === totalPageNumber}
-        />
+          onClick={() => setCurrentPage(currentPage + 1)}></MdArrowRight>
       </PageNumberOptionBlock>
     </>
   );

@@ -133,22 +133,21 @@ function SortBlock({ children }) {
   );
 
   const consonants = [
-    { consonant: '가', id: '가' },
-    { consonant: '나', id: '나' },
-    { consonant: '다', id: '다' },
-    { consonant: '라', id: '라' },
-    { consonant: '마', id: '마' },
-    { consonant: '바', id: '바' },
-    { consonant: '사', id: '사' },
-    { consonant: '아', id: '아' },
-    { consonant: '자', id: '자' },
-    { consonant: '차', id: '차' },
-    { consonant: '카', id: '카' },
-    { consonant: '타', id: '타' },
-    { consonant: '파', id: '파' },
-    { consonant: '하', id: '하' },
+    { consonant: 'A', id: '가' },
+    { consonant: 'B', id: '나' },
+    { consonant: 'C', id: '다' },
+    { consonant: 'D', id: '라' },
+    { consonant: 'E', id: '마' },
+    { consonant: 'F', id: '바' },
+    { consonant: 'G', id: '사' },
+    { consonant: 'H', id: '아' },
+    { consonant: 'I', id: '자' },
+    { consonant: 'J', id: '차' },
+    { consonant: 'K', id: '카' },
+    { consonant: 'L', id: '타' },
+    { consonant: 'N', id: '파' },
+    { consonant: 'M', id: '하' },
   ];
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [filter, consonant]);
@@ -203,10 +202,10 @@ function SortBlock({ children }) {
                 key={item.id}
                 onClick={() => {
                   setConsonant(item.id);
-                  navigate(link4Consonant + filter + '/' + item.id);
+                  navigate(link4Consonant + filter + '/' + item.consonant);
                 }}
                 width="13px">
-                {item.consonant}
+                {item.id}
               </CircleColorButton>
             ))}
           </ConsonantPositioner>

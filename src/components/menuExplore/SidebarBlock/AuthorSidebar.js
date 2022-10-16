@@ -117,7 +117,23 @@ function AuthorSidebar() {
 
   const [includeFinalData, setIncludeFinalData] = useState({});
   const [finalListDatas, setFinalListDatas] = useState([]);
-
+  const consonants = {
+    all: 'all',
+    A: '가',
+    B: '나',
+    C: '다',
+    D: '라',
+    E: '마',
+    F: '바',
+    G: '사',
+    H: '아',
+    I: '자',
+    J: '차',
+    K: '카',
+    L: '타',
+    N: '파',
+    M: '하',
+  };
   const [authorJsonDatas] = useAsync(
     () => getLeftAuthor(filter, -1, consonant),
     [consonant],

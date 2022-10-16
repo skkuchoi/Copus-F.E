@@ -116,6 +116,25 @@ function BookSidebar() {
   const [includeFinalData, setIncludeFinalData] = useState({});
   const [finalListDatas, setFinalListDatas] = useState([]);
 
+  const consonants = {
+    all: 'all',
+    A: '가',
+    B: '나',
+    C: '다',
+    D: '라',
+    E: '마',
+    F: '바',
+    G: '사',
+    H: '아',
+    I: '자',
+    J: '차',
+    K: '카',
+    L: '타',
+    N: '파',
+    M: '하',
+  };
+  console.log(consonant);
+  //console.log(consonants[consonant]);
   // 서지 api 요청, consonant가 바뀔 때마다 OK
   const [seojiJsonDatas] = useAsync(
     () => getLeftSeoji(filter, 0, consonant),
@@ -216,7 +235,7 @@ function BookSidebar() {
     container.current.scrollTo(0, 0);
   }, [filter, consonant]);
 
-  useEffect(()=>{},[]);
+  useEffect(() => {}, []);
   if (
     seojiListDatas === null ||
     seojiListDatas === undefined ||

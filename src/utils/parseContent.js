@@ -123,7 +123,7 @@ export default function parseContent(content, annotation) {
       paraArray.push({
         indent: indent,
         align: align,
-        itle: curParaContentNWonju,
+        title: curParaContentNWonju,
       });
     }
 
