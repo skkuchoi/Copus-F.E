@@ -57,7 +57,9 @@ function HomeCard() {
           <Card
             icon="1"
             title="코퍼스(Copus)"
-            content={'고전문헌 연행록에 대한\n정제된 데이터들을\n업로드합니다.'}
+            content={
+              '고전문헌 한국문집총간에 대한\n정제된 데이터들을\n업로드합니다.'
+            }
             cardColor="white"
           />
         </Link>
@@ -70,7 +72,7 @@ function HomeCard() {
             cardColor=" rgba(188, 248, 183)"
           />
         </Link>
-        <Link to="/original-text/연행록" className="link-line">
+        <Link to="/" className="link-line">
           <Card
             icon="3"
             title="코퍼스 위키(Wiki)"
