@@ -182,6 +182,7 @@ export default function Content() {
             finalDataJsonDatas.data.finalData.annotation,
           ).map((item) => (
             <>
+              {/* 단락 내용 */}
               {item.contents && (
                 <ParagraphContentPositioner>
                   {item.contents.map((content) => (
@@ -197,6 +198,7 @@ export default function Content() {
                 </ParagraphContentPositioner>
               )}
 
+              {/* 단락 제목 */}
               {item.titles && (
                 <ParagraphTitlePositioner>
                   {item.titles.map((title) => (
