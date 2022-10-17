@@ -6,6 +6,7 @@ import SidebarBlock from './SidebarBlock/SidebarBlock';
 import { useLocation, useParams } from 'react-router-dom';
 import useAsync from '../../hooks/useAsync';
 import getLeftSearchResult from '../../api/search/getLeftSearchResult';
+import Loading from '../shared/Loading';
 
 const MainContentBlock = styled.div`
   display: flex;
@@ -52,7 +53,7 @@ function SearchResultLayout() {
   );
 
   // 로딩 페이지
-  if (leftDatas.data === null) return <div>zz</div>;
+  if (leftDatas.data === null) return <Loading />;
   return (
     <>
       <totalFilter.Provider

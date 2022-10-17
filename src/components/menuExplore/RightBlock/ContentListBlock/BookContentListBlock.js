@@ -13,11 +13,14 @@ import {
   seojiContext,
   muncheContext,
   finalContext,
+  scrollContext,
 } from '../../../shared/ContentLayout';
 import { selectedConsonant, selectedFilter } from '../../SortBlock/SortBlock';
 import parseAuthor from '../../../../utils/parseAuthor';
 import Loading from '../../../shared/Loading';
 import calculateIdLevel from '../../../../utils/calculateIdLevel';
+import calculateLastIdNumber from '../../../../utils/calculateLastIdNumber';
+
 import { leftBlockDepth } from '../../../../pages/menuExplore/MenuExplore';
 import NoExistDataBlock from '../../../searchResult/ResultDataBlock/NoExistDataBlock';
 
@@ -81,44 +84,57 @@ function BookContentListBlock() {
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
+  const clickScrollContext = useContext(scrollContext);
   const navigate = useNavigate();
+
   const { state } = useLocation();
   if (state !== null) {
     const count = calculateIdLevel(state.currentId);
+
     if (count === 3) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.currentId);
       currentFocusTitle.setCurrentFocusTitle(state.currentId);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.currentId));
     } else if (count === 4) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.lv1Id);
       currentFocusTitle.setCurrentFocusTitle(state.lv1Id);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.lv1Id));
       depthContext.setDepth(2);
       clickGwonchaContext.setClickGwoncha(state.currentId);
       currentFocusTitle.setCurrentFocusTitle(state.currentId);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.currentId));
     } else if (count === 5) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.lv1Id);
       currentFocusTitle.setCurrentFocusTitle(state.lv1Id);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.lv1Id));
       depthContext.setDepth(2);
       clickGwonchaContext.setClickGwoncha(state.lv2Id);
       currentFocusTitle.setCurrentFocusTitle(state.lv2Id);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.lv2Id));
       depthContext.setDepth(3);
       clickMuncheContext.setClickMunche(state.currentId);
       currentFocusTitle.setCurrentFocusTitle(state.currentId);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.currentId));
     } else if (count === 6) {
       depthContext.setDepth(1);
       clickSeojiContext.setClickSeoji(state.lv1Id);
       currentFocusTitle.setCurrentFocusTitle(state.lv1Id);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.lv1Id));
       depthContext.setDepth(2);
       clickGwonchaContext.setClickGwoncha(state.lv2Id);
       currentFocusTitle.setCurrentFocusTitle(state.lv2Id);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.lv2Id));
       depthContext.setDepth(3);
       clickMuncheContext.setClickMunche(state.lv3Id);
       currentFocusTitle.setCurrentFocusTitle(state.lv3Id);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.lv3Id));
       depthContext.setDepth(4);
       clickFinalContext.setClickFinal(state.currentId);
       currentFocusTitle.setCurrentFocusTitle(state.currentId);
+      clickScrollContext.setScroll(calculateLastIdNumber(state.currentId));
     }
   }
 
@@ -147,7 +163,7 @@ function BookContentListBlock() {
     () => getRightSeoji(filter, seojiKeyword, consonant),
     [consonant, clickAuthorContext.authorValue],
   );
-  
+
   if (seojiJsonDatas.error) navigate('/server-error');
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <Loading />;

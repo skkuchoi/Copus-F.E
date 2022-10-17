@@ -35,9 +35,13 @@ export const gwonchaContext = createContext();
 export const muncheContext = createContext();
 export const finalContext = createContext();
 
+export const scrollContext = createContext();
+
 function ContentLayout({ filter }) {
   const depthContext = useContext(leftBlockDepth);
 
+  // 검색 -> 메뉴 올때 스크롤 상태
+  const [scroll, setScroll] = useState(0);
   // 현재 선택된 아이
   const [currentFocusTitle, setCurrentFocusTitle] = useState('');
   // 저자
@@ -89,42 +93,48 @@ function ContentLayout({ filter }) {
                     clickFinal: clickFinal,
                     setClickFinal: setClickFinal,
                   }}>
-                  <DisplaySelectedListBlock />
-                  <SortBlock>
-                    <MainContentBlock>
-                      {filter === 'book' && <BookSidebar />}
-                      {filter === 'author' && <AuthorSidebar />}
+                  <scrollContext.Provider
+                    value={{
+                      scroll: scroll,
+                      setScroll: setScroll,
+                    }}>
+                    <DisplaySelectedListBlock />
+                    <SortBlock>
+                      <MainContentBlock>
+                        {filter === 'book' && <BookSidebar />}
+                        {filter === 'author' && <AuthorSidebar />}
 
-                      {(depthContext.depth === 0 ||
-                        depthContext.depth === -1) && (
-                        <ContentListTitleBlock title={'총 리스트'}>
-                          <BookTableRowBlock />
-                          <BookContentListBlock />
-                        </ContentListTitleBlock>
-                      )}
+                        {(depthContext.depth === 0 ||
+                          depthContext.depth === -1) && (
+                          <ContentListTitleBlock title={'총 리스트'}>
+                            <BookTableRowBlock />
+                            <BookContentListBlock />
+                          </ContentListTitleBlock>
+                        )}
 
-                      {depthContext.depth === 1 && (
-                        <ContentListTitleBlock title={'총 리스트'}>
-                          <GwonchaContentListBlock />
-                        </ContentListTitleBlock>
-                      )}
-                      {depthContext.depth === 2 && (
-                        <ContentListTitleBlock title={'총 리스트'}>
-                          <MuncheContentListBlock />
-                        </ContentListTitleBlock>
-                      )}
-                      {depthContext.depth === 3 && (
-                        <ContentListTitleBlock title={'총 리스트'}>
-                          <TitleContentListBlock />
-                        </ContentListTitleBlock>
-                      )}
-                      {depthContext.depth === 4 && (
-                        <ContentListTitleBlock>
-                          <Content />
-                        </ContentListTitleBlock>
-                      )}
-                    </MainContentBlock>
-                  </SortBlock>
+                        {depthContext.depth === 1 && (
+                          <ContentListTitleBlock title={'총 리스트'}>
+                            <GwonchaContentListBlock />
+                          </ContentListTitleBlock>
+                        )}
+                        {depthContext.depth === 2 && (
+                          <ContentListTitleBlock title={'총 리스트'}>
+                            <MuncheContentListBlock />
+                          </ContentListTitleBlock>
+                        )}
+                        {depthContext.depth === 3 && (
+                          <ContentListTitleBlock title={'총 리스트'}>
+                            <TitleContentListBlock />
+                          </ContentListTitleBlock>
+                        )}
+                        {depthContext.depth === 4 && (
+                          <ContentListTitleBlock>
+                            <Content />
+                          </ContentListTitleBlock>
+                        )}
+                      </MainContentBlock>
+                    </SortBlock>
+                  </scrollContext.Provider>
                 </finalContext.Provider>
               </muncheContext.Provider>
             </gwonchaContext.Provider>

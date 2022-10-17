@@ -16,6 +16,7 @@ import {
   gwonchaContext,
   muncheContext,
   finalContext,
+  scrollContext,
 } from '../../shared/ContentLayout';
 import parseGwoncha from '../../../utils/parseGwoncha';
 import parseMunche from '../../../utils/parseMunche';
@@ -91,11 +92,6 @@ const FinalWonju = styled.span`
 function BookSidebar() {
   const container = useRef();
 
-  useEffect(() => {
-    container.current.scrollTo(0, 400);
-    window.scrollTo(0, 100);
-  }, [container]);
-
   const consonant = useContext(selectedConsonant);
   const filter = useContext(selectedFilter);
   const depthContext = useContext(leftBlockDepth);
@@ -105,6 +101,7 @@ function BookSidebar() {
   const clickGwonchaContext = useContext(gwonchaContext);
   const clickMuncheContext = useContext(muncheContext);
   const clickFinalContext = useContext(finalContext);
+  const clickScrollContext = useContext(scrollContext);
 
   const [seojiListDatas, setSeojiListDatas] = useState([]);
 
@@ -215,9 +212,62 @@ function BookSidebar() {
   }, [finalJsonDatas]);
 
   // set scroll 0 whenever click filter || consonant
+
   useEffect(() => {
-    container.current.scrollTo(0, 0);
-  }, [filter, consonant]);
+    window.scrollTo(0, 110);
+    if (typeof clickScrollContext.scroll === 'number') {
+      switch (true) {
+        case clickScrollContext.scroll <= 100:
+          container.current.scrollTo(0, 200);
+          break;
+        case clickScrollContext.scroll <= 200:
+          container.current.scrollTo(0, 780);
+          break;
+        case clickScrollContext.scroll <= 250:
+          container.current.scrollTo(0, 780);
+          break;
+        case clickScrollContext.scroll <= 300:
+          container.current.scrollTo(0, 700);
+          break;
+        case clickScrollContext.scroll <= 350:
+          container.current.scrollTo(0, 900);
+          break;
+        case clickScrollContext.scroll <= 400:
+          container.current.scrollTo(0, 1100);
+          break;
+        case clickScrollContext.scroll <= 450:
+          container.current.scrollTo(0, 1300);
+          break;
+        case clickScrollContext.scroll <= 500:
+          container.current.scrollTo(0, 1500);
+          break;
+        case clickScrollContext.scroll <= 550:
+          container.current.scrollTo(0, 1700);
+          break;
+        case clickScrollContext.scroll <= 600:
+          container.current.scrollTo(0, 1900);
+          break;
+        case clickScrollContext.scroll <= 650:
+          container.current.scrollTo(0, 1900);
+          break;
+        case clickScrollContext.scroll <= 700:
+          container.current.scrollTo(0, 2100);
+          break;
+        case clickScrollContext.scroll <= 800:
+          container.current.scrollTo(0, 2600);
+          break;
+        case clickScrollContext.scroll <= 900:
+          container.current.scrollTo(0, 2800);
+          break;
+        default:
+          break;
+      }
+    }
+  }, [clickScrollContext]);
+
+  const handleItemScroll = () => {
+    clickScrollContext.setScroll('');
+  };
 
   if (
     seojiListDatas.error ||
@@ -244,7 +294,8 @@ function BookSidebar() {
           <ListItemPositioner padding="0px">
             <HiOutlineDocumentText className="list-icon" />
             <ListLi
-              onClick={(target) => {
+              onClick={() => {
+                handleItemScroll();
                 currentFocusTitle.setCurrentFocusTitle(seoji.childId);
                 clickSeojiContext.setClickSeoji(seoji.childId);
                 depthContext.setDepth(1);
@@ -265,7 +316,8 @@ function BookSidebar() {
                   <ListItemPositioner padding="20px">
                     <HiOutlineDocumentText className="list-icon" />
                     <ListLi
-                      onClick={(target) => {
+                      onClick={() => {
+                        handleItemScroll();
                         clickGwonchaContext.setClickGwoncha(gwoncha.childId);
                         depthContext.setDepth(2);
                         currentFocusTitle.setCurrentFocusTitle(gwoncha.childId);
@@ -286,7 +338,8 @@ function BookSidebar() {
                           <ListItemPositioner padding="40px">
                             <HiOutlineDocumentText className="list-icon" />
                             <ListLi
-                              onClick={(target) => {
+                              onClick={() => {
+                                handleItemScroll();
                                 clickMuncheContext.setClickMunche(
                                   munche.childId,
                                 );
@@ -311,7 +364,8 @@ function BookSidebar() {
                                 <ListItemPositioner padding="60px">
                                   <HiOutlineDocumentText className="list-icon" />
                                   <ListLi
-                                    onClick={(target) => {
+                                    onClick={() => {
+                                      handleItemScroll();
                                       depthContext.setDepth(4);
                                       currentFocusTitle.setCurrentFocusTitle(
                                         final.childId,

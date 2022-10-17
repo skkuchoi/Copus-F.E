@@ -215,24 +215,25 @@ function ResultDataBlock() {
                                 {parseMunche(item.muncheTitle)}
                               </SubInformationText>
                             )}
-
-                            {item.finalTitle !== null &&
-                              parseTitle(item.finalTitle).map((el) => (
-                                <FinalTitle
-                                  onClick={() => {
-                                    navigate('/menu-explore/book/all', {
-                                      state: {
-                                        lv1Id: item.seojiId,
-                                        lv2Id: item.gwonchaId,
-                                        lv3Id: item.muncheId,
-                                        currentId: item.finalId,
-                                      },
-                                    });
-                                  }}>
-                                  &nbsp; {el.title}&nbsp;
-                                  <FinalWonju>{el.wonju}</FinalWonju>
-                                </FinalTitle>
-                              ))}
+                            <FinalTitle
+                              onClick={() => {
+                                navigate('/menu-explore/book/all', {
+                                  state: {
+                                    lv1Id: item.seojiId,
+                                    lv2Id: item.gwonchaId,
+                                    lv3Id: item.muncheId,
+                                    currentId: item.finalId,
+                                  },
+                                });
+                              }}>
+                              {item.finalTitle !== null &&
+                                parseTitle(item.finalTitle).map((el) => (
+                                  <>
+                                    {el.title}&nbsp;
+                                    <FinalWonju>{el.wonju}&nbsp; </FinalWonju>
+                                  </>
+                                ))}
+                            </FinalTitle>
                           </SubInformation>
                           {item.contentPartition !== null && (
                             <OriginalText
@@ -540,22 +541,24 @@ function ResultDataBlock() {
                             }}>
                             {parseMunche(item.muncheTitle)}
                           </SubInformationText>
-                          {parseTitle(item.finalTitle).map((el) => (
-                            <FinalTitle
-                              onClick={() => {
-                                navigate('/menu-explore/book/all', {
-                                  state: {
-                                    lv1Id: item.seojiId,
-                                    lv2Id: item.gwonchaId,
-                                    lv3Id: item.muncheId,
-                                    currentId: item.finalId,
-                                  },
-                                });
-                              }}>
-                              &nbsp; {el.title}&nbsp;
-                              <FinalWonju>{el.wonju}</FinalWonju>
-                            </FinalTitle>
-                          ))}
+                          <FinalTitle
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv2Id: item.gwonchaId,
+                                  lv3Id: item.muncheId,
+                                  currentId: item.finalId,
+                                },
+                              });
+                            }}>
+                            {parseTitle(item.finalTitle).map((el) => (
+                              <>
+                                {el.title}&nbsp;
+                                <FinalWonju>{el.wonju}&nbsp; </FinalWonju>
+                              </>
+                            ))}
+                          </FinalTitle>
                         </SubInformation>
                         <OriginalText
                           onClick={() => {
@@ -644,24 +647,25 @@ function ResultDataBlock() {
                               {parseMunche(item.muncheTitle)}
                             </SubInformationText>
                           )}
-
-                          {item.finalTitle &&
-                            parseTitle(item.finalTitle).map((el) => (
-                              <FinalTitle
-                                onClick={() => {
-                                  navigate('/menu-explore/book/all', {
-                                    state: {
-                                      lv1Id: item.seojiId,
-                                      lv2Id: item.gwonchaId,
-                                      lv3Id: item.muncheId,
-                                      currentId: item.finalId,
-                                    },
-                                  });
-                                }}>
-                                &nbsp; {el.title}&nbsp;
-                                <FinalWonju>{el.wonju}</FinalWonju>
-                              </FinalTitle>
-                            ))}
+                          <FinalTitle
+                            onClick={() => {
+                              navigate('/menu-explore/book/all', {
+                                state: {
+                                  lv1Id: item.seojiId,
+                                  lv2Id: item.gwonchaId,
+                                  lv3Id: item.muncheId,
+                                  currentId: item.finalId,
+                                },
+                              });
+                            }}>
+                            {item.finalTitle &&
+                              parseTitle(item.finalTitle).map((el) => (
+                                <>
+                                  {el.title}&nbsp;
+                                  <FinalWonju>{el.wonju}&nbsp; </FinalWonju>
+                                </>
+                              ))}
+                          </FinalTitle>
                         </SubInformation>
                       </ResultInformation>
                     </ResultListPositioner>
@@ -1019,23 +1023,24 @@ function ResultDataBlock() {
                         }}>
                         {parseMunche(item.muncheTitle)}
                       </SubInformationText>
-                      {parseTitle(item.finalTitle).map((el) => (
-                        <FinalTitle
-                          onClick={() => {
-                            navigate('/menu-explore/book/all', {
-                              state: {
-                                lv1Id: item.seojiId,
-                                lv2Id: item.gwonchaId,
-                                lv3Id: item.muncheId,
-
-                                currentId: item.finalId,
-                              },
-                            });
-                          }}>
-                          &nbsp; {el.title}&nbsp;
-                          <FinalWonju>{el.wonju}</FinalWonju>
-                        </FinalTitle>
-                      ))}
+                      <FinalTitle
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv2Id: item.gwonchaId,
+                              lv3Id: item.muncheId,
+                              currentId: item.finalId,
+                            },
+                          });
+                        }}>
+                        {parseTitle(item.finalTitle).map((el) => (
+                          <>
+                            {el.title}&nbsp;
+                            <FinalWonju>{el.wonju}&nbsp; </FinalWonju>
+                          </>
+                        ))}
+                      </FinalTitle>
                     </SubInformation>
                     <OriginalText
                       onClick={() => {
@@ -1137,25 +1142,25 @@ function ResultDataBlock() {
                           {parseMunche(item.muncheTitle)}
                         </SubInformationText>
                       )}
-
-                      {item.finalTitle &&
-                        parseTitle(item.finalTitle).map((el) => (
-                          <FinalTitle
-                            onClick={() => {
-                              navigate('/menu-explore/book/all', {
-                                state: {
-                                  lv1Id: item.seojiId,
-                                  lv2Id: item.gwonchaId,
-                                  lv3Id: item.muncheId,
-
-                                  currentId: item.finalId,
-                                },
-                              });
-                            }}>
-                            &nbsp; {el.title}&nbsp;
-                            <FinalWonju>{el.wonju}</FinalWonju>
-                          </FinalTitle>
-                        ))}
+                      <FinalTitle
+                        onClick={() => {
+                          navigate('/menu-explore/book/all', {
+                            state: {
+                              lv1Id: item.seojiId,
+                              lv2Id: item.gwonchaId,
+                              lv3Id: item.muncheId,
+                              currentId: item.finalId,
+                            },
+                          });
+                        }}>
+                        {item.finalTitle &&
+                          parseTitle(item.finalTitle).map((el) => (
+                            <>
+                              {el.title}&nbsp;
+                              <FinalWonju>{el.wonju}&nbsp; </FinalWonju>
+                            </>
+                          ))}
+                      </FinalTitle>
                     </SubInformation>
                   </ResultInformation>
                 </ResultListPositioner>
