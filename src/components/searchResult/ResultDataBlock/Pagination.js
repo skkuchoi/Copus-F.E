@@ -43,8 +43,6 @@ const NumberButton = styled.button`
   }
 `;
 
-// 페이지 번호 버튼 출력
-// 클릭 이벤트: 페이지 상태 변경, 화면 재 렌더링
 function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
   //const totalPageNumber = Math.ceil(totalContent / limitPage);
   const [currentPageArray, setCurrentPageArray] = useState([]);
