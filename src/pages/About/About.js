@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import HeaderBlock from '../../components/home/header/HeaderBlock/HeaderBlock';
 import Introduction from '../../components/About/Introduction';
@@ -38,6 +38,9 @@ const WholeContainer = styled.div`
 
 function About() {
   const [menu, setMenu] = useState('first');
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       {menu === 'first' && (
