@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 function getRightSeoji(filter, seojiKeyword, consonant) {
-  
   const response = axios({
     url: '/article/seoji',
     method: 'get',
@@ -10,7 +9,6 @@ function getRightSeoji(filter, seojiKeyword, consonant) {
       keyword: consonant,
     },
   });
-
   return response;
 }
 

@@ -177,7 +177,7 @@ function BookContentListBlock() {
             bgColor="#edeaea"
             key={item.seojiId}
             clickId={item.seojiId}
-            authorName={filter === 'author' ? item.authorName : ''}
+            authorName={filter === 'author' ? item.authorId : ''}
             currentTitle={item.seojiId}>
             <TableItem>{id++}</TableItem>
             <TableItem>{item.seojiTitle}</TableItem>

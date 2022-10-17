@@ -138,13 +138,13 @@ function AuthorSidebar() {
       depthContext.setDepth(-1);
     }
   }, [authorJsonDatas]);
-
+ 
   // 서지 api 요청, consonant가 바뀔 때마다
   const [seojiJsonDatas] = useAsync(
     () => getLeftSeoji(filter, 0, clickAuthorContext.clickAuthor),
-    [clickAuthorContext.clickAuthor, depthContext.depth],
+    [clickAuthorContext.clickAuthor],
   );
-
+  
   // 서지 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (seojiJsonDatas.data !== null) {
@@ -164,16 +164,14 @@ function AuthorSidebar() {
     }
   }, [seojiJsonDatas]);
 
-  //console.log(seojiListDatas);
-  // 권차
-  //const [clickSeoji, setClickSeoji] = useState('');
 
+  // 권차
   // 권차 api 요청, seojiTitle이 바뀔 때마다
   const [gwonchaJsonDatas] = useAsync(
     () => getLeftGwoncha(filter, 1, clickSeojiContext.clickSeoji),
-    [clickSeojiContext.clickSeoji, depthContext.depth],
+    [clickSeojiContext.clickSeoji],
   );
-  //console.log('권차 사이드바 갖와: ', gwonchaJsonDatas);
+
   //권차 api 요청 데이터인 json이 바뀔 때마다
   useEffect(() => {
     if (gwonchaJsonDatas.data !== null) {
@@ -295,7 +293,8 @@ function AuthorSidebar() {
           </ListItemPositioner>
           {seojiListDatas.map(
             (seoji) =>
-              clickAuthorContext.clickAuthor.includes(author.childId) && (
+              Number(clickAuthorContext.clickAuthor) ===
+                Number(author.childId) && (
                 <>
                   <ListItemPositioner padding="20px">
                     <HiOutlineDocumentText className="list-icon" />

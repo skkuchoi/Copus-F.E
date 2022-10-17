@@ -35,11 +35,10 @@ function BookTableBlock({
   const currentFocusTitle = useContext(currentFocusTitleContext);
   const clickSeojiContext = useContext(seojiContext);
   const clickAuthorContext = useContext(authorContext);
-  //console.log('전달받은 clickId: ', clickId);
+
   if (from === 'search') {
     depthContext.setDepth(1);
     clickSeojiContext.setClickSeoji(clickId);
-    //console.log('seojiContext 변경됐어: ', clickSeojiContext.clickSeoji);
     currentFocusTitle.setCurrentFocusTitle(currentTitle);
     return;
   }
@@ -53,9 +52,9 @@ function BookTableBlock({
           e.target.innerHTML !== '목차' &&
           e.target.innerHTML !== '해제'
         ) {
-          if (authorName !== '') {
-            clickAuthorContext.setClickAuthor(authorName);
+          if (authorName) {
             depthContext.setDepth(0);
+            clickAuthorContext.setClickAuthor(Number(authorName));
           }
           depthContext.setDepth(1);
           clickSeojiContext.setClickSeoji(clickId);
