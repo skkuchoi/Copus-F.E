@@ -47,16 +47,20 @@ function BookTableBlock({
     <ContentListTablePositioner
       border={border}
       bgColor={bgColor}
-      onClick={() => {
-        // depthContext.setDepth(0);
-        if (authorName !== '') {
-          clickAuthorContext.setClickAuthor(authorName);
-          depthContext.setDepth(0);
+      onClick={(e) => {
+        if (
+          e.target.innerHTML !== '범례' &&
+          e.target.innerHTML !== '목차' &&
+          e.target.innerHTML !== '해제'
+        ) {
+          if (authorName !== '') {
+            clickAuthorContext.setClickAuthor(authorName);
+            depthContext.setDepth(0);
+          }
+          depthContext.setDepth(1);
+          clickSeojiContext.setClickSeoji(clickId);
+          currentFocusTitle.setCurrentFocusTitle(currentTitle);
         }
-        depthContext.setDepth(1);
-        clickSeojiContext.setClickSeoji(clickId);
-        //console.log('seojiContext 변경됐어: ', clickSeojiContext.clickSeoji);
-        currentFocusTitle.setCurrentFocusTitle(currentTitle);
       }}>
       {children}
     </ContentListTablePositioner>

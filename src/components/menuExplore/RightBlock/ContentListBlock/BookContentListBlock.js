@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import BookTableBlock from '../BookTableBlock';
 
@@ -22,7 +22,6 @@ import { leftBlockDepth } from '../../../../pages/menuExplore/MenuExplore';
 import NoExistDataBlock from '../../../searchResult/ResultDataBlock/NoExistDataBlock';
 
 import Pagination from '../../../searchResult/ResultDataBlock/Pagination';
-import NotWorking from '../../../../pages/NotWorking/NotWorking';
 
 const TableItem = styled.p`
   font-size: 15px;
@@ -35,6 +34,7 @@ const Buga = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 `;
 
 const BugaButton = styled.div`
@@ -46,6 +46,7 @@ const BugaButton = styled.div`
   padding: 3px;
   margin-right: 5px;
   color: #fc8a70;
+  z-index: 999;
 
   &:hover {
     background-color: black;
@@ -146,7 +147,7 @@ function BookContentListBlock() {
     () => getRightSeoji(filter, seojiKeyword, consonant),
     [consonant, clickAuthorContext.authorValue],
   );
-  console.log(seojiJsonDatas);
+  
   if (seojiJsonDatas.error) navigate('/server-error');
   if (seojiJsonDatas.data === null || seojiJsonDatas.data === undefined)
     return <Loading />;

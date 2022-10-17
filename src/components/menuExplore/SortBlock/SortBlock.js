@@ -123,15 +123,6 @@ function SortBlock({ children }) {
   // 분류기준 midu Opid
   const [sortMenuOpen, setSortMenuOpen] = useState(true);
   const handleSortMenuOpenButton = () => setSortMenuOpen(!sortMenuOpen);
-
-  // consonant 설정
-  const { pathname } = useLocation();
-  const [consonant, setConsonant] = useState('all');
-  // Select Category Filter
-  const [filter, setFilter] = useState(
-    pathname.includes('book') ? 'book' : 'author',
-  );
-
   const consonants = [
     { consonant: 'A', id: '가' },
     { consonant: 'B', id: '나' },
@@ -148,6 +139,34 @@ function SortBlock({ children }) {
     { consonant: 'N', id: '파' },
     { consonant: 'M', id: '하' },
   ];
+  const consonantsOrder = {
+    all: 'all',
+    A: '가',
+    B: '나',
+    C: '다',
+    D: '라',
+    E: '마',
+    F: '바',
+    G: '사',
+    H: '아',
+    I: '자',
+    J: '차',
+    K: '카',
+    L: '타',
+    N: '파',
+    M: '하',
+  };
+  // consonant 설정
+  const { pathname } = useLocation();
+
+  const [consonant, setConsonant] = useState(
+    consonantsOrder[pathname.split('/')[3]],
+  );
+  // Select Category Filter
+  const [filter, setFilter] = useState(
+    pathname.includes('book') ? 'book' : 'author',
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [filter, consonant]);
@@ -202,7 +221,9 @@ function SortBlock({ children }) {
                 key={item.id}
                 onClick={() => {
                   setConsonant(item.id);
-                  navigate(link4Consonant + filter + '/' + item.consonant);
+                  window.location.replace(
+                    link4Consonant + filter + '/' + item.consonant,
+                  );
                 }}
                 width="13px">
                 {item.id}
