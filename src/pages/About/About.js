@@ -12,6 +12,9 @@ const ButtonStyle = styled.div`
   margin: 0px 10%;
   display: flex;
   flex-direction: row;
+  @media screen and (min-width: 1600px) {
+    margin: 0px 30%;
+  }
 `;
 
 const Button = styled.div`
@@ -34,6 +37,22 @@ const WholeContainer = styled.div`
   border-color: lightgray;
   border-width: 2px;
   padding-bottom: 60px;
+  @media screen and (min-width: 1600px) {
+    margin: 0px 30%;
+    padding-top: 150px;
+  }
+`;
+
+const WholeContainer2 = styled.div`
+  margin: 0px 10%;
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 2px;
+  padding-bottom: 60px;
+  @media screen and (min-width: 1600px) {
+    margin: 0px 30%;
+    //padding-top: 150px;
+  }
 `;
 
 function About() {
@@ -57,11 +76,11 @@ function About() {
               성균코퍼스 구축과정
             </Button>
           </ButtonStyle>
-          <WholeContainer>
+          <WholeContainer2>
             <WhatIsCopus />
             <CopusDestination />
             <WhatWeExpect />
-          </WholeContainer>
+          </WholeContainer2>
           <Footer />
         </>
       )}

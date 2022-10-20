@@ -9,6 +9,9 @@ const HeaderPositioner = styled.div`
   background-image: url(${process.env.PUBLIC_URL + '/img/home/header/bg.png'});
   background-size: 100% 100%;
   overflow-x: hidden;
+  @media screen and (min-width: 1600px) {
+    height: 35vh;
+  }
 `;
 
 const MenubarPositioner = styled.div`

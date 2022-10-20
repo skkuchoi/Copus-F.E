@@ -6,6 +6,9 @@ const WholeBlock = styled.div`
   justify-content: center;
   align-items: center;
   margin: 60px 10%;
+  @media screen and (min-width: 1600px) {
+    margin: 60px 30%;
+  }
 `;
 
 const Card = styled.div`
