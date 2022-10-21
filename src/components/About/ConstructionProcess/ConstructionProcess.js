@@ -19,6 +19,26 @@ const Container = styled.div`
   width: 900px;
   grid-column-gap: 10px;
   margin-bottom: 100px;
+  @media screen and (min-width: 1600px) {
+    height: 1000px;
+    width: 900px;
+  }
+`;
+
+const Container2 = styled.div`
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 0.008fr 1fr 1fr;
+  height: 800px;
+  width: 900px;
+  grid-column-gap: 10px;
+  margin-bottom: 100px;
+  @media screen and (min-width: 1600px) {
+    height: 1000px;
+    width: 900px;
+  }
 `;
 
 const TitleCard = styled.div`

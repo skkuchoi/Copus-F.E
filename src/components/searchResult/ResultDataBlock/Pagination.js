@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { MdArrowLeft } from 'react-icons/md';
 import { MdArrowRight } from 'react-icons/md';
-
+import { useState, useEffect } from 'react';
+import sliceArrayByLimit from './functions';
 const PageNumberOptionBlock = styled.nav`
   display: flex;
   justify-content: center;
@@ -42,16 +43,26 @@ const NumberButton = styled.button`
   }
 `;
 
-// 페이지 번호 버튼 출력
-// 클릭 이벤트: 페이지 상태 변경, 화면 재 렌더링
 function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
-  // Math.ceil: 그것보다 큰 수를 반환 (?)
   //const totalPageNumber = Math.ceil(totalContent / limitPage);
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(totalContent / limitPage); i++) {
-    pageNumbers.push(i);
-  }
+  const [currentPageArray, setCurrentPageArray] = useState([]);
+  const [totalPageArray, setTotalPageArray] = useState([]);
 
+  useEffect(() => {
+    if (currentPage % limitPage === 1) {
+      setCurrentPageArray(totalPageArray[Math.floor(currentPage / limitPage)]);
+    } else if (currentPage % limitPage === 0) {
+      setCurrentPageArray(
+        totalPageArray[Math.floor(currentPage / limitPage) - 1],
+      );
+    }
+  }, [currentPage]);
+
+  useEffect(() => {
+    const slicedPageArray = sliceArrayByLimit(totalContent, limitPage);
+    setTotalPageArray(slicedPageArray);
+    setCurrentPageArray(slicedPageArray[0]);
+  }, [totalContent]);
   return (
     <>
       <PageNumberOptionBlock>
@@ -61,17 +72,21 @@ function Pagination({ totalContent, limitPage, currentPage, setCurrentPage }) {
           onClick={() => setCurrentPage(currentPage - 1)}
           disabled={currentPage === 1}
         />
-        {pageNumbers.map((number) => (
+        {currentPageArray?.map((i) => (
           <a href="#top">
-            <NumberButton key={number} onClick={() => setCurrentPage(number)}>
-              {number}
+            <NumberButton
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              aria-current={currentPage === i + 1 ? 'page' : null}>
+              {i + 1}
             </NumberButton>
           </a>
         ))}
         <MdArrowRight
           size="40"
           className="arrow-icon"
-          onClick={() => setCurrentPage(currentPage + 1)}></MdArrowRight>
+          onClick={() => setCurrentPage(currentPage + 1)}
+          disabled={currentPage === totalContent}></MdArrowRight>
       </PageNumberOptionBlock>
     </>
   );
