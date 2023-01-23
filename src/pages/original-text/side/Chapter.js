@@ -15,7 +15,10 @@ const Title = styled.h1`
   font-size: 25px;
 `;
 
-const ChapterPositioner = styled.div``;
+const ChapterPositioner = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
 const ChapterTitle = styled.p`
   background-color: #f3f3f3;
@@ -60,7 +63,7 @@ function Chapter() {
                           <>
                             {contentItem.split('*')[0]}
                             <ChapterWonju>
-                              &nbsp; {contentItem.split('*')[1]} &nbsp; 
+                              &nbsp; {contentItem.split('*')[1]} &nbsp;
                             </ChapterWonju>
                           </>
                         ))}

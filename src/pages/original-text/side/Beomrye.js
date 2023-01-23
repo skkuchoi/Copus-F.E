@@ -56,6 +56,7 @@ function Beomrye() {
         {parseBeomrye(beomryeJsonDatas.data.beomrye)[0].map((item) => (
           <FirstParagraphFont>{item}</FirstParagraphFont>
         ))}
+        <br />
 
         {parseBeomrye(beomryeJsonDatas.data.beomrye)[1].map((item) => (
           <SecondParagraphFont>{item}</SecondParagraphFont>
