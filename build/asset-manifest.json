@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.de1fa6b2.css",
+    "main.js": "/static/js/main.b21b170e.js",
+    "static/js/787.54ec8887.chunk.js": "/static/js/787.54ec8887.chunk.js",
+    "static/media/skku-logo.png": "/static/media/skku-logo.1244f4801396205e30a0.png",
+    "static/media/BookImg.png": "/static/media/BookImg.6f32d29f1dcf1d60cfb9.png",
+    "index.html": "/index.html",
+    "main.de1fa6b2.css.map": "/static/css/main.de1fa6b2.css.map",
+    "main.b21b170e.js.map": "/static/js/main.b21b170e.js.map",
+    "787.54ec8887.chunk.js.map": "/static/js/787.54ec8887.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de1fa6b2.css",
+    "static/js/main.b21b170e.js"
+  ]
+}
