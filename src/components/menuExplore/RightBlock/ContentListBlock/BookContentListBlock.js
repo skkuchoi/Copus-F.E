@@ -171,6 +171,7 @@ function BookContentListBlock() {
   return (
     <>
       {seojiJsonDatas.data.datas
+        .toString()
         .slice(offset, offset + limitPage)
         .map((item) => (
           <BookTableBlock
