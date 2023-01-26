@@ -8,7 +8,7 @@ import axios from 'axios'
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
-axios.defaults.baseURL = process.env.REACT_APP_API_ENDPOINT
+axios.defaults.baseURL = "http://ec2-52-78-232-56.ap-northeast-2.compute.amazonaws.com:8080/"
 
 root.render(
   <React.StrictMode>
